@@ -1,0 +1,50 @@
+@startuml Caso_trafer
+
+class Persona{
+    - nombre: string
+    - apellido: string
+    - contrasena: string
+    - dni: int
+
+}
+
+class Revisor{
+    + registrar_viaje(): void
+    + registrar_billete(): void
+    + imprimir_billete(): void
+    + descargar_informe(): void
+}
+
+class Usuario{
+    + anotarse_viaje(): void
+    + ingresar_billete(): void
+}
+
+class Viaje{
+    - estacion: string
+    - origen: string
+    - destino: string
+}
+
+class Estacion{
+    - nombre: string
+    - numero: int
+    - carriles: int
+}
+
+class Informe{
+    - numero_de_billete: int
+    - cantidad: int
+    - monto_unitario: float
+    - fecha: datetime
+    - hora: datetime
+    - total: float
+}
+
+Persona <|-- Revisor
+Persona <|-- Usuario
+Informe o-- Revisor
+Viaje o-- Estacion
+Viaje *-- Informe
+
+@enduml

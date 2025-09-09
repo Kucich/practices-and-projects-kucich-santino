@@ -1,0 +1,25 @@
+@startuml Caso_1
+
+(*top) --> "Pedir DNI"
+
+if "¿DNI existente?" then
+    --> [Existe] "Solicitar fecha y hora"
+
+else
+    --> [No existe] "Solicitar datos"
+    --> "Almacenar en la BD"
+
+endif
+
+"Solicitar fecha y hora" --> "Asignar turno"
+"Asignar turno" --> "Almacenar en la BD"
+
+if "¿Solicitar turno?" then
+    --> [Si] "Pedir DNI"
+
+else
+    --> [No] (*)
+
+endif
+ 
+@enduml

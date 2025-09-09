@@ -1,0 +1,40 @@
+@startuml Línea_aérea 
+
+[*] --> cargar_pasaje : cargar_pasaje()
+
+state verificar_validez <<choice>>
+cargar_pasaje --> verificar_validez
+verificar_validez --> valido : verificar_validez()
+verificar_validez --> invalido : verificar_validez()
+valido --> presentando_pasaje_al_sistema : asignar_disponibilidad()
+presentando_pasaje_al_sistema --> reservar : reservar_pasaje()
+invalido --> [*]
+
+state forma_de_reserva <<choice>> 
+reservar --> forma_de_reserva 
+forma_de_reserva --> reserva_telefonica : forma_de_reserva()
+forma_de_reserva --> reserva_web : forma_de_reserva()
+reserva_telefonica --> confirmar_reserva : confirmar_reserva()
+reserva_web --> confirmar_reserva : confirmar_reserva()
+
+state venta_de_pasaje <<choice>> 
+confirmar_reserva -->  venta_de_pasaje
+venta_de_pasaje --> vendido : 95%
+venta_de_pasaje --> cancelado : 5%
+cancelado --> valido : asignar_disponibilidad()
+
+state concluir_venta <<choice>>
+vendido --> concluir_venta : concluir_venta()
+concluir_venta --> pasaje_utilizado : asignar_disponibilidad()
+pasaje_utilizado --> [*]
+concluir_venta --> devolver_pasaje : devolver_dinero()
+
+state estado_del_pasaje <<choice>>
+devolver_pasaje --> estado_del_pasaje : verificar_validez()
+estado_del_pasaje --> valido: asignar_disponibilidad()
+estado_del_pasaje --> invalido: asignar_disponibilidad()
+estado_del_pasaje --> caducado: No se tomo el vuelo
+
+@enduml
+
+

@@ -1,0 +1,60 @@
+@startuml Diagrama_de_estado_n1
+
+[*] --> Estado
+
+state Habilitacion <<choice>>
+Estado --> Habilitacion : habilitacion_de_habitacion()
+Habilitacion --> Habitacion_habilitada : habilitacion_de_habitacion()
+Habilitacion --> Habitacion_inhabilitada : habilitacion_de_habitacion()
+Habitacion_inhabilitada --> [*]
+
+state Disponibilidad <<choice>>
+Habitacion_habilitada --> Disponibilidad : verificar_disponibilidad()
+Disponibilidad --> Desocupada : habitacion_disponible()
+Disponibilidad --> Ocupada : habitacion_no_disponible()
+
+state Ocupar <<choice>>
+Desocupada --> Ocupar : cambiar_estado()
+Ocupar --> Ocupada : habitacion_no_disponible()
+Ocupar --> Limpieza : limpiar_habitacion()
+
+state Finalizacion_limpieza <<choice>>
+Limpieza --> Finalizacion_limpieza : finalizar_limpieza()
+Finalizacion_limpieza --> No_terminada : limpiar_habitacion()
+Finalizacion_limpieza --> Limpieza_finalizada : finalizar_limpieza()
+No_terminada --> Limpieza
+Limpieza_finalizada --> Desocupada : cambiar_estado()
+
+state Alta_paciente <<choice>>
+Ocupada --> Alta_paciente : cambiar_estado()
+Alta_paciente --> Paciente_dado_de_alta : cambiar_estado()
+Alta_paciente --> Paciente_sin_alta
+Paciente_sin_alta --> Ocupada
+Paciente_dado_de_alta --> Desocupada: cambiar_estado()
+
+@enduml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+' state "Req(Id)" as ReqId <<sdlreceive>>
+' state "Minor(Id)" as MinorId
+' state "Major(Id)" as MajorId
+ 
+' state c <<choice>>
+ 
+' Idle --> ReqId
+' ReqId --> c
+' c --> MinorId : [Id <= 10]
+' c --> MajorId : [Id > 10]
+' @enduml

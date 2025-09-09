@@ -1,0 +1,40 @@
+@startuml Caso_Empresa2
+
+class Persona{
+    - nombre: String
+    - apellido: String
+    - dni: Int
+    - sexo: String
+    - edad: Int
+}
+
+class Cliente{
+    - telefono: Int
+    - email: String
+
+    + modificar_cliente(): Void
+    + eliminar_cliente(): Void
+    + mostrar_datos(): Void
+}
+
+class Empleado{
+    - sueldo: Float
+    - puesto: String
+
+    + modificar_cliente(): Void
+    + eliminar_cliente(): Void
+    + mostrar_datos(): Void
+}
+
+class Empresa{
+    - nombre: String
+    - cuit: Int
+}
+
+Persona <|-- Cliente
+Persona <|-- Empleado
+
+Empleado "1..*" --o "1" Empresa
+Cliente "1..*" --o "1" Empresa
+
+@enduml

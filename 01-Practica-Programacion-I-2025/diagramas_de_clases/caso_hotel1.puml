@@ -1,0 +1,63 @@
+@startuml Diagrama_caso_hotel
+
+class Reserva{
+    - cliente: List<Cliente>
+    - habitacion: List<Habitacion>
+    - fecha_inicial: DateTime
+    - fecha_final: DateTime
+    - estado: Boolean
+
+    + modificar_descuento(): Void
+    + insertar_descuento(): Void
+    + anular(): Void
+    + confirmar(): Void
+    + calcular_descuento(): Void
+    + calcular_total(): Void
+}
+
+class Habitacion {
+    - numero_de_pieza: Int
+    - reserva: Int
+    - nombre_de_cliente = String
+
+    + consultar_habitacion(): void
+    + mostrar_listado(): void
+    + reservar_habitacion(): void
+    - cambiar_precio_habitacion(): void
+    + eliminar_reserva(): void
+}
+
+class Cliente{
+    - nombre: String
+    - apellido: String
+    - dni: Int
+    - email: String
+    - telefono: Int
+    - habitacion_reservada: Int
+    + fecha_de_comienzo: Int
+    + fecha_final: Int
+    + tipo_de_cliente: String
+
+    + registrase(): void
+}
+
+class Administrador{
+    - nombre: String
+    - apellido: String
+    - dni: Int
+    - email: String
+    - telefono: Int
+
+    - cambiar_descuento(): void
+    - cambiar_precio_habitacion(): void
+}
+
+class Sistema{
+    + calcular_ganancias_mensuales(): void
+}
+
+
+Reserva <|-- Habitacion 
+Reserva <|-- Cliente
+
+@enduml
