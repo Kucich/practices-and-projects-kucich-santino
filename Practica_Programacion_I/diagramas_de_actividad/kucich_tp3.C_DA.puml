@@ -1,0 +1,73 @@
+@startuml Administracion_externa
+
+|Administrador|
+start
+
+:"Registrar disponibilidad";
+:"Consultar disponibilidad";
+
+|Sistema|
+
+fork
+    :"Mostrar calendario con ubicación";
+
+fork again
+    :"Mostrar información de ubicación";
+
+end fork
+
+stop
+
+|Administrador|
+start
+
+:"Enviar solicitud de cambio de turno";
+
+|Farmacia X|
+
+repeat
+    :"Notificar solicitud"; 
+
+    if ("¿Pasaron 12 horas?") then ("Si")
+        |Sistema|
+        :"Eliminar solicitud";
+        stop
+        break
+
+    else ("No")
+        |Farmacia X|
+        if ("¿Solicitud aceptada?") then ("Si")
+            |Sistema|
+            :"Modificar turno";
+            :"Notificar cambio";
+            stop
+            break
+        
+        else ("No")
+            |Farmacia X|
+
+        endif 
+
+    endif 
+
+repeat while ("Notificar negación de Farmacia X")
+
+stop 
+
+|Interrupciones|
+start
+:"Interferencia externa";
+:"Cerrar sesiones activas";
+:"Bloquear acciones de modificación de datos";
+
+stop 
+
+|Interrupciones|
+start
+:"Fallo de conexión";
+:"Reiniciar sistema";
+:"Vereficar integridad de los datos";
+:"Cerrar sesiones activas";
+stop
+
+@enduml

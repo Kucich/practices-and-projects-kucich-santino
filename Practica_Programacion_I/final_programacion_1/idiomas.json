@@ -1,0 +1,232 @@
+{
+    "status": true,
+    "message": "Success",
+    "timestamp": 1756328751380,
+    "data": [
+      {
+        "name": "English (UK)",
+        "code": "en-gb",
+        "countryFlag": "gb"
+      },
+      {
+        "name": "English (US)",
+        "code": "en-us",
+        "countryFlag": "us"
+      },
+      {
+        "name": "Deutsch",
+        "code": "de",
+        "countryFlag": "de"
+      },
+      {
+        "name": "Nederlands",
+        "code": "nl",
+        "countryFlag": "nl"
+      },
+      {
+        "name": "Français",
+        "code": "fr",
+        "countryFlag": "fr"
+      },
+      {
+        "name": "Español",
+        "code": "es",
+        "countryFlag": "es"
+      },
+      {
+        "name": "Español (AR)",
+        "code": "es-ar",
+        "countryFlag": "ar"
+      },
+      {
+        "name": "Español (MX)",
+        "code": "es-mx",
+        "countryFlag": "mx"
+      },
+      {
+        "name": "Català",
+        "code": "ca",
+        "countryFlag": "catalonia"
+      },
+      {
+        "name": "Italiano",
+        "code": "it",
+        "countryFlag": "it"
+      },
+      {
+        "name": "Português (PT)",
+        "code": "pt-pt",
+        "countryFlag": "pt"
+      },
+      {
+        "name": "Português (BR)",
+        "code": "pt-br",
+        "countryFlag": "br"
+      },
+      {
+        "name": "Norsk",
+        "code": "no",
+        "countryFlag": "no"
+      },
+      {
+        "name": "Suomi",
+        "code": "fi",
+        "countryFlag": "fi"
+      },
+      {
+        "name": "Svenska",
+        "code": "sv",
+        "countryFlag": "se"
+      },
+      {
+        "name": "Dansk",
+        "code": "da",
+        "countryFlag": "dk"
+      },
+      {
+        "name": "Čeština",
+        "code": "cs",
+        "countryFlag": "cz"
+      },
+      {
+        "name": "Magyar",
+        "code": "hu",
+        "countryFlag": "hu"
+      },
+      {
+        "name": "Română",
+        "code": "ro",
+        "countryFlag": "ro"
+      },
+      {
+        "name": "日本語",
+        "code": "ja",
+        "countryFlag": "jp"
+      },
+      {
+        "name": "简体中文",
+        "code": "zh-cn",
+        "countryFlag": "cn"
+      },
+      {
+        "name": "繁體中文",
+        "code": "zh-tw",
+        "countryFlag": "z4"
+      },
+      {
+        "name": "Polski",
+        "code": "pl",
+        "countryFlag": "pl"
+      },
+      {
+        "name": "Ελληνικά",
+        "code": "el",
+        "countryFlag": "gr"
+      },
+      {
+        "name": "Русский",
+        "code": "ru",
+        "countryFlag": "ru"
+      },
+      {
+        "name": "Türkçe",
+        "code": "tr",
+        "countryFlag": "tr"
+      },
+      {
+        "name": "Български",
+        "code": "bg",
+        "countryFlag": "bg"
+      },
+      {
+        "name": "العربية",
+        "code": "ar",
+        "countryFlag": "sa"
+      },
+      {
+        "name": "한국어",
+        "code": "ko",
+        "countryFlag": "kr"
+      },
+      {
+        "name": "עברית",
+        "code": "he",
+        "countryFlag": "il"
+      },
+      {
+        "name": "Latviski",
+        "code": "lv",
+        "countryFlag": "lv"
+      },
+      {
+        "name": "Українська",
+        "code": "uk",
+        "countryFlag": "ua"
+      },
+      {
+        "name": "हिन्दी",
+        "code": "hi",
+        "countryFlag": "in"
+      },
+      {
+        "name": "Bahasa Indonesia",
+        "code": "id",
+        "countryFlag": "id"
+      },
+      {
+        "name": "Bahasa Malaysia",
+        "code": "ms",
+        "countryFlag": "my"
+      },
+      {
+        "name": "ภาษาไทย",
+        "code": "th",
+        "countryFlag": "th"
+      },
+      {
+        "name": "Eesti",
+        "code": "et",
+        "countryFlag": "ee"
+      },
+      {
+        "name": "Hrvatski",
+        "code": "hr",
+        "countryFlag": "hr"
+      },
+      {
+        "name": "Lietuvių",
+        "code": "lt",
+        "countryFlag": "lt"
+      },
+      {
+        "name": "Slovenčina",
+        "code": "sk",
+        "countryFlag": "sk"
+      },
+      {
+        "name": "Srpski",
+        "code": "sr",
+        "countryFlag": "rs"
+      },
+      {
+        "name": "Slovenščina",
+        "code": "sl",
+        "countryFlag": "si"
+      },
+      {
+        "name": "Tiếng Việt",
+        "code": "vi",
+        "countryFlag": "vn"
+      },
+      {
+        "name": "Filipino",
+        "code": "tl",
+        "countryFlag": "ph"
+      },
+      {
+        "name": "Íslenska",
+        "code": "is",
+        "countryFlag": "is"
+      }
+    ]
+  }

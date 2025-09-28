@@ -1,0 +1,31 @@
+@startuml Maquina_expendedora_inteligente
+
+(*) --> "Insertar moneda" as im
+
+if "¿Moneda dañada?" then
+    --> ["Si"] "Devoler moneda"
+    --> im
+
+else 
+    --> ["No"] "Seleccionar producto"
+
+endif
+
+if "¿Hay stock?" then
+    --> ["Si hay"] "Dispensar producto"
+    --> ===B1===
+    --> "Recibiendo producto"
+    --> ===B2===
+
+    ===B1=== --> "Registrar venta"
+    --> ===B2===
+    --> (*)
+    
+else 
+    --> ["No hay"] "Devolver moneda"
+    --> im
+
+endif 
+
+@enduml
+

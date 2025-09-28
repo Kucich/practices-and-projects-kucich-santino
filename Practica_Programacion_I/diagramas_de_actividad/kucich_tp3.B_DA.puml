@@ -1,0 +1,74 @@
+@startuml Administracion_interna
+
+|Empleado|
+start
+
+:"Registrar turno de trabajo";
+:"Consultar turno de trabajo";
+
+if ("¿Modificar turno?") then ("Si")
+    |Administrador|
+    :"Modificar turno de trabajo";
+    :"Asignar turno a empleado";
+    |Empleado|
+
+else ("No")
+
+endif
+
+stop
+
+|Administrador|
+start
+:"Agregar medicamento";
+:"Registrar fecha de vencimiento";
+
+if ("¿Medicamento desactualizado?") then ("Si")
+    :"Actualizar existencias";
+
+else ("No")
+
+endif 
+
+stop
+
+|Sistema|
+start 
+:"Verificar fechas de vencimiento";
+
+if ("¿Vencio?") then ("Si")
+    :"Mostrar cartel de advertencia";
+    |Administrador|
+    if ("¿Error de fecha?") then ("Si")
+        :"Modificar fecha de vencimiento";
+    
+    else ("No")
+        :"Dar de baja el medicamento";
+    endif 
+
+    stop
+
+else ("No")
+    |Sistema|
+    :"Organizar inventario";
+    stop
+
+endif
+
+|Interrupciones|
+start
+:"Interferencia externa";
+:"Cerrar sesiones activas";
+:"Bloquear acciones de modificación de datos";
+
+stop 
+
+|Interrupciones|
+start
+:"Fallo de conexión";
+:"Reiniciar sistema";
+:"Vereficar integridad de los datos";
+:"Cerrar sesiones activas";
+stop
+
+@enduml
