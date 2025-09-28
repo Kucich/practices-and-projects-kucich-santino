@@ -1,0 +1,54 @@
+@startuml Reservación_de_vuelo_en_línea
+
+(*) --> "Ingreso de fechas de viajes"
+"Ingreso de fechas de viajes" --> "Selección de vuelo"
+
+--> ===B1===
+--> "Ingreso de información personal"
+--> ===B2===
+
+===B1=== --> "Buscar disponibilidad"
+--> ===B2===
+
+--> "Selección vuelo"
+--> "Selección metodo de pago"
+if "Metodo" then
+    --> ["Puntos"] ===B3===
+    --> "Ingreso de puntos"
+    --> ===B4===
+
+    ===B3=== --> "Apartar la reservación"
+    --> ===B4===
+    --> "Ingresar información de pago"
+
+else
+    --> ["Otro metodo"] "Apartar reservación"
+
+endif
+
+--> "Ingresar información de pago"
+
+if "Verificar información" then
+    --> ["Datos validos"] ===B5===
+    --> "Generar información"
+    --> ===B6===
+
+    ===B5=== --> "Reservar lugar"
+    --> ===B6===
+
+    if "Días mayor a 30?" then
+        --> ["Confirmado"] "Enviar correo de confirmación" 
+        --> (*)
+
+    else
+        --> ["Cancelado"] "Enviar correo de cancelación"
+        --> (*)
+    
+    endif
+
+else
+    --> ["Datos invalidos"] "Selección metodo de pago"
+
+endif
+
+@enduml

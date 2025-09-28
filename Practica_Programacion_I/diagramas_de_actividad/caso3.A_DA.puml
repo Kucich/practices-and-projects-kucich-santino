@@ -1,0 +1,24 @@
+@startuml Venta_de_productos
+
+(*) --> "Procesar orden de venta"
+"Procesar orden de venta" --> "Almacenar datos de tarjeta"
+
+--> ===B1===
+--> "Verificar datos de tarjeta"
+--> ===B2===
+
+===B1=== --> "Verificar stock de producto"
+--> ===B2===
+
+if "¿Datos validos y stock disponible?" then
+    --> ["¡Todo OK!"] "Procesar orden"
+    --> "Entregar producto"
+    --> (*)
+
+else 
+    --> ["Algo salio mal..."] "Cancelar orden"
+    --> (*)
+
+endif 
+
+@enduml

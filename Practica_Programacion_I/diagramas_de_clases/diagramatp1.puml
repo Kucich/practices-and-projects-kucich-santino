@@ -1,0 +1,75 @@
+@startuml Trabajo_practico_nº1 Kucich Santino
+
+class Persona{ 
+
+    - nombre : string
+    - apellido : string
+    - dni : int
+    - email : string
+    - celular : int
+    - tipo : string
+
+    + modificar_datos(): void
+    + eliminar_registro(): void
+}
+
+class Empleada{
+    - direccion : string
+    - especialidad : string
+    - sueldo : float
+
+    + registrar_empleada(): void
+    + asignar_sueldo(): void
+    + modificar_sueldo(): void
+}
+
+class Proveedor{
+    - localidad : string
+    - tipo_de_proveedor: string
+
+    + registrar_proveedor(): void
+    + registrar_fecha_entrega_productos(): void
+    + modificar_fecha_de_entrega(): void
+    + borrar_fecha_de_entrega(): void 
+}
+
+class Producto{
+    - nombre : string
+    - marca : string
+    - tipo : string
+    - peso : float
+    - precio : float
+    - fecha_de_vencimiento : datetime
+    - descripcion : string
+    - cantidad : int
+
+    + registrar_producto(): void
+    + modificar_datos_de_producto():
+    + eliminar_producto(): void
+    + mostrar_inventario(): void
+}
+
+class Venta{
+    - fecha_y_hora : datetime
+    - metodo_de_pago : string
+
+    + registrar_item_de_venta(): void
+    + registrar_metodo_de_pago(): void
+    + agregar_item_de_venta(): void
+    + modificar_item_de_venta(): void
+    + eliminar_item_de_venta(): void
+}
+
+class Sistema{
+    + calcular_total_de_ingresos(): void
+}
+
+Persona <|-- Empleada
+Persona <|-- Proveedor
+Producto <|-- Venta
+Producto "1..*" *-- "0..*" Venta
+Venta "0..*" o-- Sistema
+Proveedor "1..*" *-- "1..*" Producto
+Empleada "1..*" *-- "0..*" Venta
+
+@enduml

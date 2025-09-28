@@ -1,0 +1,53 @@
+@startuml Caso_hipotecas
+
+(*) --> "Comprar la casa"
+--> "Convertir en propietario"
+if "¿Realizar un prestamo?" then
+    --> ["SI"] "Formalizar prestamo"
+    --> "Ingreso de datos personales" as idp
+
+    if "¿Datos validos?" then
+        --> ["SI"] "Realizar prestamo" as rp
+
+        if "¿Se realizo el prestamo?" then
+            --> ["SI"] "Tomar casa como garantia"
+            --> "Evaluar tasación de la casa"
+            --> "Ajustar capital de hipoteca"
+
+            if "¿Capital y sueldo insuficiente?" then
+                --> ["SI"] "Exigir garantía adicional"
+                --> "Formalizar hipoteca" as fh
+                --> "Pedir datos personales" as pdp
+
+                if "¿Datos correctos?" then 
+                    -->["Si"] "Detallar capital"
+                    --> "Detallar duración"
+                    --> "Calcular importe de mensualidad"
+                    --> (*)
+
+                else
+                    --> ["No"] pdp
+
+                endif 
+
+            else 
+                --> ["NO"] fh
+
+            endif 
+
+        else 
+            --> ["NO"] rp
+
+        endif 
+
+    else 
+        --> ["NO"] idp
+
+    endif
+
+else 
+    --> ["NO"] "Ingresar otro metodo de pago"
+    --> (*)
+
+endif 
+@enduml

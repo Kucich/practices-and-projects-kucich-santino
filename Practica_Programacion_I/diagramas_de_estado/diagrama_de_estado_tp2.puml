@@ -1,0 +1,36 @@
+@startuml Trabajo_practico_II_Kucich_Santino
+
+[*] --> enviar_notificacion : crear_multa()
+
+enviar_notificacion --> estado_de_notificacion : asignar_estado()
+estado_de_notificacion --> comunicada : comunicar()
+
+state presentar_recurso <<choice>>
+comunicada --> presentar_recurso : contadador_dias()
+presentar_recurso --> confirmada : Si días = 30
+presentar_recurso --> recurrida : Si días < 30
+
+state estado_de_sancion <<choice>>
+recurrida --> estado_de_sancion : asignar_estado()
+estado_de_sancion --> confirmada : Se confirma la sanción
+estado_de_sancion --> anular_sancion : Se anula la sanción
+recurrida --> anular_sancion : Si meses = 6
+anular_sancion --> [*]
+
+state concluir_multa <<choice>>
+confirmada --> concluir_multa : evaluar_multa()
+concluir_multa --> pagada : Se realizo el pago de la multa
+pagada --> cobrada : asignar_estado()
+cobrada --> [*]
+
+state simultaneo <<fork>>
+concluir_multa --> simultaneo : Si meses = 6
+simultaneo --> comunicado : generar_comunicado()
+simultaneo --> embargo : procedimiento_de_embargo()
+
+state union <<join>>
+comunicado --> union
+embargo --> union
+union --> [*]
+
+@enduml

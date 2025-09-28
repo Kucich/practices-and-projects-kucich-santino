@@ -1,0 +1,32 @@
+@startuml Concurso_de_fotografía  
+
+[*] --> procesando_datos_consignados : presentar_fotografia()
+
+state verificar_datos <<choice>>
+procesando_datos_consignados --> verificar_datos : ingresar_datos()
+verificar_datos --> asignar_tema : "Datos ingresados validos"
+verificar_datos --> [*] : "Datos ingresados no validos"
+
+state verificar_tema <<choice>>
+asignar_tema --> verificar_tema : asignar_tematica()
+verificar_tema --> pre_seleccion : "Tema elegido valido"
+verificar_tema --> [*] : "Tema elegido no valido"
+
+state semifinalistas <<choice>>
+pre_seleccion --> semifinalistas : pre_seleccion()
+semifinalistas --> guardando_pre_seleccion : "Semi finalista seleccionado"
+semifinalistas --> guardando_participantes : "Participantes del concurso cuando semifinalistas = 10"
+guardando_participantes --> publicando_participantes : publicar()
+publicando_participantes --> [*]
+
+state ganadores <<choice>>
+guardando_pre_seleccion --> ganadores 
+ganadores --> fotografias_ganadoras : guardar_ganadores()
+ganadores --> guardando_participantes : "Participantes del concurso cuando Finalistas = 3"
+fotografias_ganadoras --> publicando_ganadores : publicar()
+publicando_ganadores --> [*]
+
+@enduml
+
+
+

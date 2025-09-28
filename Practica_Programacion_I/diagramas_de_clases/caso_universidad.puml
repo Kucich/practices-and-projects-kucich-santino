@@ -1,0 +1,59 @@
+@startuml Caso_universidad
+
+class Persona{
+    - nombre: string
+    - apellido: string
+    - email: string
+    - contrasena: string
+    - dni: int
+    - telefono: int
+    - tipo: string
+}
+
+class Usuario{
+    + visualizar_expediente(): void
+    + anotarse_a_materia(): void
+    + matricular_asignatura(): void
+}
+
+class Profesor{
+    - asignatura_asignada: Asignatura
+
+    + cargar_acta(): void
+    + publicar_acta(): void
+    + visualizar_expediente(): void
+}
+
+class Administrador{
+    + registrar_asignatura(): void
+    + asociar_asignatura_a_profesor(): void
+    + cargar_acta(): void
+    + publicar_acta(): void
+}
+
+class Acta{
+    - profesor: Profesor
+    - asignatura: Asignatura
+    - alumno: Usuario
+    - nota: float
+    - fecha: date
+    - curso: string
+}
+
+class Asignatura{
+    - nombre: string
+    - curso: string
+    - profesor: Profesor
+}
+
+Persona <|-- Usuario
+Persona <|-- Profesor
+Persona <|-- Administrador
+Usuario "1..*" *-- "1" Asignatura
+Profesor "1" o-- "0..*" Asignatura
+Administrador *-- Asignatura
+Asignatura *-- Acta
+Acta o-- Profesor
+Acta o-- Administrador
+
+@enduml

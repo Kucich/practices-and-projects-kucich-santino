@@ -1,0 +1,77 @@
+@startuml Administracion_acceso
+
+(*) --> "Iniciar sesion" as ins
+
+if "Validar usuario" then
+    --> ["Admin"] "Ingresar y enviar email"
+    --> "Recibir codigo"
+    if "Validar estado de cuenta" then
+        --> ["Bloqueda"] "Desbloquear cuenta" as dc
+    
+    else
+        --> ["Desbloqueada"] "Ingresar codigo" as inc
+        if "¿Codigo correcto?" then
+            --> ["No"] "Mostrar mensaje de invalidez"
+            if "¿Reintentar?" then
+                --> ["Intentos maximos alcanzados"] "Bloquear cuenta" as bc
+            
+            else
+                --> ["Reintentar, sumar 1 al contador"] inc
+
+            endif
+
+        else 
+            --> ["Si"] "Mostrar menú"
+            --> (*)
+
+        endif 
+
+    endif
+
+else
+    --> ["Usuario estandar"] "Ingresar contraseña" as incontrasena
+    if "¿Contraseña correcta?" as cc then
+        --> ["No"] "Mostrar un mensaje de invalidez"
+        if "¿Reintentar de nuevo?" then
+            --> ["Intentos maximos logrados"] bc
+            
+        else
+            --> ["Reintentar, sumar uno al contador"] incontrasena
+
+        endif
+
+    else 
+        --> ["Si"] "Mostrar menú"
+
+    endif 
+
+endif 
+
+bc --> dc
+if "¿Respuestas correctas?" then
+    --> ["No"] dc
+
+else 
+    --> ["Si"] "Enviar email de resolución"
+    if "¿Cuenta validada?" then
+        --> ["No se valido"] dc
+    
+    else 
+        --> ["Se valido exitosamente"] "Enviar email de restablecimiento"
+        --> "Restablecer contraseña"
+        --> ins
+
+    endif 
+
+endif
+
+(*) .u.> "Interrupción externa"
+.u.> "Bloquear acciones de modificación"
+.u.> "Cerrar sesiones activas"
+
+(*) .u.> "Error de conexión"
+.u.> "Reiniciar sistema"
+.u.> "Verificar integridad de los datos"
+.u.> "Cerrar sesiones" 
+
+@enduml

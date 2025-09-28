@@ -1,0 +1,18 @@
+@startuml Formulario_de_registro_en_línea_a_un_evento
+
+(*) --> "Llenar formulario de inscripción"
+"Llenar formulario de inscripción" --> "Enviar formulario"
+
+if "Verificar información" then 
+    --> ["Datos validos"] "Crear cuenta para cliente"
+    --> "Envíar confirmación"
+    --> (*)
+
+else
+    --> ["Datos invalidos"] "Denegar solicitud"
+    --> "Mostrar error"
+    --> "Llenar formulario de inscripción"
+
+endif
+
+@enduml

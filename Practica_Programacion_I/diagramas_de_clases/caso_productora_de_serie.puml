@@ -1,0 +1,50 @@
+@startuml Caso_productora_de_serie
+
+class Serie{
+    - titulo = String
+    - fecha_de_inicio = Datetime
+    - sinosis = String
+    - genero = String
+    - personajes = []
+
+    + registrar_serie(): Void
+    + agregar_genero(): Void
+    + agregar_personaje(): Void
+    + agregar_actor(): Void
+    + modificar_serie(): Void
+    + eliminar_serie(): Void
+}
+
+class Temporada{
+    - fecha_de_produccion = Datetime
+    - fecha_de_estreno = Datetime
+  
+    + registrar_temporada(): Void
+    + modificar_temporada(): Void
+    + eliminar_temporada(): Void
+}
+
+class Capitulo{
+    - titulo = String
+    - duracion = Int
+    - sinopsis = String
+
+    + vincular_capitulo_a_temporada(): Void
+    + modificar_capitulo(): Void
+    + eliminar_capitulo(): Void
+}
+
+class Personaje{
+    - nombre = String
+    - nombre_de_serie = String
+    - actor_que_lo_interpreta = String
+    - descripcion = String
+
+    + vincular_personaje_a_serie(): Void
+    + modificar_personaje(): Void
+    + eliminar_personaje(): Void
+}
+
+Serie  *-- "0--*" Temporada
+Serie o-- "1--*" Personaje
+Temporada *-- "0--" Capitulo

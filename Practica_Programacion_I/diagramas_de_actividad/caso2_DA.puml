@@ -1,0 +1,44 @@
+@startuml Vuelo
+
+(*top) --> "Seleccionar vuelo"
+
+if "¿El vuelo esta disponible?" then
+    --> [true] "Seleccionar DNI"
+    --> if "¿El pasajero es extranjero?"
+            --> [true] "Pedir información adicional"
+            if "¿Posee descuentos?" then
+                --> [true] "Aplicar descuento"
+                --> "Realizar calculos de precio"
+        
+            else
+                --> [false] "Realizar calculos de precio"
+            
+            endif
+        endif
+        if "¿Confirmar venta de pasaje?" then
+            --> [true] "Actualizar disponibilidad de vuelo"
+            --> "Registrar facturación"
+            --> "Entregar pasaje a pasajero"
+            --> (*)
+
+        else
+            if "¿Selecciionar otro vuelo?" then
+                --> [true] "Seleccionar vuelo"
+            
+            else
+                --> [false] (*)
+            
+            endif
+
+        endif 
+else
+    --> [false] "Mostrar información"
+    --> "Mostrar vuelos alternativos"
+    --> "Seleccionar vuelo"
+
+endif
+
+
+
+
+@enduml

@@ -1,0 +1,24 @@
+@startuml farmacia_interna
+package "Farmacia Interna" {
+    usecase "Registrar empleado" as REmpleado
+    usecase "Cambiar turno" as CTurno
+    usecase "Asociar turno" as ATurno
+    usecase "Modificar turno" as MTurno
+    usecase "Registrar turno" as RTurno
+
+    usecase "Consultar turno" as COTurno
+    usecase "Registrar medicamento" as RMedicamento
+    usecase "Completar formulario desbloqueo" as CFDesbloqueo
+    
+    Empleado --> CFDesbloqueo
+    Empleado --> COTurno
+    Empleado --> RMedicamento
+
+    Admin --> REmpleado
+    REmpleado <.u. ATurno: <<include>>
+    Admin --> CTurno
+    Admin --> MTurno
+    Admin --> RTurno
+    
+}
+@enduml

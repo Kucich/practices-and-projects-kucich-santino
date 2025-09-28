@@ -1,0 +1,121 @@
+dicc = {
+    "status": True,
+    "message": "Success",
+    "timestamp": 1756498780014,
+    "data": [
+      {
+        "dest_id": "-1015004",
+        "search_type": "city",
+        "dest_type": "city",
+        "city_ufi": None,
+        "city_name": "Santa Rosa de Calamuchita",
+        "cc1": "ar",
+        "region": "Córdoba Province",
+        "hotels": 325,
+        "name": "Santa Rosa de Calamuchita",
+        "country": "Argentina",
+        "latitude": -32.06863,
+        "lc": "en",
+        "longitude": -64.53818,
+        "roundtrip": "GhA1MTI5OGVlZGQzZTQwNDBjIAAoATICZW46HUNhbGFtdWNoaXRhLCBDb3Jkb2JhIFByb3ZpbmNlQABKAFAA",
+        "nr_hotels": 325,
+        "type": "ci",
+        "image_url": "https://cf.bstatic.com/xdata/images/city/150x150/664535.jpg?k=4089dd0f7eb25ffb701d120af919dfb80f7488d4ddd6e6d39301c1926e73129d&o=",
+        "label": "Santa Rosa de Calamuchita, Córdoba Province, Argentina"
+      },
+      {
+        "dest_id": "12658557",
+        "search_type": "hotel",
+        "type": "ho",
+        "nr_hotels": 1,
+        "image_url": "https://cf.bstatic.com/xdata/images/hotel/150x150/589917994.jpg?k=e8444333d4e124ec44a8df4e30270fbd732068cafe0093439ed76c6f81d7fa0a&o=",
+        "label": "Cabañas AcaciasBlancas - Santa Rosa de Calamuchita, Córdoba, Santa Rosa de Calamuchita, Córdoba Province, Argentina",
+        "roundtrip": "GhA1MTI5OGVlZGQzZTQwNDBjIAEoATICZW46HUNhbGFtdWNoaXRhLCBDb3Jkb2JhIFByb3ZpbmNlQABKAFAA",
+        "longitude": -64.57025,
+        "lc": "en",
+        "country": "Argentina",
+        "name": "Cabañas AcaciasBlancas - Santa Rosa de Calamuchita, Córdoba",
+        "latitude": -32.057293,
+        "region": "Córdoba Province",
+        "hotels": 1,
+        "cc1": "ar",
+        "city_name": "Santa Rosa de Calamuchita",
+        "dest_type": "hotel",
+        "city_ufi": -1015004
+      },
+      {
+        "dest_id": "3394340",
+        "search_type": "hotel",
+        "name": "Departamentos Calamuchita",
+        "country": "Argentina",
+        "latitude": -32.067284,
+        "lc": "en",
+        "longitude": -64.53499,
+        "roundtrip": "GhA1MTI5OGVlZGQzZTQwNDBjIAIoATICZW46HUNhbGFtdWNoaXRhLCBDb3Jkb2JhIFByb3ZpbmNlQABKAFAA",
+        "nr_hotels": 1,
+        "type": "ho",
+        "label": "Departamentos Calamuchita, Santa Rosa de Calamuchita, Córdoba Province, Argentina",
+        "image_url": "https://cf.bstatic.com/xdata/images/hotel/150x150/139652130.jpg?k=0bb8f72cd4f8dd2c6ac26e24f1967ec2c232a0797d2b3735b5e6808aa8f1f6cb&o=",
+        "dest_type": "hotel",
+        "city_ufi": -1015004,
+        "cc1": "ar",
+        "city_name": "Santa Rosa de Calamuchita",
+        "region": "Córdoba Province",
+        "hotels": 1
+      },
+      {
+        "dest_id": "10763800",
+        "search_type": "hotel",
+        "label": "Monoambiente calamuchita, Santa Rosa de Calamuchita, Córdoba Province, Argentina",
+        "image_url": "https://cf.bstatic.com/xdata/images/hotel/150x150/507705473.jpg?k=76457fd322591ab27011dd4beadfcb5b54c01895f3c2f94032cd35ec52f6b2a7&o=",
+        "type": "ho",
+        "nr_hotels": 1,
+        "roundtrip": "GhA1MTI5OGVlZGQzZTQwNDBjIAMoATICZW46HUNhbGFtdWNoaXRhLCBDb3Jkb2JhIFByb3ZpbmNlQABKAFAA",
+        "longitude": -64.53366,
+        "lc": "en",
+        "latitude": -32.071594,
+        "country": "Argentina",
+        "name": "Monoambiente calamuchita",
+        "hotels": 1,
+        "region": "Córdoba Province",
+        "city_name": "Santa Rosa de Calamuchita",
+        "cc1": "ar",
+        "city_ufi": -1015004,
+        "dest_type": "hotel"
+      },
+      {
+        "dest_id": "13553072",
+        "search_type": "hotel",
+        "dest_type": "hotel",
+        "city_ufi": -1010725,
+        "city_name": "Río de los Sauces",
+        "cc1": "ar",
+        "region": "Córdoba Province",
+        "hotels": 1,
+        "name": "Casa con pileta en Córdoba, Valle de Calamuchita",
+        "country": "Argentina",
+        "latitude": -32.53256,
+        "longitude": -64.58716,
+        "lc": "en",
+        "roundtrip": "GhA1MTI5OGVlZGQzZTQwNDBjIAQoATICZW46HUNhbGFtdWNoaXRhLCBDb3Jkb2JhIFByb3ZpbmNlQABKAFAA",
+        "type": "ho",
+        "nr_hotels": 1,
+        "image_url": "https://cf.bstatic.com/xdata/images/hotel/150x150/722885416.jpg?k=bacf1f3d84de02487d61a9779487006d3033034cd2a8531341dcabbe9f869e9c&o=",
+        "label": "Casa con pileta en Córdoba, Valle de Calamuchita, Río de los Sauces, Córdoba Province, Argentina"
+      }
+    ]
+  }
+
+lista = [{1: "hola"}, {2: "adios"}, {"name": "Caballito blanco"}]
+
+for indice, diccionarios in enumerate(dicc["data"], start=1):
+    if "name" in diccionarios:
+        print(f"{indice}- {diccionarios['name']}")
+
+# frutas = ["manzana", "banana", "pera"]
+
+# for indice, fruta in enumerate(frutas):
+#     print(indice, fruta)
+
+# for i, hotel in enumerate(hoteles, start=1):
+#     print(f"{i}. {hotel['name']}")

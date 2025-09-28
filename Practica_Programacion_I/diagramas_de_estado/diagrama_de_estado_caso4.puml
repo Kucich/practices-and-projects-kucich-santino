@@ -1,0 +1,32 @@
+@startuml Neila_hipotecas_a_jubilados
+
+[*] --> procesando_documentacion
+procesando_documentacion  --> verificacion_de_datos_ingresados
+
+state asignar_situacion <<choice>>
+verificacion_de_datos_ingresados  --> asignar_situacion
+asignar_situacion --> procesando_documentacion 
+asignar_situacion --> iniciada : cambiar_situacion()
+
+iniciada --> realizando_estudio
+
+state verficacion_de_estudio_completo <<choice>>
+realizando_estudio --> verficacion_de_estudio_completo : verificar_solvencia()
+verficacion_de_estudio_completo --> realizando_estudio
+verficacion_de_estudio_completo --> estudio_completado
+
+state asignar_estado_de_hipoteca <<choice>>
+estudio_completado --> asignar_estado_de_hipoteca
+asignar_estado_de_hipoteca --> denegado : asignar_estado()
+asignar_estado_de_hipoteca --> concedida : asignar_estado()
+
+denegado --> archivar : archivar_hipoteca()
+archivar --> [*]
+
+state firmar_hipoteca <<choice>>
+concedida --> firmar_hipoteca
+firmar_hipoteca --> firmando : firmando_hipoteca()
+firmando --> [*]
+firmar_hipoteca --> [*]
+
+@enduml

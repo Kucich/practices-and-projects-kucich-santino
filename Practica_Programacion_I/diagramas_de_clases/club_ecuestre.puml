@@ -1,0 +1,51 @@
+@startuml Club_ecuestre
+
+class Cliente{
+    - nombre : string
+    - apellido : string
+    - dni : int
+    - telefono : int
+    - email : string
+    - direccion : string
+    - es_socio : bool
+
+    + registrar_caballo() : void
+    + registrar_paseo() : void
+    + consultar_establo() : void
+    + convertise_en_socio() : void
+    + anotarse_curso() : void
+}
+
+class Caballo{
+    - descripcion : string
+    - altura : float
+    - peso : float
+    - edad : int
+    - cliente : Cliente
+    - establo : Establo
+}
+
+class Establo{
+    - numero : int
+    - ubicacion : string
+    - capacidad : int
+    - estado : bool
+
+    + asignar_caballo_a_establo() : void
+    + cambiar_estado_de_establo() : void
+}
+
+class Servicio{
+    - descripcion : string
+    - tipo : string
+    - nivel : int
+
+    + registrar_curso() : void
+}
+
+Cliente "1..*" --> "1..*" Caballo
+Establo  "1..*" --> "1" Cliente
+Servicio "0..*" --> "1" Cliente
+Establo "0..*" --> "0..*" Caballo
+
+@enduml
