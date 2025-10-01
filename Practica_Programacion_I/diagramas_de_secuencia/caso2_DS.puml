@@ -1,0 +1,13 @@
+@startuml Diagrama_de_secuencia_linea_aerea
+
+actor Usuario 
+participant Sistema
+database BD
+
+-> Usuario : "Enviar datos de tarjeta"
+Usuario -> Sistema : "Enviar datos recibidos"
+Sistema 
+alt ["Datos registrados"]
+    BD -> Sistema : ""
+
+

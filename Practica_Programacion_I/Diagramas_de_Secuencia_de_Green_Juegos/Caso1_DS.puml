@@ -1,0 +1,20 @@
+@startuml Registrar_Producto
+
+actor Administrador 
+participant Sistema
+
+
+activate Administrador
+loop ["Mientras los datos del producto no sean validos"]
+    Administrador -> Sistema : CargarNuevoProducto()
+    alt ["Datos validos"]
+        activate Sistema
+        Sistema --> Administrador : MensajeConfirmación()
+
+    else ["Datos no validos"]
+        Sistema --> Administrador : MensajeNegacion()
+
+        deactivate Sistema
+        deactivate Administrador
+    end
+end 

@@ -35,21 +35,11 @@ while True:
 
     elif opcion == "2":
 
-        # Buscar país, provincia y ciudad. Ademas la fecha de inicio de reserva y de partida.
+        # Buscar país, provincia y ciudad.
         
         pais = pidiendo_mensaje("Ingrese el país donde desea buscar un Hotel: ")
         provincia = pidiendo_mensaje("Ingrese el nombre de la provincia en la: ")
         ciudad = pidiendo_mensaje("Ingrese el nombre de la ciudad donde iniciar la busqueda: ")
-        fecha_de_llegada = pidiendo_mensaje("¿En qué fecha iniciara la reserva del hotel? Complete con dd/mm/aaaa: ")
-        fecha_de_partida = pidiendo_mensaje("¿Hasta qué fecha reservara en el hotel? Complete con dd/mm/aaaa: ")
-
-        # 1. Convertir los strings a objetos de fecha
-        fecha_llegada_obj = datetime.strptime(fecha_de_llegada, "%d/%m/%Y")
-        fecha_partida_obj = datetime.strptime(fecha_de_partida, "%d/%m/%Y")
-
-        # 2. Formatear los objetos de fecha al formato YYYY-MM-DD
-        fecha_llegada_api = fecha_llegada_obj.strftime("%Y-%m-%d")
-        fecha_partida_api = fecha_partida_obj.strftime("%Y-%m-%d")
 
         # Consulta a la API Serach Hotels Destination, 
         # para visualizar hoteles en la región ingresada por el usuario
@@ -57,7 +47,7 @@ while True:
         url_1 = "https://booking-com15.p.rapidapi.com/api/v1/hotels/searchDestination"
 
         querystring = {f"query":{ciudad + " " + provincia + " " + pais}}
-        print(querystring)
+        #print(querystring)
         headers = {
             "x-rapidapi-key": "f981cd47b6mshcb3742cd4ee8522p1fdedbjsn49b886b5c874",
             "x-rapidapi-host": "booking-com15.p.rapidapi.com"
@@ -76,9 +66,21 @@ while True:
                 diccionario_de_regiones[indice] = [diccionarios['name'], diccionarios['dest_id'], diccionarios['search_type']]
                 print(indice ,diccionario_de_regiones[indice][0])
                 indice += 1
-        print(diccionario_de_regiones)
+        #print(diccionario_de_regiones)
 
         seleccionar_region = int(pidiendo_mensaje("\nSeleccione la región en la desea encontrar su hotel: "))
+
+         # Se ingresa la fecha de inicio de reserva y de partida.
+        fecha_de_llegada = pidiendo_mensaje("¿En qué fecha iniciara la reserva del hotel? Complete con dd/mm/aaaa: ")
+        fecha_de_partida = pidiendo_mensaje("¿Hasta qué fecha reservara en el hotel? Complete con dd/mm/aaaa: ")
+
+        # 1. Convertir los strings a objetos de fecha
+        fecha_llegada_obj = datetime.strptime(fecha_de_llegada, "%d/%m/%Y")
+        fecha_partida_obj = datetime.strptime(fecha_de_partida, "%d/%m/%Y")
+
+        # 2. Formatear los objetos de fecha al formato YYYY-MM-DD
+        fecha_llegada_api = fecha_llegada_obj.strftime("%Y-%m-%d")
+        fecha_partida_api = fecha_partida_obj.strftime("%Y-%m-%d")
 
         # Consultamos a la API Serachs Hotels para mostrar los hoteles de la región
         # y para obtener y vizualizar los datos del hotel
@@ -100,6 +102,8 @@ while True:
         data_regiones_de_hoteles = response.json()
 
         while True:
+            
+            print("\n--- Hoteles Encontrados ---\n")
 
             for i, hotel in enumerate(data_regiones_de_hoteles["data"]["hotels"], start=1):
                 print(i, " - ", hotel["property"]["name"])
@@ -125,18 +129,18 @@ while True:
             # if hotel["hotel_id"] == int(diccionario_de_hoteles[seleccionar_hotel][0]):
             #     # Este 'else' se ejecuta si el bucle termina sin encontrar el hotel.
             #     print(f"No se encontró ningún hotel con el ID: {int(diccionario_de_hoteles[seleccionar_hotel][0])}")
-            print(hotel_seleccionado)
-            seleccionar_opcion = pidiendo_mensaje("\n--- Menú de Opciones ---\n1- Realizar reserva en el Hotel\n2- Volver a mostrar lista de Hoteles\n3- Regresar al menú principal\nSeleccione una Opción: ")
+            #print(hotel_seleccionado)
+            seleccionar_opcion = pidiendo_mensaje("\n--- Menú de Opciones ---\n\n1- Realizar reserva en el Hotel\n2- Volver a mostrar lista de Hoteles\n3- Regresar al menú principal\nSeleccione una Opción: ")
 
             if seleccionar_opcion == "1":
                 
-                print(f"--- Reservación en {hotel_seleccionado[1]} ---")
+                print(f"\n--- Reservación en {hotel_seleccionado[1]} ---\n")
 
                 apellido_familiar = pidiendo_mensaje("\nIngrese su Apellido: ")
                 numero_adultos = pidiendo_mensaje("¿Cúantos adultos van a ser? : ")
                 numero_chicos = pidiendo_mensaje("¿Cúantos niños habra? : ")
                 archivo = "reservas_de_hoteles.csv"
-                reserva = [f"Familia: {apellido_familiar}", f"Total de adultos: {numero_adultos}", f"Total de chicos: {numero_chicos}", fecha_de_llegada, fecha_de_partida, f"Hotel: {hotel_seleccionado[1]}"]
+                reserva = [apellido_familiar, f"Total: {numero_adultos}", f"Total: {numero_chicos}", fecha_de_llegada, fecha_de_partida, hotel_seleccionado[1]]
                 with open(archivo, "a", newline="") as file:
                     escritura = csv.writer(file, delimiter=",")
 
@@ -144,9 +148,9 @@ while True:
                         encabezado = ["FAMILIA", "Nº DE ADULTOS", "Nº DE NIÑOS", "FECHA DE LLEGADA", "FECHA DE SALIDA","NOMBRE DEL HOTEL"]
                         escritura.writerow(encabezado)
                     
-                    escritura.writerows(reserva)
-                print("--- ¡Reservación completada con exito!")
-                print(f"Detalles de reserva: {reserva}")
+                    escritura.writerow(reserva)
+                print(f"\n--- ¡Reservación en {hotel_seleccionado[1]} completada con exito! ---\n")
+                print(f"Detalles de reserva:\nFamilia: {reserva[0]}\nTotal de adultos: {reserva[1]}\nTotal de chicos: {reserva[2]}\nDesde: {reserva[3]} - Hasta: {reserva[4]}")
                 # Menú : para volver a hacer otra reserva mostrando hoteles, o volver al menú principal
                 input("\nPuasa")
 

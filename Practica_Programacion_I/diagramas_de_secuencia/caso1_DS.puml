@@ -1,0 +1,34 @@
+@startuml Diagrama_de_secuencia_farmacia
+"Empleado" -> "Paciente" : "Solicitar DNI"
+"Paciente" -> "Empleado" : "Enviar DNI"
+"Empleado" -> "Sistema" : "Enviar datos al sistema"
+database "Base de datos"
+
+alt [Existe]
+
+    "Sistema" -> "Base de datos" : "Verificar datos recibidos"
+    "Base de datos" -> "Sistema" : "Mensaje de datos encontrados"
+    "Sistema" -> "Empleado" : "Mensaje de DNI registrado" 
+    "Empleado" -> "Paciente" : "Solicitar fecha y hora"
+    "Paciente" -> "Empleado" : "Enviar fecha y hora"
+    "Empleado" -> "Sistema" : "Enviar datos al sistema"
+    "Sistema" -> "Base de datos" : "Asignar turno al paciente"
+    "Base de datos" -> "Sistema" : "Mensaje de exito en registro"
+    "Sistema" -> "Paciente" : "Enviar email de exito en registro de turno"
+
+else ["No existe"] 
+
+    "Sistema" -> "Base de datos" : "Verificar datos recibidos"
+    "Base de datos" -> "Sistema" : "Mensaje de datos no encontrados"
+    "Sistema" -> "Empleado" : "Mensaje de DNI no registrado" 
+    "Empleado" -> "Paciente" : "Solicitar datos personales"
+    "Paciente" -> "Empleado" : "Enviar datos personales"
+    "Empleado" -> "Sistema" : "Enviar datos al sistema"
+    "Sistema" -> "Base de datos" : "Almacenar datos del paciente"
+    "Base de datos" -> "Sistema" : "Mensaje de exito en registro"
+    "Sistema" -> "Paciente" : "Enviar email de exito en su registro al sistema"
+
+end
+
+
+@enduml
