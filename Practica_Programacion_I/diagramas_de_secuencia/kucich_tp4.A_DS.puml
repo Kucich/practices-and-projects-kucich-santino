@@ -1,0 +1,153 @@
+@startuml Administración_de_acceso
+
+actor Usuario
+participant Sistema
+database BD
+
+
+loop ["Email invalido"]
+    Usuario -> Sistema : enviarEmail()
+    Sistema -> BD : verificarDatos()
+
+    alt ["Email ingresado no existente"]
+        BD --> Sistema : mensaje_datos_no_encontrados
+        Sistema --> Usuario : mensaje_de_datos_no_encontrados
+
+    else ["Emial ingresado existente"]
+        BD --> Sistema : mensaje_datos_datos_encontrados
+        Sistema --> Usuario : enviarCodigo()
+        note right of Sistema
+            "Email validado"
+            "Envia el codigo"
+            "Sale del bucle"
+        end note
+    end 
+
+end
+
+loop ["Contador <= 3"]
+    Usuario -> Sistema : ingresarCodigo()
+
+    alt ["Credencial ingresada no valida"]
+        Sistema --> Usuario : mensaje_de_codigo_incorrecto
+        note right of Sistema
+            "Credencial invalida"
+            "Contador += 1"
+        end note 
+    
+    else ["Número de intentos maximos alcanzados"]
+        Sistema -> BD  : bloquearCuenta()
+        BD --> Sistema : mensaje_de_confirmacion
+        note right of Sistema
+            "Contador = 3"
+            "Bloquea la cuenta"
+        end note
+
+    else ["Credencial ingresada valida"]
+        Sistema --> Usuario : mensaje_de_codigo_correcto
+        note right of Sistema
+            "Credencial validada"
+            "Sale del bucle"
+        end note
+    end
+
+end
+
+Sistema -> BD : verificarEstadoDeCuenta()
+BD --> Sistema : enviar_estado_de_cuenta
+
+alt ["Cuenta bloqueada"]
+
+    loop ["Datos ingresados no existentes"]
+
+        Sistema --> Usuario : solicitarDatos()
+        Usuario -> Sistema : enviarDatosPersonales()
+        Sistema -> BD : verificarDatosRecibidos()
+
+        alt ["Datos personales inexistentes"]
+            BD --> Sistema : mensaje_datos_no_existentes
+            Sistema --> Usuario : mensaje_de_datos_no_registrados
+
+        else ["Datos personales encontrados"]
+            BD --> Sistema : mensaje_datos_encontrados
+            Sistema -> BD : solicitarPreguntas()
+            BD --> Sistema : mostrar_reguntas_aleatorias
+            Sistema --> Usuario : enviarPreguntasAleatorias()
+            note right of Sistema
+                "Datos encontrados"
+                "Envia preguntas aleatorias"
+                "Sale del bucle"
+            end note
+        end 
+    end 
+
+    Usuario -> Sistema : enviarRespuestas()
+    Sistema -> BD : consultarRespuestas()
+    BD --> Sistema :  mostrar_respuestas
+    Sistema --> Usuario : enviarEmail() 
+
+    alt ["Cuenta validada"]
+        Sistema -> BD : cambiarEstadoCuenta()
+        BD --> Sistema : mensaje_de_confirmacion
+        Sistema --> Usuario : enviarEmailDeRecuperacion()
+        Usuario -> Sistema : enviarNuevaContraseña()
+        Sistema -> BD : guardarContraseñaRecibida()
+        BD --> Sistema : mensaje_de_confirmacion
+        Sistema --> Usuario : mensaje_de_contraseña_cambiada
+
+    else ["Cuenta invalidada"]
+        Sistema --> Usuario : enviarEmailDeSugerencia()
+
+    end 
+
+else ["Cuenta desbloqueada"]
+    Sistema --> Usuario : mostrarMenuDeInicio()
+
+end 
+
+== "Fallo Eléctrico" ==
+
+note over Sistema
+    "Se produce un corte o desperfecto eléctrico"
+    "El sistema puede detener sus funciones momentáneamente"
+end note
+
+Sistema -> BD : detenerOperaciones()
+BD --> Sistema : operaciones_suspendidas
+Sistema --> Usuario : notificar_fallo_electrico
+
+opt ["Restauración del servicio eléctrico"]
+
+    Sistema -> BD : reanudarOperaciones()
+    BD --> Sistema : confirmación_reanudación
+    Sistema --> Usuario : notificar_sistema_operativo
+
+end
+
+== "Manipulación Externa de Seguridad" ==
+
+note over Sistema
+    "Agente externo intenta vulnerar el sistema o la red"
+    "El sistema detecta actividad sospechosa"
+end note
+
+Sistema -> BD : verificarIntegridadDeDatos()
+BD --> Sistema : resultadoVerificación
+
+alt ["Intrusión confirmada"]
+
+    Sistema -> BD : bloquearAccesoTemporal()
+    BD --> Sistema : confirmación_de_bloqueo
+    Sistema --> Usuario : notificar_intrusión_confirmada
+
+else ["Falsa alarma"]
+
+    Sistema --> Usuario : notificar_alerta_falsa
+
+end
+
+note over Usuario
+    "El usuario toma conocimiento del evento y realiza las acciones necesarias"
+end note
+
+@enduml

@@ -1,0 +1,32 @@
+@startuml Diagrama_de_secuencia_venta_de_producto
+
+actor Cliente
+actor Usuario
+participant Sistema
+database BD
+
+Cliente -> Usuario : "Enviar orden de compra"
+Usuario -> Sistema : "Enviar orden de compra"
+Usuario -> Cliente : "Solicitar datos de tarjeta"
+Cliente -> Usuario : "Enviar datos de tarjeta"
+
+alt ["Datos de tarjeta validos"]
+    Sistema -> BD : "Consultar stock"
+    BD -> Sistema : "Enviar respuesta"
+
+    alt ["Hay stock"]
+        Sistema -> Usuario : "Mensaje de orden aprobada"
+        Sistema -> Cliente : "Enviar email de aprobación"
+        
+    else ["No hay stock"] 
+        Sistema -> Usuario : "Mensaje de orden cancelada"
+
+    end 
+
+else ["Datos de tarjeta no validos"]
+    Sistema -> Usuario : "Mensaje de datos de tarjeta no validos"
+    Usuario -> Cliente : "Notificar datos no validos"
+    
+end
+
+@enduml

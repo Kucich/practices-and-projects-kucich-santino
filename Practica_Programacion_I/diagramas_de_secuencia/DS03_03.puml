@@ -1,0 +1,42 @@
+@startuml Diagrama_de_secuencia_reservacion_de_vuelo_en_linea
+
+actor Cliente
+participant Sistema
+database BD
+
+Cliente -> Sistema: enviar_fecha_viaje()
+Sistema -> BD : consultar_disponibilidad()
+BD --> Sistema: enviar_validacion()
+
+alt ["No hay disponibilidad"]
+    Sistema -> Cliente : mostrar_mensaje_error()
+end 
+
+' BD -> Sistema : "Mensaje de confirmación"
+' Sistema -> Cliente : "Solicitar datos personales"
+Sistema --> Cliente: enviar_vuelo_disponible()
+Cliente -> Sistema : enviar_datos_cliente()
+Sistema -> BD : guardar_datos()
+' Sistema -> Cliente : "Mostrar vuelos disponibles"
+Cliente -> Sistema : enviar_vuelo()
+Sistema -> BD : guardar_datos()
+BD -> Sistema : mostrar_mensaje_confirmacion()
+Sistema -> Cliente : solicitar_datos_pago()
+Cliente -> Sistema : enviar_datos_pago()
+' Sistema -> Cliente : "Solicitar puntos de recompensa"
+
+par ["procesos simultaneos"]
+    Sistema --> BD: almacenar_pago()
+    Sistema --> BD: almacenar_reserva()
+    Sistema --> Cliente: generar_info_pago()
+end
+
+alt ["Pasaron 30 días"]
+
+    Sistema -> BD : cancelar_reserva()
+    Sistema -> Cliente : enviar_email_reserva_cancelada()
+end
+
+Sistema -> Cliente : enviar_email_reserva_guardada()
+    
+@enduml

@@ -4,10 +4,42 @@ actor Usuario
 participant Sistema
 database BD
 
--> Usuario : "Enviar datos de tarjeta"
-Usuario -> Sistema : "Enviar datos recibidos"
-Sistema 
-alt ["Datos registrados"]
-    BD -> Sistema : ""
+Usuario -> Sistema : "Consultar vuelo seleccionado"
+Sistema -> BD : "Consultar disponibilidad"
+BD -> Sistema : "Enviar datos de respuesta"
 
+alt ["No hay lugar"]
+    Sistema -> Usuario: "Mostrar vuelos alternativos"
+    Usuario -> Sistema : "Enviar vuelo seleccionado"
+    Sistema -> BD : "Guardar selección"
+    BD -> Sistema : "Mensaje de datos guardados"
+    Sistema -> Usuario : "Enviar mensaje de confirmación"
+
+else ["Si hay lugar"]
+    Sistema -> Usuario : "Solicitar DNI y pasaporte"
+    Usuario -> Sistema : "Enviar datos solicitados"
+    Sistema -> Usuario : "Solicitar descuentos"
+
+    alt ["Tiene descuentos"]
+        Usuario -> Sistema : "Enviar cupones de descuentos"
+        Sistema -> BD : "Consultar descuentos"
+        BD -> Sistema : "Enviar datos de respuesta"
+        Sistema -> Usuario : "Mostrar precio final con descuento"
+        Usuario -> Sistema : "Enviar datos de pago"
+        Sistema -> BD : "Actualizar disponibilidad"
+        Sistema -> BD : "Registrar facturación"
+        Sistema -> Usuario : "Devolver pasajes"
+
+    else ["No tiene descuentos"]
+        Sistema -> Usuario : "Mostrar precio final del pasaje"
+        Usuario -> Sistema : "Enviar datos de pago"
+        Sistema -> BD : "Actualizar disponibilidad"
+        Sistema -> BD : "Registrar facturación"
+        Sistema -> Usuario : "Devolver pasajes"
+
+    end
+
+end 
+
+@enduml
 

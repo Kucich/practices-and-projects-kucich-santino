@@ -1,0 +1,69 @@
+@startuml Diagrama_de_secuencia_reservacion_de_vuelo_en_linea
+
+actor Usuario
+participant Sistema
+database BD
+
+Usuario -> Sistema: "Enviar fecha de viaje"
+Sistema -> BD : "Consultar disponibilidad"
+
+alt ["Hay disponibilidad"]
+
+    BD --> Sistema : "Mensaje de confirmación"
+    Sistema --> Usuario : "Solicitar datos personales"
+    Usuario -> Sistema : "Enviar datos personales"
+    Sistema -> BD : "Enviar información ingresada"
+    Sistema --> Usuario : "Mostrar vuelos disponibles"
+    Usuario -> Sistema : "Enviar vuelo seleccionado"
+    Sistema -> BD : "Enviar datos recibidos"
+    BD --> Sistema : "Mensaje de confirmación"
+    Sistema --> Usuario : "Solicitar datos de pago"
+    Usuario -> Sistema : "Enviar datos de pago"
+    Sistema --> Usuario : "Solicitar puntos de recompensa"
+
+    alt ["Tiene puntos"]
+
+        Usuario -> Sistema : "Enviar puntos totales"
+        Sistema -> BD : "Enviar datos de reservación"
+        BD --> Sistema : "Mensaje de confirmación"
+        Sistema --> Usuario : "Enviar información de pago"
+        Sistema --> Usuario : "Enviar email de confirmación de vuelo"
+
+        alt ["Pasaron 30 días"]
+
+            Sistema -> BD : "Cancelar reserva"
+            Sistema --> Usuario : "Enviar email de reserva cancelada"
+
+        else ["Reserva confirmada antes de los 30 días"]
+
+            Sistema --> Usuario : "Enviar email de reserva guardada"
+
+        end     
+
+    else ["No tiene puntos"]
+
+        Sistema -> BD : "Enviar datos de reservación"
+        BD --> Sistema : "Mensaje de confirmación"
+        Sistema --> Usuario : "Enviar información de pago"
+        Sistema --> Usuario : "Enviar email de confirmación de vuelo"
+
+        alt ["Pasaron 30 días"]
+
+            Sistema -> BD : "Cancelar reserva"
+            Sistema --> Usuario : "Enviar email de reserva cancelada"
+
+        else ["Reserva confirmada antes de los 30 días"]
+
+            Sistema --> Usuario : "Enviar email de reserva guardada"
+
+        end     
+
+    end 
+
+else ["No hay disponibilidad"]
+
+    Sistema --> Usuario : "Mensaje de no disponibilidad"
+
+end 
+
+@enduml

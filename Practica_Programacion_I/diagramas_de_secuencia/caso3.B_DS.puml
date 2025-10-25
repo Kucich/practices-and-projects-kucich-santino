@@ -1,0 +1,21 @@
+@startuml Diagrama_de_secuencia_reservacion_de_vuelo_en_linea
+
+actor Usuario
+participant Sistema
+database BD
+
+Usuario -> Sistema : "Enviar formulario"
+Sistema -> BD : "Enviar datos recibidos"
+BD --> Sistema : "Enviar mensaje validación"
+
+alt ["Información correcta"]
+    Sistema -> BD : "Guardar datos de cuenta nueva"
+    BD --> Sistema : "Mensaje de datos guardados"
+    Sistema --> Usuario : "Enviar email con confirmación"
+
+else ["Información incorrecta"]
+    Sistema --> Usuario : "Mensaje de datos no validos"
+
+end 
+
+@enduml

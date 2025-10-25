@@ -1,0 +1,239 @@
+@startuml Administración_interna
+
+actor Usuario_Administrador as Admin
+actor Usuario_Empleado as Empleado
+participant Sistema
+database BD
+
+loop ["Mientras opción != Salir"]
+
+    Empleado -> Sistema : ingresarOpcion()
+
+    alt ["Consultar turnos de trabajo"]
+
+        Empleado -> Sistema : consultarTurno()
+        Sistema -> BD : solicitarTurnos()
+        BD --> Sistema : mostrar_turnos_de_trabajo
+        Sistema --> Empleado : mostrar_turnos
+
+    else ["Registrar turno de trabajo"]
+
+        loop ["Mientras turno registrado no sea valido"]
+
+            Empleado -> Sistema : registrarTurno()
+            
+            alt ["Turno registrado invalido"]
+
+                Sistema -> BD : agregarTurno()
+                BD --> Sistema : mensaje_de_negacion
+                Sistema --> Empleado : mensaje_de_turno_no_disponible
+
+            else ["Turno registrado valido"]
+
+                Sistema -> BD : agregarTurno()
+                BD --> Sistema : mensaje_de_confirmacion
+                Sistema --> Empleado : mensaje_de_turno_registrado
+                note right of Sistema
+                    "Turno registrado"
+                    "Sale del bucle"
+                end note
+
+            end 
+
+        end 
+
+    else ["Solicitar cambio de turno con colega"]
+
+        Empleado -> Sistema : solicitarCambioConColega()
+        Sistema -> Admin : notificarSolicitud()
+
+        alt ["Solicitud de cambio rechazada"]
+
+            Admin --> Sistema : enviarRespuesta()
+            Sistema --> Empleado : mensaje_de_solicitud_rechazada
+
+        else ["Solicitud de cambio aceptada"]
+
+            Admin --> Sistema : enviarRespuesta()
+            Sistema -> BD : cambiarTurnos()
+            BD --> Sistema : mensaje_de_confirmacion
+            Sistema --> Empleado : mensaje_de_solicitud_aceptada
+
+        end 
+
+    else ["Salir"]
+
+        Empleado -> Sistema : salir()
+        note right of Sistema
+            "Selecciona opción de salir"
+            "Sale del bucle"
+        end note
+
+    end
+
+end
+
+loop ["Mientras opción != Salir"]
+
+    Admin -> Sistema : ingresarOpcion()
+
+    alt ["Agregar nuevo medicamento"]
+
+        loop ["Mientras los datos de medicamento no sean validos"]
+
+            Admin -> Sistema : agregarMedicamento()
+            Sistema -> BD : insertarMedicamento()
+            
+            alt ["Datos de medicamento invalidos"]
+
+                BD --> Sistema : mensaje_de_negacion
+                Sistema --> Admin : notificar_datos_no_validos
+
+            else ["Datos de medicamento validos"]
+
+                BD --> Sistema : mensaje_de_confirmacion
+                Sistema --> Admin : notificar_confirmacion
+                note right of Sistema
+                    "Agrega el medicamente"
+                    "Notifica al Administrador"
+                    "Sale del bucle"
+                end note
+
+            end 
+            
+        end 
+    
+    else ["Actualizar existencias"]
+
+        Admin -> Sistema : actualizarExistencias()
+        Sistema -> BD : actualizarDatos()
+        BD --> Sistema : mensaje_de_confirmacion
+        Sistema --> Admin : notificar_existencias_actualizados
+
+        opt ["No se pudieron actualizar las existencias"]
+
+            Admin -> Sistema : actualizarExistencias()
+            Sistema -> BD : actualizarDatos()
+            BD --> Sistema : mensaje_de_negacion
+            Sistema --> Admin : notificar_fallo_en_intento
+
+        end 
+
+    else ["Registrar fecha de vencimiento"]
+
+        loop ["Mientras la fecha de vencimiento ingresada no sea valida"]
+            
+            alt ["Fecha de vencimiento invalida"]
+
+                Admin -> Sistema : registrarFechaVencimiento()
+                Sistema -> BD : actualizarFechaVencimiento()
+                BD --> Sistema : mensaje_de_negacion
+                Sistema --> Admin : notificar_fallo_en_registro 
+
+            else ["Fecha de vencimiento valida"]
+
+                Admin -> Sistema : registrarFechaVencimiento()
+                Sistema -> BD : actualizarFechaVencimiento()
+                BD --> Sistema : mensaje_de_confirmacion
+                Sistema --> Admin : notificar_registro 
+            
+                note right of Sistema
+                    "Registra la fecha ingresada"
+                    "Sale del bucle"
+                end note
+
+            end 
+
+        end 
+
+    else ["Salir"]
+
+        Admin -> Sistema : salir()
+        note right of Sistema
+            "Selecciona opción de salir"
+            "Sale del bucle"
+        end note
+
+    end 
+
+end 
+
+Sistema -> BD : consultarFechasVencimiento()
+BD --> Sistema : enviar_datos_solicitados
+
+alt ["Medicamento caducado"]
+
+    Sistema -> BD : darDeBajaMedicamento()
+    BD --> Sistema : mensaje_de_confirmacion
+    Sistema -> Admin : enviarAdvertencia()
+
+    opt ["Error en carga de medicamento"]
+
+        Admin -> Sistema : modificarFechaVencimiento()
+        Sistema -> BD : darDeAltaMedicamento()
+        BD --> Sistema : mensaje_de_confirmacion
+        Sistema -> BD : actualizarFechaVencimiento()
+        BD -> Sistema : mensaje_de_confirmacion
+        Sistema -> Admin : notificar_actualizacion
+
+    end 
+
+end 
+
+Sistema -> BD : organizarCategorias()
+BD --> Sistema : mensaje_de_confirmacion
+
+opt ["No se pudo organizar el inventario"]
+
+    Sistema -> BD : organizarCategorias()
+    BD --> Sistema : mensaje_de_negacion
+    Sistema -> Admin : notificar_error_en_orden_inventario
+
+end 
+
+== "Fallo Eléctrico" ==
+
+note over Sistema
+    "Se produce un corte o desperfecto eléctrico"
+    "El sistema puede detener sus funciones momentáneamente"
+end note
+
+Sistema -> BD : detenerOperaciones()
+BD --> Sistema : operaciones_suspendidas
+Sistema --> Admin : notificar_fallo_electrico
+
+opt ["Restauración del servicio eléctrico"]
+
+    Sistema -> BD : reanudarOperaciones()
+    BD --> Sistema : confirmación_reanudación
+    Sistema --> Admin : notificar_sistema_operativo
+
+end
+
+== "Manipulación Externa de Seguridad" ==
+
+note over Sistema
+    "Agente externo intenta vulnerar el sistema o la red"
+    "El sistema detecta actividad sospechosa"
+end note
+
+Sistema -> BD : verificarIntegridadDeDatos()
+BD --> Sistema : resultadoVerificación
+
+alt ["Intrusión confirmada"]
+
+    Sistema -> BD : bloquearAccesoTemporal()
+    BD --> Sistema : confirmación_de_bloqueo
+    Sistema --> Admin : notificar_intrusión_confirmada
+
+else ["Falsa alarma"]
+
+    Sistema --> Admin : notificar_alerta_falsa
+
+end
+
+note over Admin
+    "El administrador toma conocimiento del evento y realiza las acciones necesarias"
+end note
+
+@enduml

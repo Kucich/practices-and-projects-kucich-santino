@@ -21,7 +21,6 @@ def pidiendo_mensaje(mensaje):
 diccionario_de_regiones = {} # Diccionario en el cual guardo las regiones donde buscar los hoteles
 diccionario_de_hoteles = {} # Diccionario donde guardo los hoteles con sus caracteristicas
 
-
 # Menu principal
 
 while True:

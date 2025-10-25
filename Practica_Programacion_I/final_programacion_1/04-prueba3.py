@@ -1337,32 +1337,74 @@ id_a_buscar = 823728
 # for i, hotel in enumerate(dicc["data"]["hotels"], start=1):
 #             print(i, " - ", hotel["name"])
 
-import os
+# import os
 
-lista = []
-lista2 = []
-archivo = "reservas_de_hoteles.csv"
-header = ["Habitaciones", "Adultos", "Niños", "Forma de pago"]
+# lista = []
+# lista2 = []
+# archivo = "reservas_de_hoteles.csv"
+# header = ["Habitaciones", "Adultos", "Niños", "Forma de pago"]
 
-habitaciones = input("habitaciones: ")
-adultos = input("adultos: ")
-ninos = input("niños: ")
-# inicio = input("inicio: ")
-# final = input("final: ")
-pago = input("forma de pago: ")
+# habitaciones = input("habitaciones: ")
+# adultos = input("adultos: ")
+# ninos = input("niños: ")
+# # inicio = input("inicio: ")
+# # final = input("final: ")
+# pago = input("forma de pago: ")
 
-lista2.append(habitaciones)
-lista2.append(adultos)
-lista2.append(ninos)
-lista2.append(pago)
+# lista2.append(habitaciones)
+# lista2.append(adultos)
+# lista2.append(ninos)
+# lista2.append(pago)
 
-lista.append(lista2)
+# lista.append(lista2)
 
-with open(archivo, "a", newline="") as file:
-                escritura = csv.writer(file, delimiter=",")
+# with open(archivo, "a", newline="") as file:
+#                 escritura = csv.writer(file, delimiter=",")
 
-                if os.stat(archivo).st_size == 0:
-                    escritura.writerow(header)
+#                 if os.stat(archivo).st_size == 0:
+#                     escritura.writerow(header)
                 
                 
-                escritura.writerows(lista)
+#                 escritura.writerows(lista)
+
+# from datetime import datetime
+
+# def pidiendo_mensaje(mensaje):
+#     """Esta función se asegura de que en cada input del usuario se ingrese un valor y no un espacio vacio"""
+#     while True:
+#         ingreso = input(mensaje)
+#         if ingreso:
+#             return ingreso
+#         else:
+#             print("Debe ingresar una opción.\n")
+
+# def cambiar_a_formato_fecha(fecha_de_llegada, fecha_de_partida):
+
+#     # 1. Convertir los strings a objetos de fecha
+#     fecha_llegada_obj = datetime.strptime(fecha_de_llegada, "%d/%m/%Y")
+#     fecha_partida_obj = datetime.strptime(fecha_de_partida, "%d/%m/%Y")
+
+#     # 2. Formatear los objetos de fecha al formato YYYY-MM-DD
+#     fecha_llegada_api = fecha_llegada_obj.strftime("%Y-%m-%d")
+#     fecha_partida_api = fecha_partida_obj.strftime("%Y-%m-%d")
+
+#     return fecha_llegada_api, fecha_partida_api
+
+# while True:
+#   fecha_de_llegada = pidiendo_mensaje("¿En qué fecha iniciara la reserva del hotel? Complete con dd/mm/aaaa: ")
+#   fecha_de_partida = pidiendo_mensaje("¿Hasta qué fecha reservara en el hotel? Complete con dd/mm/aaaa: ")
+#   fechas_ingresadas = cambiar_a_formato_fecha(fecha_de_llegada, fecha_de_partida)
+#   print(fechas_ingresadas)
+#   print(type(fechas_ingresadas))
+
+def pidiendo_mensaje(mensaje):
+    """Esta función se asegura de que en cada input del usuario se ingrese un valor y no un espacio vacio"""
+    while True:
+        ingreso = input(mensaje).lower()
+        if ingreso:
+            return ingreso
+        else:
+            print("Debe ingresar una opción.\n")
+
+hola = pidiendo_mensaje("Ingresar: ")
+print(hola)
