@@ -1,0 +1,27 @@
+{
+    "status": true,
+    "message": "Success",
+    "timestamp": 1761774459999,
+    "data": [
+      {
+        "id": "LIM.AIRPORT",
+        "type": "AIRPORT",
+        "name": "Jorge Chavez International Airport",
+        "code": "LIM",
+        "city": "LIM",
+        "cityName": "Lima",
+        "regionName": "Provincia de Lima",
+        "country": "PE",
+        "countryName": "Peru",
+        "countryNameShort": "Peru",
+        "photoUri": "https://q-xx.bstatic.com/xdata/images/city/square150/644697.jpg?k=996569f86e338238f8c0e768527219cedd1075493c7b5de56684e08f20bdb776&o=",
+        "distanceToCity": {
+          "value": 9.514313458983848,
+          "unit": "km"
+        },
+        "parent": "LIM"
+      }
+    ]
+}
+
+
