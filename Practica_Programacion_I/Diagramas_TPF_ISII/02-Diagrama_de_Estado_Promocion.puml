@@ -1,0 +1,58 @@
+@startuml Diagrama_de_Estado_Ventas
+
+[*] --> Esperando_ingreso
+
+state Opcion <<choice>>
+Esperando_ingreso --> Opcion: ingresar_opcion()
+Opcion --> Registrando_item_de_venta: Registrar ítem de venta
+Opcion --> Agregando_item_de_venta: Agregar ítem de venta
+Opcion --> Modificando_item_de_venta: Modificar ítem de venta
+Opcion --> Eliminando_item_de_venta: Eliminar ítem agregado
+Opcion --> Registrando_metodo_de_pago: Registrar método de pago
+
+state Validar_datos_de_registro <<choice>>
+Registrando_item_de_venta --> Validar_datos_de_registro: registrar_item()
+Validar_datos_de_registro --> Item_registrado: Datos de registro validos
+Item_registrado --> Guardando_item: guardar_item()
+Guardando_item --> Item_guardado: Guardado exitoso
+Validar_datos_de_registro --> Registrado_de_item_denegado: Datos de registro no validos
+Registrado_de_item_denegado --> Registrando_item_de_venta: denegar_registro()
+
+state Agregar_item <<choice>>
+Item_guardado --> Agregar_item: ¿Agregar otro ítem?
+Agregar_item --> Agregando_item_de_venta: agregar_otro_item()
+Agregar_item --> [*]
+
+state Validar_item_agregado <<choice>>
+Agregando_item_de_venta --> Validar_item_agregado: agregar_item()
+Validar_item_agregado --> Item_agregado: confirmar_item()
+Validar_item_agregado --> Agregando_item_de_venta: item_invalido()
+
+state Agregar_otro_item <<choice>>
+Item_agregado --> Agregar_otro_item: validar_seleccion()
+Agregar_otro_item --> Agregando_item_de_venta: agregar_otro_item()
+Agregar_otro_item --> [*]
+
+state Validar_datos_modificados <<choice>>
+Modificando_item_de_venta --> Validar_datos_modificados: modificar_item()
+Validar_datos_modificados --> Item_modificado: Modificacion exitosa
+Item_modificado --> Guardando_modificacion: guardar_modificacion()
+Guardando_modificacion --> Modificacion_guardada: Se guardo la modificacion
+Validar_datos_modificados --> Modificando_item_de_venta: denegar_modificacion()
+Modificacion_guardada --> [*]
+
+state Confirmar_eliminacion <<choice>>
+Eliminando_item_de_venta --> Confirmar_eliminacion: eliminar_item()
+Confirmar_eliminacion --> Item_eliminado: Se elimino el item
+Confirmar_eliminacion --> Eliminando_item_de_venta: eliminacion_cancelada()
+Item_eliminado --> [*]
+
+state Validar_metodo_pago <<choice>>
+Registrando_metodo_de_pago --> Validar_metodo_pago: ingresar_metodo_de_pago()
+Validar_metodo_pago --> Metodo_de_pago_registrado: Se registro el metodo de pago
+Metodo_de_pago_registrado --> Guardando_metodo_de_pago: guardar_metodo()
+Guardando_metodo_de_pago --> Metodo_de_pago_guardado: Se guardo el metodo
+Validar_metodo_pago --> Registrando_metodo_de_pago: metodo_invalido()
+Metodo_de_pago_guardado --> [*]
+
+@enduml

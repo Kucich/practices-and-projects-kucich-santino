@@ -1,0 +1,72 @@
+@startuml Caso10_Green_Juegos
+actor "admin:Administrador" as admin
+participant "cp: controlProcesador" as cp
+participant "cpc:<<singleton>>  CatalogoDeUsuarios" as catalogo
+participant "descrip[i]: descripcionDeObjeto" as descr
+
+
+
+
+admin --> cp: ingresar_datos(email:string, contraseña:string)
+activate cp
+
+
+alt Datos no validos
+
+    cp -> admin: "<<Datos no validos>>"
+
+end 
+
+cp -> catalogo: buscar_usuario(email:string, contraseña:string)
+activate catalogo
+
+loop para cada i en descrip
+    
+    catalogo -> descr : get_email()
+    activate descr
+    descr --> catalogo : "<<email:string>>"
+    deactivate descr
+    
+   catalogo -> descr : get_contraceña()
+   activate descr
+    descr --> catalogo : "<<contraceña:string>>"
+    deactivate descr
+end
+note right of catalogo
+    Si ya se encontro el email o se recorrieron todos los registros:
+    cortar iteración
+    end note
+
+alt Email no encontrado
+
+    catalogo --> cp: "<<NULL>>"
+    cp -> admin: "<<Usuario no encontrado>>"
+
+end 
+
+' ' loop para cada i en descrip
+' '     catalogo -> descr : get_contraseña()
+' '     activate descr
+' '     descr --> catalogo : "<<contraseña:string>>"
+
+' '     deactivate descr
+' end
+' note right of catalogo
+'     Si ya se encontro la contraseña o se recorrieron todos los registros:
+'     cortar iteración
+'     end note
+
+alt Contraseña no encontrada
+
+    catalogo --> cp: "<<NULL>>"
+    cp -> admin: "<<Contraseña incorrecta>>"
+
+end 
+
+catalogo --> cp: "<<True>>"
+deactivate catalogo
+
+cp -> admin: "<<Bienvenida al usuario>>"
+deactivate cp
+
+@enduml

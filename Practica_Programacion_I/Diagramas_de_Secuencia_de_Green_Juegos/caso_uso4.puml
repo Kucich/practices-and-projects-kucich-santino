@@ -1,0 +1,53 @@
+@startuml Caso4_Green_Juegos
+title Registrar usuario
+actor "admin:Administrador" as admin
+participant "cp: controlProcesador" as cp
+participant "cpc:<<singleton>>  CatalogoDeUsuarios" as catalogo
+participant "descrip(i): descripcionDeObjeto" as descr
+participant "multi" as multi
+
+
+admin -> cp: registrar_usuario(nom:str, apellido:str, email:str, contraseña:str, cuit:str, tipo:str)
+activate cp
+alt Validar datos
+    cp --> admin: "<<Datos no validos>>"
+end
+
+cp -> catalogo: buscar_usuario(cuit:str)
+activate catalogo
+
+loop para cada i en descrip
+    catalogo -> descr : get_cuit()
+    activate descr
+    descr --> catalogo : "<<cuit:string>>"
+    deactivate descr
+end
+note right of catalogo
+    cuit = cuitUsuario o 
+    no se encuentran concidencias
+    end note
+
+alt cuit ya registrado
+    catalogo --> cp: "<<True>>"
+    
+    cp --> admin: "<<Usuario ya registrado>>"
+    
+end
+
+catalogo --> cp: "<<NULL>>"
+deactivate catalogo
+create "usuario:Usuario" as usuario
+
+
+cp -> "usuario": crear_usuario(nombre:str, apellido:str, email:str, contraseña:str, cuit:str, tipo:str)
+cp -> multi : guardar_usuario()
+activate multi
+
+multi--> cp: "<<Usuario guardado>>"
+
+deactivate multi
+
+cp --> admin: "<<Mensaje de exito>>"
+deactivate cp
+
+@enduml

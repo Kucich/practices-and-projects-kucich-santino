@@ -1,0 +1,55 @@
+@startuml Caso3_Green_Juegos
+
+participant admin
+participant "cp: controlProcesador" as cp
+participant "cpc:<<singleton>>  CatalogoDeProductos" as catalogo
+participant "descrip(i): descripcionDeObjeto" as descr
+participant "nombre:NombreDelProducto" as producto
+participant "<<multiobjeto>>  lista_productos:ListaDeProductos" as multi
+
+admin -> cp: ingresar_nombre(nombre:str)
+activate cp
+
+cp -> catalogo: buscar_producto(nombre:str)
+activate catalogo
+
+loop para cada i en descrip
+    catalogo -> descr : get_nombre()
+    activate descr
+    descr --> catalogo : "<<nombre:string>>"
+    deactivate descr
+end
+note right of catalogo
+    Si no se encpentran más coincidencia:
+    cortar iteración
+    end note
+
+alt Producto no encontrado
+    catalogo --> cp: "<<NULL>>"
+    
+    cp --> admin: "<<Producto no encontrado>>"
+    
+end
+
+catalogo --> cp: "<<nombre:NombreDelProducto[]>>"
+deactivate catalogo
+cp --> admin: "<<Mostrar coincidencias>>"
+
+
+admin -> cp: seleccionar_producto(eleccion:int)
+
+
+cp -> producto: delete_producto(eleccion:int)
+activate producto
+producto --> cp
+deactivate producto
+
+cp -> multi: actualizar_registros()
+activate multi
+multi --> cp
+deactivate multi
+
+cp --> admin: "<<Eliminación completada>>"
+deactivate cp
+
+@enduml

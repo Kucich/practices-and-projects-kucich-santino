@@ -1,0 +1,37 @@
+@startuml Diagrama_de_Estado_Stock_de_productos
+
+[*] --> Esperando_ingreso
+
+state Opcion <<choice>>
+Esperando_ingreso --> Opcion: ingresar_opcion()
+Opcion --> Registrando_producto: Registrar producto
+Opcion --> Modificando_producto: Modificar producto
+Opcion --> Eliminando_producto: Eliminar producto
+Opcion --> Mostrando_inventario: Mostrar inventario
+Mostrando_inventario --> Espera_en_menu: menu_principal()
+
+state Validar_datos <<choice>>
+Registrando_producto --> Validar_datos: datos_de_registro()
+Validar_datos --> Producto_registrado: Datos de registro validos
+Producto_registrado --> Agregando_producto: agregar_producto()
+Agregando_producto --> Producto_agregado: Producto agregado con exito
+Validar_datos --> Registrando_producto : denegar_registro()
+Producto_agregado --> [*]
+
+state Validar_datos_modificados <<choice>>
+Modificando_producto --> Validar_datos_modificados: datos_de_modificacion()
+Validar_datos_modificados --> Producto_modificado: Se modifico el producto
+Producto_modificado --> Guardando_modificacion: guardar_modificacion()
+Guardando_modificacion --> Modificacion_guardada: Se guardo la modificacion
+Validar_datos_modificados --> Modificando_producto: denegar_modificacion()
+Modificacion_guardada --> [*]
+
+state Confirmar_eliminacion <<choice>>
+Eliminando_producto --> Confirmar_eliminacion: eliminar_producto_seleccionado()
+Confirmar_eliminacion --> Producto_eliminado: Se elimino el producto
+Producto_eliminado --> Borrando_registro: borrar_del_inventario()
+Borrando_registro --> Registro_borrado: Se borro el registro
+Confirmar_eliminacion --> Eliminando_producto: eliminacion_cancelada()
+Registro_borrado --> [*]
+
+@enduml

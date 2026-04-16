@@ -5,6 +5,7 @@ from datetime import datetime
 import csv
 import os
 
+
 # Clases
 
 class Region:
@@ -14,28 +15,31 @@ class Region:
         self.ciudad = ciudad
 
     def consultar_regiones(self):
-        """Consulta a la API Serach Hotels Destination, 
-           para visualizar las regiones localizadas en la ubicación ingresada por el usuario"""
+        """Consulta a la API Serach Hotels Destination, para visualizar las 
+           regiones localizadas en la ubicación ingresada por el usuario."""
 
         url_1 = "https://booking-com15.p.rapidapi.com/api/v1/hotels/searchDestination"
 
         querystring = {f"query":{self.ciudad + " " + self.provincia + " " + self.pais}}
 
         headers = {
-            "x-rapidapi-key": "182a9fa00bmsh1f9c7a1a71822ecp1eddb8jsndb1db7264d06",
+            "x-rapidapi-key": "e9aeb9743fmsh7ee6828ce199259p1b282djsn80f01a3a77c0",
             "x-rapidapi-host": "booking-com15.p.rapidapi.com"
         }
 
         response = requests.get(url_1, headers=headers, params=querystring)
-        print(response)
         data_hoteles = response.json()
 
+        if not validar_respuesta_api(response, data_hoteles, "API de Hoteles"):
+            print("\n⚠️ No se pudieron obtener regiones. Posiblemente los datos ingresados no son validos. Regresando al menú principal...\n")
+            return None
+        
         return data_hoteles
     
     def mostrar_regiones(self, data_hoteles):
-        """Muestra regiones enumeradas"""
+        """Muestra regiones encontradas enumeradas."""
 
-        print("\n --- Regiones Encontradas --- \n")
+        print("\n --- 🗺️ Regiones Encontradas 🌍 --- \n")
         indice = 1
         for diccionarios in data_hoteles["data"]:
             if "name" in diccionarios: # Le borre esta condición: and diccionarios["search_type"] == "hotel"
@@ -64,20 +68,23 @@ class Hotel:
                         "currency_code":"AED"}
 
         headers = {
-          "x-rapidapi-key": "4c3e31a8c3msh13653f487510d5ep18801ejsn60c95ffe982b",
+          "x-rapidapi-key": "e9aeb9743fmsh7ee6828ce199259p1b282djsn80f01a3a77c0",
           "x-rapidapi-host": "booking-com15.p.rapidapi.com"
         }
 
         response = requests.get(url_2, headers=headers, params=querystring2)
         data_regiones_de_hoteles = response.json()
-        print(response)
+
+        if not validar_respuesta_api(response, data_regiones_de_hoteles, "API de Hoteles"):
+            print("\n⚠️ No se pudieron obtener Hoteles en la región seleccionada. Regresando al menú principal... Posiblemente los datos ingresados no son validos.\n")
+            return None
 
         return data_regiones_de_hoteles
     
     def mostar_hoteles(self, hoteles):
         """Muestra todos los hoteles encontrados en la región seleccionada"""
 
-        print("\n--- Hoteles Encontrados ---\n")
+        print("\n--- 🏨 Hoteles Encontrados 🏢 ---\n")
 
         for i, hotel in enumerate(hoteles["data"]["hotels"], start=1):
             print(i, " - ", hotel["property"]["name"])
@@ -139,24 +146,31 @@ class Aeropuerto:
         querystring_destino = {f"query":{self.destino}}
 
         headers = {
-            "x-rapidapi-key": "cf85f86a03mshf9e322be12c1c76p1933a1jsn69a987a512ed",
+            "x-rapidapi-key": "e9aeb9743fmsh7ee6828ce199259p1b282djsn80f01a3a77c0",
             "x-rapidapi-host": "booking-com15.p.rapidapi.com"
         }
 
         response_aero_origen = requests.get(url, headers=headers, params=querystring_origen)
-        response_aero_destino = requests.get(url, headers=headers, params=querystring_destino)
-        print(response_aero_origen, response_aero_destino)
         data_aero_origen = response_aero_origen.json()
-        data_aero_destino = response_aero_destino.json()
         
+        if not validar_respuesta_api(response_aero_origen, data_aero_origen, "API de Aeropuertos"):
+            print("\n⚠️ No se pudieron obtener Aeropuertos en la región de Origen ingresada. Regresando al menú principal...\n")
+            return None
+        
+        response_aero_destino = requests.get(url, headers=headers, params=querystring_destino)
+        data_aero_destino = response_aero_destino.json()
+
+        if not validar_respuesta_api(response_aero_destino, data_aero_destino, "API de Aeropuertos"):
+            print("\n⚠️ No se pudieron obtener Aeropuertos en la región de Destino ingresada. Regresando al menú principal...\n")
+            return None
+
         return data_aero_origen, data_aero_destino
 
     def mostrar_aeropuertos_region_origen(self, aeropuertos_origen):
         """Muestra los aeropuertos de origen encontrados en la región ingresada por el usuario."""
-
+        
         limpiar_terminal()
-        print("\n--- Seleccionar Aeropuerto de Partida ---\n")
-
+        print("\n--- 🛫 Aeropuertos de Origen 🛫 ---\n")
         indice = 1
         for aeropuerto_origen in aeropuertos_origen["data"]:
             if aeropuerto_origen["type"].upper() == "AIRPORT":
@@ -171,8 +185,7 @@ class Aeropuerto:
         """Muestra los aeropuertos de destino encontrados en la región ingresada por el usuario."""
 
         limpiar_terminal()
-        print("\n--- Seleccionar Aeropuerto Destino ---\n")
-
+        print("\n--- 🛬 Aeropuertos de Destino 🛬 ---\n")
         indice = 1
         for aeropuerto_destino in aeropuertos_destino["data"]:
             if aeropuerto_destino["type"].upper() == "AIRPORT":
@@ -192,38 +205,40 @@ class Vuelo:
     def consultar_vuelos(self, origen_seleccionado, destino_seleccionado):
         """Consultamos los vuelos disponibles entre los aeropuertos seleccionados, y mostramos sus datos.
            La consulta es en Search Flights"""
-
+        
         url = "https://booking-com15.p.rapidapi.com/api/v1/flights/searchFlights"
 
         querystring = {"fromId":{self.aeropuertos_de_origen[origen_seleccionado][1]},"toId":{self.aeropuertos_de_destino[destino_seleccionado][1]}, "departDate":{self.fecha_de_salida},"stops":"none","pageNo":"1","adults":"1","children":"0,17","sort":"BEST","cabinClass":"ECONOMY","currency_code":"AED"}
 
         headers = {
-            "x-rapidapi-key": "cf85f86a03mshf9e322be12c1c76p1933a1jsn69a987a512ed",
+            "x-rapidapi-key": "e9aeb9743fmsh7ee6828ce199259p1b282djsn80f01a3a77c0",
             "x-rapidapi-host": "booking-com15.p.rapidapi.com"
         }
 
         response = requests.get(url, headers=headers, params=querystring)
-        print(response)
         vuelos_disponibles = response.json()
+
+        if not validar_respuesta_api(response, vuelos_disponibles, "API de Vuelos"):
+            print("\n⚠️ No hay vuelos disponibles entre los Aeropuertos seleccionados. Regresando al menú principal...\n")
+            return None
 
         return vuelos_disponibles
 
     def mostrar_vuelos(self, vuelos_encontrados, aero_origen_seleccionado, aero_destino_seleccionado):
         """Muestra los vuelos disponibles entre los aeropuertos seleccionados por el usuario."""
-        
+
         # Acceso directo al total de vuelos
         total_vuelos = vuelos_encontrados["data"]["aggregation"]["totalCount"]
 
         # Acceso a la lista de escalas
         lista_de_escalas = vuelos_encontrados["data"]["aggregation"]["stops"]
-        lista_de_valores_reserva = []
-        limpiar_terminal()
-        print(f'\n--- ✈️ Total de Vuelos Encontrados: {total_vuelos} ---')
-        print("\n--- Precios Mínimos por Opciones de Escala ---\n")
+
+        print(f'\n--- ✈️ Total de Vuelos Encontrados: {total_vuelos} ✈️ ---\n')
+        print("--- 💵 Precios Mínimos por Opciones de Escala 💰 ---\n")
 
         for escala in lista_de_escalas:
             
-            # --- 1. Cálculo del Precio Final ---
+            # Cálculo del Precio Final 
             
             # Acceder a los componentes del precio mínimo redondeado (minPriceRound)
             unidades = escala['minPriceRound']['units']
@@ -233,8 +248,7 @@ class Vuelo:
             # Combinar unidades y nanos (dividiendo nanos por 1,000,000,000 para obtener decimales)
             precio_final = unidades + (nanos / 1000000000)
             
-            # --- 2. Extracción de Otros Datos ---
-            
+            # Extracción de Otros Datos 
             vuelos_count = escala['count']
             num_escalas = escala['numberOfStops']
             aerolinea = escala['cheapestAirline']['name']
@@ -242,48 +256,46 @@ class Vuelo:
             # Formato de salida
             etiqueta_escala = "Vuelo Directo" if num_escalas == 0 else f"{num_escalas} Escala(s)"
             
-            # --- 3. Imprimir el Resumen ---
-            
+            # Imprimir el Resumen
             print(f"| {etiqueta_escala} ({vuelos_count} opciones)")
             print(f"|   Precio Mínimo: {precio_final:,.2f} {moneda}")
             print(f"|   Aerolínea más barata: {aerolinea}")
             print("-" * 30)
 
+            lista_de_valores_reserva = [self.aeropuertos_de_origen[aero_origen_seleccionado][0], self.aeropuertos_de_destino[aero_destino_seleccionado][0], 
+                                        self.fecha_de_salida, aerolinea, precio_final, moneda]
+            
         while True:
-            escala_seleccionada = pidiendo_mensaje_numerico("\nSeleccione el número de escala para reservar el vuelo: ")
+            escala_seleccionada = pidiendo_mensaje("\nSeleccione el número de escala para reservar el vuelo: ")
 
-            if escala_seleccionada >= 0 and escala_seleccionada <= 2:
+            if escala_seleccionada == "0" or escala_seleccionada == "1" or escala_seleccionada == "2" or escala_seleccionada == "3":
                 break
 
             else:
-                limpiar_terminal()
-                print("Escala seleccionada no valida... Intente nuevamente, pueden ser 0, 1 o 2 según las opciones mostradas.")
+                print("Escala seleccionada no valida... Intente nuevamente.\n")
+        lista_de_valores_reserva.append(escala_seleccionada)
 
-        lista_de_valores_reserva = [self.aeropuertos_de_origen[aero_origen_seleccionado][0], self.aeropuertos_de_destino[aero_destino_seleccionado][0], 
-                                    self.fecha_de_salida, aerolinea, precio_final, escala_seleccionada, moneda]
-        #print(lista_de_valores_reserva)
         return lista_de_valores_reserva
 
     def reservar_vuelo(self, vuelo_seleccionado):
         """Realiza la reserva de un vuelo con sus datos."""
-        
-        limpiar_terminal()
-        print(f"\n--- 🎫 Confirmación de Reserva de Vuelo ---\n")
+
+        print(f"\n--- 🎫 Confirmación de Reserva de Vuelo 📝 ---\n")
         
         aerolinea = vuelo_seleccionado[3]
         precio = vuelo_seleccionado[4]
-        escalas = vuelo_seleccionado[5]
+        escalas = vuelo_seleccionado[6]
         
-        # 1. Solicitar datos personales para la reserva
+        # Solicitar datos personales para la reserva
         apellido_familiar = pidiendo_mensaje("Ingrese su Apellido: ")
         numero_adultos = pidiendo_mensaje_numerico("¿Cuántos adultos van a ser? : ")
         numero_chicos = pidiendo_mensaje_numerico("¿Cuántos niños habra? : ")
 
-        # 2. Construir la lista de datos a guardar
+        # Construir la lista de datos a guardar
         datos_reserva = [apellido_familiar, numero_adultos, numero_chicos, vuelo_seleccionado[0], 
                          vuelo_seleccionado[1], self.fecha_de_salida, aerolinea, escalas, precio]
 
-        # 3. Abrir y escribir en el archivo CSV
+        # Abrir y escribir en el archivo CSV
         with open(archivo_vuelos, "a", newline="", encoding='utf-8') as file:
             escritura = csv.writer(file, delimiter=",")
 
@@ -301,7 +313,7 @@ class Vuelo:
         # 4. Mensaje de confirmación
         print(f"\n--- ¡Reserva de vuelo completada con éxito! ---\n")
         print(f"Detalles:\nFamilia: {apellido_familiar}\nRuta: {vuelo_seleccionado[0]} -> {vuelo_seleccionado[1]}")
-        print(f"Aerolínea: {aerolinea} ({escalas} escalas) | Precio: {precio} {vuelo_seleccionado[6]}")
+        print(f"Aerolínea: {aerolinea} ({escalas} escalas) | Precio: {precio} {vuelo_seleccionado[5]}")
         print(f"Fecha de ida: {self.fecha_de_salida}")
 
 
@@ -314,7 +326,7 @@ def pidiendo_mensaje(mensaje):
         if ingreso:
             return ingreso
         else:
-            print("Debe ingresar una opción.\n")
+            print("⚠️ Debe ingresar una opción o caracter.\n")
 
 def pidiendo_mensaje_numerico(mensaje):
     """Verifica que se ingrese un dato y que sea un número entero mayor a cero."""
@@ -326,17 +338,17 @@ def pidiendo_mensaje_numerico(mensaje):
                 return ingreso
             
         except ValueError:
-            print("El valor ingresado debe ser numérico y mayor a cero. Intente nuevamente...\n")
+            print("⚠️ El valor ingresado debe ser numérico y mayor a cero. Intente nuevamente...\n")
 
 def cambiar_a_formato_fecha(fecha_de_llegada, fecha_de_partida=None):
     """Cambia el formato de las fechas ingresadas por el usuario a formato valido para consulta a la API"""
 
     if fecha_de_partida != None:
-        # 1. Convertir los strings a objetos de fecha
+        # Convertir los strings a objetos de fecha
         fecha_llegada_obj = datetime.strptime(fecha_de_llegada, "%d/%m/%Y")
         fecha_partida_obj = datetime.strptime(fecha_de_partida, "%d/%m/%Y")
 
-        # 2. Formatear los objetos de fecha al formato YYYY-MM-DD
+        # Formatear los objetos de fecha al formato YYYY-MM-DD
         fecha_llegada_api = fecha_llegada_obj.strftime("%Y-%m-%d")
         fecha_partida_api = fecha_partida_obj.strftime("%Y-%m-%d")
 
@@ -356,12 +368,10 @@ def obtener_usuarios():
     if not os.path.exists(archivo_usuarios) or os.stat(archivo_usuarios).st_size == 0:
         return usuarios 
 
-    # Modo 'r' (read) para lectura
     with open(archivo_usuarios, "r", newline="") as file:
         lector = csv.DictReader(file, delimiter=",") 
         
         for fila in lector:
-            # Asume que los encabezados son 'NOMBRE DE USUARIO' y 'CONTRASEÑA'
             usuarios[fila["NOMBRE DE USUARIO"]] = fila["CONTRASEÑA"]
             
     return usuarios
@@ -369,18 +379,17 @@ def obtener_usuarios():
 def iniciar_sesion(nombre_ingresado, contrasena_ingresada):
     """Verifica las credenciales del usuario."""
     
-    # 1. Cargar todos los usuarios
+    # Cargar todos los usuarios
     usuarios_registrados = obtener_usuarios()
     
     if not usuarios_registrados:
-        limpiar_terminal()
         print("⚠️ No hay usuarios registrados. Regístrese primero.")
         return False # Fallo al no haber usuarios
         
-    # 2. Verificar existencia del nombre
+    # Verificar existencia del nombre
     if nombre_ingresado in usuarios_registrados:
         
-        # 3. Si el usuario existe, verificar la contraseña guardada
+        # Si el usuario existe, verificar la contraseña guardada
         clave_guardada = usuarios_registrados[nombre_ingresado]
         
         if contrasena_ingresada == clave_guardada:
@@ -415,51 +424,36 @@ def registrar_usuario(nombre, contrasena):
 
         # Usa writerow para escribir la fila de datos
         escritura.writerow(nuevo_usuario)
-    
     limpiar_terminal()
     print(f"✅ Usuario {nombre} registrado exitosamente.")
     return True
 
-def verificar_estado_respuesta(response, datos_json):
-    """ Verifica el estado de la conexión HTTP y el estado interno 'status' del JSON. 
-        Retorna True si la conexión es 200 y el estado interno es True.
-        Retorna False en caso de errores HTTP, fallas de autenticación o errores en los datos."""
+def validar_respuesta_api(response, datos_json, nombre_api="API"):
+    """Verifica que la respuesta de una API sea válida."""
+    try:
+        if response.status_code != 200:
+            print(f"❌ Error: la {nombre_api} devolvió código {response.status_code}.")
+            if response.status_code == 403:
+                print("   Clave API incorrecta o acceso prohibido.")
+            elif response.status_code == 429:
+                print("   Límite de solicitudes alcanzado. Intente en unos minutos.")
+            else:
+                print("   Error desconocido al consultar la API.")
+            return False
 
-    # --- 1. VERIFICACIÓN DEL CÓDIGO DE ESTADO HTTP (Conexión) ---
-    if response.status_code != 200:
-        print(f"❌ Error HTTP {response.status_code}.")
-        
-        if response.status_code == 403:
-            print("   Acceso Prohibido. Verifique su API Key.")
-        elif response.status_code == 429:
-            print("   Límite de solicitudes excedido. Intente en unos minutos.")
-        else:
-            print("   No se pudo realizar la solicitud. Código de error no manejado.")
+        if not datos_json.get("data"):
+            print(f"⚠️ La {nombre_api} no devolvió resultados (data vacía).")
+            return False
+
+        if datos_json.get("status") is False:
+            print(f"⚠️ La {nombre_api} reporta error interno en la consulta.")
+            return False
+
+        return True
+
+    except Exception as e:
+        print(f"⚠️ Error al procesar la respuesta de la {nombre_api}: {e}")
         return False
-
-    # Si la conexión es 200, ahora verificamos el JSON.
-
-    # --- 2. VERIFICACIÓN DEL ESTADO INTERNO DEL JSON ('status' de la API) ---
-
-    # Comprueba si la clave 'status' existe y si su valor es False
-    if datos_json.get('status') is False:
-        print("⚠️ La API reporta un error en los datos de la consulta.")
-        
-        # Muestra el mensaje de error específico si está disponible
-        mensaje_error = datos_json.get('message', 'Error interno no especificado.')
-        print(f"   Mensaje de la API: {mensaje_error}")
-        return False
-
-    # --- 3. VERIFICACIÓN DE DATOS VACÍOS (Aplica a Aeropuertos/Búsquedas) ---
-
-    # Usa un chequeo más general si la clave 'data' está vacía o es nula
-    if not datos_json.get('data'):
-        # Esto ocurre cuando la búsqueda de aeropuertos o de vuelos no devuelve resultados
-        print("🔍 Búsqueda sin resultados: La API no devolvió datos (posiblemente un resultado vacío).")
-        return False
-        
-    # Si pasa todas las verificaciones
-    return True
 
 def limpiar_terminal():
     """Función que limpia la terminal cada vez que es llamada."""
@@ -500,146 +494,195 @@ while True:
             continue
 
         while True:
-
-            print("\n--- Menú de consulta de Viajes y Hoteles ---\n")
-            print("1- Consultar Viajes en Avión.\n2- Consultar Hoteles por Región.\n3- Cerrar sesión.\n4- Salir del programa.\n")
-            
-            opcion_seleccionada = pidiendo_mensaje("Ingrese una opción: ")
-
-            if opcion_seleccionada == "1":
-                bandera_cero = True
-                while bandera_cero:
-                    limpiar_terminal()
-                    print("\n--- Consultar Vuelos ---\n")
-                    origen = pidiendo_mensaje("Ingrese el lugar de origen de donde partira: ")
-                    destino = pidiendo_mensaje("Ingrese el lugar de destino a donde llegara: ")
-
-                    aeropuertos = Aeropuerto(origen, destino)
-                    aeropuertos_encontrados = aeropuertos.consultar_aeropuertos()
-                    aeropuertos_origen_mostrados = aeropuertos.mostrar_aeropuertos_region_origen(aeropuertos_encontrados[0])
-                    aeropuerto_origen_seleccionado = int(pidiendo_mensaje_numerico("\nSeleccione el Aeropuerto desde el que tomara el vuelo: "))
-
-                    aeropuertos_destino_mostrados = aeropuertos.mostrar_aeropuertos_region_destino(aeropuertos_encontrados[1])
-                    aeropuerto_destino_seleccionado = int(pidiendo_mensaje_numerico("\nSeleccione el Aeropuerto donde desea aterrizar: "))
-                    
-                    limpiar_terminal()
-                    fecha_de_salida = pidiendo_mensaje("Ingrese la fecha en la que desea tomar el vuelo (en formato DD/MM/YYYY): ")
-                    fecha_formateada = cambiar_a_formato_fecha(fecha_de_salida)
-                    vuelos = Vuelo(aeropuertos_origen_mostrados, aeropuertos_destino_mostrados, fecha_formateada)
-                    vuelos_disponibles = vuelos.consultar_vuelos(aeropuerto_origen_seleccionado, aeropuerto_destino_seleccionado)
-                    valores_obtenidos = vuelos.mostrar_vuelos(vuelos_disponibles, aeropuerto_origen_seleccionado, aeropuerto_destino_seleccionado)
-                    print(valores_obtenidos)
-                    input("pausa")
-                    limpiar_terminal()
-
-                    while True:
-                        print("\n--- Menú de Opciones ---\n1- Realizar reserva de vuelo.\n2- Consultar otros vuelos.\n3- Volver al menú principal.\n")
-                        opcion_ingresada = pidiendo_mensaje("Ingrese una opción del menú: ")
-
-                        if opcion_ingresada == "1":
-                            reservar_vuelo = vuelos.reservar_vuelo(valores_obtenidos)
-                            input("\nPresione cualquier TECLA para volver al menú principal")
-                            limpiar_terminal()
-                            bandera_cero = False
-                            break
-
-                        elif opcion_ingresada == "2":
-                            limpiar_terminal()
-                            break
-
-                        elif opcion_ingresada == "3":
-                            limpiar_terminal()
-                            bandera_cero = False
-                            break
-                            
-                        else:
-                            limpiar_terminal()
-                            print("Opción ingresada no valida... Intente nuevamente.")    
-
-            elif opcion_seleccionada == "2":
-                print("\n--- Consultar Hoteles ---\n")
-                # Buscar país, provincia y ciudad.
+            try:        
+                print("\n--- Menú de consulta de Viajes y Hoteles ---\n")
+                print("1- Consultar Viajes en Avión.\n2- Consultar Hoteles por Región.\n3- Cerrar sesión.\n4- Salir del programa.\n")
                 
-                pais = pidiendo_mensaje("Ingrese el país donde desea buscar un Hotel: ")
-                provincia = pidiendo_mensaje("Ingrese el nombre de la provincia en la: ")
-                ciudad = pidiendo_mensaje("Ingrese el nombre de la ciudad donde iniciar la busqueda: ")
+                opcion_seleccionada = pidiendo_mensaje("Ingrese una opción: ")
 
-                regiones = Region(pais, provincia, ciudad)
-                regiones_encontradas = regiones.consultar_regiones()
-                regiones_mostradas = regiones.mostrar_regiones(regiones_encontradas)
+                if opcion_seleccionada == "1":
+                    bandera_cero = True
+                    while bandera_cero:
+                        limpiar_terminal()
+                        print("\n--- Consultar Vuelos ---\n")
+                        origen = pidiendo_mensaje("Ingrese el lugar de origen de donde partira: ")
+                        destino = pidiendo_mensaje("Ingrese el lugar de destino a donde llegara: ")
 
-                seleccionar_region = int(pidiendo_mensaje_numerico("\nSeleccione la región en la desea encontrar su hotel: "))
+                        aeropuertos = Aeropuerto(origen, destino)
+                        aeropuertos_encontrados = aeropuertos.consultar_aeropuertos()
+                        
+                        if aeropuertos_encontrados is None:
+                            break
 
-                # Se ingresa la fecha de inicio de reserva y de partida y se convierten a formato de fecha.
-                fecha_de_llegada = pidiendo_mensaje("¿En qué fecha iniciara la reserva del hotel? Complete con dd/mm/aaaa: ")
-                fecha_de_partida = pidiendo_mensaje("¿Hasta qué fecha reservara en el hotel? Complete con dd/mm/aaaa: ")
-                fechas_ingresadas = cambiar_a_formato_fecha(fecha_de_llegada, fecha_de_partida)
+                        aeropuertos_origen_mostrados = aeropuertos.mostrar_aeropuertos_region_origen(aeropuertos_encontrados[0])
+                        aeropuerto_origen_seleccionado = int(pidiendo_mensaje_numerico("\nSeleccione el Aeropuerto desde el que tomara el vuelo: "))
 
-                hoteles = Hotel(regiones_mostradas, fechas_ingresadas[0], fechas_ingresadas[1])
-                data_regiones_de_hoteles = hoteles.consultar_hoteles(seleccionar_region)
-                bandera_uno = True
+                        aeropuertos_destino_mostrados = aeropuertos.mostrar_aeropuertos_region_destino(aeropuertos_encontrados[1])
+                        aeropuerto_destino_seleccionado = int(pidiendo_mensaje_numerico("\nSeleccione el Aeropuerto donde desea aterrizar: "))
+                        
+                        fecha_de_salida = pidiendo_mensaje("Ingrese la fecha en la que desea tomar el vuelo (en formato DD/MM/YYYY): ")
+                        fecha_formateada = cambiar_a_formato_fecha(fecha_de_salida)
+                        vuelos = Vuelo(aeropuertos_origen_mostrados, aeropuertos_destino_mostrados, fecha_formateada)
+                        vuelos_encontrados = vuelos.consultar_vuelos(aeropuerto_origen_seleccionado, aeropuerto_destino_seleccionado)
 
-                while bandera_uno:
-                    hoteles_mostrados = hoteles.mostar_hoteles(data_regiones_de_hoteles)
+                        if vuelos_encontrados is None:
+                            break
 
-                    seleccionar_hotel = int(pidiendo_mensaje_numerico("\nSeleccione el hotel del que desea ver sus características: "))
-                    
-                    hotel_seleccionado = hoteles.mostrar_caracteristicas(seleccionar_hotel)
-                    bandera_dos = True
+                        vuelos_disponibles = vuelos.mostrar_vuelos(vuelos_encontrados, aeropuerto_origen_seleccionado, aeropuerto_destino_seleccionado)
+                        limpiar_terminal()
 
-                    while bandera_dos:
-                        seleccionar_opcion = pidiendo_mensaje("\n--- Menú de Reservas de Hoteles ---\n\n1- Realizar reserva en el Hotel seleccionado\n2- Volver a mostrar lista de Hoteles\n3- Regresar al menú de Consultas de Viajes y Hoteles\n\nSeleccione una Opción: ")
+                        while True:
+                            print("\n--- Menú de Opciones ---\n1- Realizar reserva de vuelo.\n2- Consultar otros vuelos.\n3- Volver al menú principal.\n")
+                            opcion_ingresada = pidiendo_mensaje("Ingrese una opción del menú: ")
 
-                        if seleccionar_opcion == "1":
-                            hoteles.realizar_reserva(hotel_seleccionado)
+                            if opcion_ingresada == "1":
+                                reservar_vuelo = vuelos.reservar_vuelo(vuelos_disponibles)
+                                input("\nPresione cualquier TECLA para volver al menú principal")
+                                limpiar_terminal()
+                                bandera_cero = False
+                                break
 
-                            while True:
-                                reservar_nuevamente = pidiendo_mensaje("\nPara volver al menú de Reservas de Hoteles, presione: S\nPara volver al menú de Consultas de Viajes y Hoteles, presione: N\nIngrese alguna opción mostrada: ").lower()
+                            elif opcion_ingresada == "2":
+                                limpiar_terminal()
+                                break
 
-                                if reservar_nuevamente == "s":
-                                    break
+                            elif opcion_ingresada == "3":
+                                limpiar_terminal()
+                                bandera_cero = False
+                                break
+                                
+                            else:
+                                limpiar_terminal()
+                                print("Opción ingresada no valida... Intente nuevamente.")    
 
-                                elif reservar_nuevamente == "n":
-                                    bandera_uno = False
-                                    bandera_dos = False
-                                    break
+                elif opcion_seleccionada == "2":
+                    limpiar_terminal()
+                    print("\n--- Consultar Hoteles ---\n")
 
-                                else:
-                                    print("Opción no valida, Intente nuevamente...\n")
+                    # Buscar país, provincia y ciudad.
+                    pais = pidiendo_mensaje("Ingrese el país donde desea buscar un Hotel: ")
+                    provincia = pidiendo_mensaje("Ingrese el nombre de la provincia en la: ")
+                    ciudad = pidiendo_mensaje("Ingrese el nombre de la ciudad donde iniciar la busqueda: ")
 
-                        elif seleccionar_opcion == "2":
-                            bandera_dos = False
-                            
-                        elif seleccionar_opcion == "3":
-                            bandera_uno = False
-                            bandera_dos = False
+                    limpiar_terminal()
+                    regiones = Region(pais, provincia, ciudad)
+                    regiones_encontradas = regiones.consultar_regiones()
 
-                        else:
-                            print("Opción no valida, Intente nuevamente...\n")
+                    if regiones_encontradas is None:
+                        continue
 
-            elif opcion_seleccionada == "3":
-                break
+                    regiones_mostradas = regiones.mostrar_regiones(regiones_encontradas)
 
-            elif opcion_seleccionada == "4":
-                print("¡Hasta luego!")
-                exit()
+                    seleccionar_region = int(pidiendo_mensaje_numerico("\nSeleccione la región en la desea encontrar su hotel: "))
 
-            else:
-                print("Opción ingresada no valida... Intente nuevamente")    
+                    limpiar_terminal()
+                    # Se ingresa la fecha de inicio de reserva y de partida y se convierten a formato de fecha.
+                    fecha_de_llegada = pidiendo_mensaje("¿En qué fecha iniciara la reserva del hotel? Complete con dd/mm/aaaa: ")
+                    fecha_de_partida = pidiendo_mensaje("¿Hasta qué fecha reservara en el hotel? Complete con dd/mm/aaaa: ")
+                    fechas_ingresadas = cambiar_a_formato_fecha(fecha_de_llegada, fecha_de_partida)
+
+                    limpiar_terminal()
+                    hoteles = Hotel(regiones_mostradas, fechas_ingresadas[0], fechas_ingresadas[1])
+                    data_regiones_de_hoteles = hoteles.consultar_hoteles(seleccionar_region)
+
+                    if data_regiones_de_hoteles is None:
+                        continue
+
+                    bandera_uno = True
+
+                    while bandera_uno:
+                        hoteles_mostrados = hoteles.mostar_hoteles(data_regiones_de_hoteles)
+
+                        seleccionar_hotel = int(pidiendo_mensaje_numerico("\nSeleccione el hotel del que desea ver sus características: "))
+                        limpiar_terminal()
+                        
+                        hotel_seleccionado = hoteles.mostrar_caracteristicas(seleccionar_hotel)
+                        bandera_dos = True
+
+                        while bandera_dos:
+                            seleccionar_opcion = pidiendo_mensaje("\n--- Menú de Reservas de Hoteles ---\n\n1- Realizar reserva en el Hotel seleccionado\n2- Volver a mostrar lista de Hoteles\n3- Regresar al menú de Consultas de Viajes y Hoteles\n\nSeleccione una Opción: ")
+
+                            if seleccionar_opcion == "1":
+                                limpiar_terminal()
+                                hoteles.realizar_reserva(hotel_seleccionado)
+
+                                while True:
+                                    reservar_nuevamente = pidiendo_mensaje("\nPara volver al menú de Reservas de Hoteles, presione: S\nPara volver al menú de Consultas de Viajes y Hoteles, presione: N\nIngrese alguna opción mostrada: ").lower()
+
+                                    if reservar_nuevamente == "s":
+                                        limpiar_terminal()
+                                        break
+
+                                    elif reservar_nuevamente == "n":
+                                        limpiar_terminal()
+                                        bandera_uno = False
+                                        bandera_dos = False
+                                        break
+
+                                    else:
+                                        limpiar_terminal()
+                                        print("❌Opción no valida, Intente nuevamente...\n")
+
+                            elif seleccionar_opcion == "2":
+                                limpiar_terminal()
+                                bandera_dos = False
+                                
+                            elif seleccionar_opcion == "3":
+                                limpiar_terminal()
+                                bandera_uno = False
+                                bandera_dos = False
+
+                            else:
+                                limpiar_terminal()
+                                print("❌Opción no valida, Intente nuevamente...\n")
+
+                elif opcion_seleccionada == "3":
+                    limpiar_terminal()
+                    break
+
+                elif opcion_seleccionada == "4":
+                    limpiar_terminal()
+                    print("¡Hasta luego 👋!\n")
+                    exit()
+
+                else:
+                    limpiar_terminal()
+                    print("❌Opción ingresada no valida... Intente nuevamente.")    
+
+            except KeyError as e:
+                print(f"\n❌ Error: se intentó acceder a una clave inexistente ({e}).")
+
+            except IndexError:
+                print("\n❌ Error: se intentó acceder a un índice inexistente.")
+
+            except requests.exceptions.RequestException as e:
+                print(f"\n🌐 Error de conexión con la API: {e}")
+
+            except SystemExit:
+                print("\n👋 Gracias por usar la Agencia de Viajes. ¡Hasta luego!\n")
+                raise
+
+            except Exception as e:
+                print(f"\n⚠️ Ocurrió un error inesperado: {e}")
+
+            print("\n🔄 Volviendo al menú principal...\n")
+            input("--- Presione ENTER para continuar ---")
+            limpiar_terminal()
 
     elif opcion == "2":
         limpiar_terminal()
-        print("\n--- Registrar Nuevo Usuario ---\n")
+        print("--- Registrar Nuevo Usuario ---\n")
         nuevo_usuario = pidiendo_mensaje("Ingrese su nombre de usuario: ")
         nueva_contrasena = pidiendo_mensaje("Ingrese su contraseña: ")
 
         registrar_usuario(nuevo_usuario, nueva_contrasena)
 
     elif opcion == "3":
-        print("\n¡Hasta pronto!\n")
+        limpiar_terminal()
+        print("¡Hasta pronto 👋!\n")
         exit()
 
     else:
         limpiar_terminal()
-        print("Opción no valida, Intente nuevamente.")
+        print("❌Opción no valida, Intente nuevamente.")
         pass

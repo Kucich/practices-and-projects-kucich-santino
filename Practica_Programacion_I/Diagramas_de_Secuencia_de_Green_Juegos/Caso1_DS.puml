@@ -1,20 +1,32 @@
-@startuml Registrar_Producto
+@startuml Caso_de_uso_1
 
-actor Administrador 
-participant Sistema
+title Diagrama de Secuencia - Registrar Producto
+actor  admin
+participant  "cp:ControladorProcesador"
+
+loop "Mientras los datos sean validos y haya objetos por ingresar"
+
+    admin -> "cp:ControladorProcesador": igresar_datos(nombre, código  categoría)
+    activate "cp:ControladorProcesador"
+    create ":Producto"
+    alt Datos válidos
 
 
-activate Administrador
-loop ["Mientras los datos del producto no sean validos"]
-    Administrador -> Sistema : CargarNuevoProducto()
-    alt ["Datos validos"]
-        activate Sistema
-        Sistema --> Administrador : MensajeConfirmación()
+        "cp:ControladorProcesador"-> ":Producto": crear_producto(nombre, código, categoría)
+        "cp:ControladorProcesador" -> "<<multiobjeto>>  lista_productos:ListaDeProductos": agregar_producto()
+        activate "<<multiobjeto>>  lista_productos:ListaDeProductos"
+        "<<multiobjeto>>  lista_productos:ListaDeProductos" --> "cp:ControladorProcesador": <<NULL>>
+        deactivate "<<multiobjeto>>  lista_productos:ListaDeProductos"
+        "cp:ControladorProcesador" --> admin: <<"Producto registrado">>
+    else Datos inválidos
+        "cp:ControladorProcesador" --> admin: <<"Datos invalidos">>
+        deactivate "cp:ControladorProcesador"
 
-    else ["Datos no validos"]
-        Sistema --> Administrador : MensajeNegacion()
-
-        deactivate Sistema
-        deactivate Administrador
     end
-end 
+
+end
+  note left of "<<multiobjeto>>  lista_productos:ListaDeProductos"
+        El producto queda guardado y registrado en el "<<multiobjeto>>  lista_productos:ListaDeProductos"
+
+    end note
+@enduml

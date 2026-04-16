@@ -1,0 +1,87 @@
+@startuml Diagrama_de_Clases
+
+class Persona{ 
+
+    - nombre: string
+    - apellido: string
+    - dni: int
+    - gmail: string
+    - celular: int
+    - tipo: string
+
+    + modificar_datos(): void
+    + eliminar_registro(): void
+}
+
+class Empleada{
+
+    - direccion: string
+    - especialidad: string
+    - sueldo: float
+    - contrasena: string
+
+    + registrar_empleada(): void
+    + asignar_sueldo(): void
+    + modificar_sueldo(): void
+}
+
+class Proveedor{
+
+    - localidad: string
+    - tipo_de_proveedor: string
+
+    + registrar_proveedor(): void
+    + registrar_fecha_entrega_productos(): void
+    + modificar_fecha_de_entrega(): void
+    + borrar_fecha_de_entrega(): void 
+}
+
+class Producto{
+
+    - nombre: string
+    - marca: string
+    - tipo: string
+    - peso: float
+    - precio: float
+    - fecha_de_vencimiento: datetime
+    - descripcion: string
+    - cantidad: int
+
+    + registrar_producto(): void
+    + modificar_datos_de_producto():
+    + eliminar_producto(): void
+    + mostrar_inventario(): void
+}
+
+class Venta {
+
+    - empleada: Empleada
+    - fecha: datetime
+    - hora: time 
+    - forma_de_pago: string
+    - total: float
+
+    + calcularTotal(): void 
+    + agregarItem(): void 
+    + eliminarItem(): void 
+}
+
+class ItemVenta {
+
+    + producto: Producto
+    + cantidad: int 
+    + precioUnitario: float 
+    + subtotal: float
+
+    - calcular_subtotal(): void
+}
+
+Persona <|-- Empleada
+Persona <|-- Proveedor
+
+Proveedor "1..*" --> "0..*" Producto
+Empleada "1" --> "0..*" Venta
+Venta "1" *-- "1..*" ItemVenta
+Producto "0..*" --> "1" ItemVenta
+
+@enduml

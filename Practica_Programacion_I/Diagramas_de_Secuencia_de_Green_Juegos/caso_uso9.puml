@@ -1,0 +1,77 @@
+@startuml Caso_uso9
+title Caso de Uso 9 - Instrucciones de Voice Picking
+
+actor "admin:Administrador" as admin
+participant "cp:controlVoicePicking" as cp
+participant "cat:<<singleton>> CatalogoDeProductos" as catalogo
+participant "sp[i]:Producto" as sp
+participant "producto:ProductoSeleccionado" as producto
+
+admin -> cp: seleccionar_voice_picking()
+activate cp
+cp --> admin: "<<Bienvenido al sistema de voice picking>>"
+
+admin -> cp: seleccionar_producto_a_embalar(producto:str)
+
+cp -> catalogo: buscar_producto(producto:str)
+activate catalogo
+
+loop Mientras haya coincidencias
+    catalogo -> sp: get_nombre()
+    activate sp
+
+    sp --> catalogo: "<<Nombre de producto>>"
+    deactivate sp
+
+end 
+
+note right of catalogo
+    Si no se encuntran más coincidencias
+    Cortar iteración
+end note
+
+alt Producto no encontrado
+    catalogo --> cp: "<<NULL>>"
+    cp --> admin: "<<Producto no encontrado>>"
+   
+end
+
+catalogo --> cp: "<<producto:list<Producto>>>"
+deactivate catalogo
+cp --> admin: "<<Mostrar concidencias>>"
+admin -> cp: seleccionar_producto(elección:int)
+deactivate catalogo
+
+admin -> cp: comenzar_embalaje()
+
+loop Mientras haya productos para embalar
+    cp -> producto: get_nombres()
+    activate producto
+    producto --> cp: "<<nombre:string>>"
+    deactivate producto
+
+    cp --> admin: "<<Indicar nombre de producto  a embalar>>"
+
+    admin -> cp: confirmar_producto_embalado()
+
+    alt Comando no reconocido
+        cp --> admin: "<<No se reconoce el comando, repetir instrucción>>"
+    end
+
+    alt Instrucción pausar
+        cp --> admin: "<<Sistema en pausa>>"
+        admin -> cp: reanudar_embalaje()
+    end
+end
+
+note right of cp
+    El bucle finaliza cuando
+    no hay más productos
+    para embalar
+end note
+
+
+cp --> admin: "<<Embalaje terminado>>"
+deactivate cp
+
+@enduml

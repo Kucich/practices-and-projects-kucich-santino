@@ -1,0 +1,147 @@
+
+@startuml
+
+entity USUARIOS {
+  cuit <<key>>
+  nombre
+  contraseña
+  id_tipo_usuario
+}
+
+entity TIPOS_USUARIOS {
+  rol <<key>>
+}
+
+entity PRODUCTOS {
+  articulo <<key>>
+  nombre
+  descripcion
+  
+}
+
+entity CATEGORIAS {
+  nombre <<key>>
+}
+
+entity SUBPRODUCTOS {
+  articulo <<key>>
+  nombre
+  descripcion
+}
+
+entity PIEZAS {
+  nombre<<key>>
+  descripcion
+ 
+  
+}
+
+
+entity ALMACENES {
+  nombre <<key>>
+  ubicacion
+}
+
+
+entity ENVIOS {
+  num_envio <<key>>
+  fecha_envio
+  observaciones
+
+}
+
+entity ESTADOS_ENVIOS {
+  nombre<<key>>
+  descripcion
+}
+
+
+
+entity CLIENTES {
+  cuit <<key>>
+  nombre
+  apellido
+  email
+  celular
+}
+
+
+
+entity LOCALIDADES {
+  codigo_postal <<key>>
+  localidad
+}
+
+entity PROVINCIAS {
+  nombre <<key>>
+  
+}
+
+entity ROTULOS {
+  codigo_rotulo <<key>>
+  fecha_creacion
+  
+}
+
+
+'''Cardinalidad'''
+
+relationship ES_UN {
+}
+USUARIOS -n- ES_UN
+ES_UN -1- TIPOS_USUARIOS
+
+
+
+relationship CONTIENE {
+}
+PRODUCTOS -1- CONTIENE
+CONTIENE -N- SUBPRODUCTOS
+
+relationship SE_COMPONE_DE {
+}
+SUBPRODUCTOS -1- SE_COMPONE_DE
+SE_COMPONE_DE -n- PIEZAS
+
+relationship SE_GUARDA {
+SUBPRODUCTOS -n- SE_GUARDA
+SE_GUARDA -n- ALMACENES
+
+}
+
+relationship INCLUYE {
+}
+ENVIOS -1- INCLUYE
+INCLUYE -n- PRODUCTOS
+
+relationship TIENE_ESTADO {
+}
+ENVIOS -1- TIENE_ESTADO
+TIENE_ESTADO -n- ESTADOS_ENVIOS
+
+relationship ENVIO_A {
+}
+ENVIOS -1- ENVIO_A
+ENVIO_A -1- CLIENTES
+
+relationship PERTENECE_A {
+}
+LOCALIDADES -N- PERTENECE_A
+PERTENECE_A -1- PROVINCIAS
+
+relationship ES_DE {
+}
+CLIENTES -1- ES_DE
+ES_DE -1- LOCALIDADES
+
+relationship POSEE {
+}
+ENVIOS -1- POSEE
+POSEE -N- ROTULOS
+
+relationship AGRUPA {
+}
+PRODUCTOS -n- AGRUPA
+AGRUPA -1- CATEGORIAS
+
+@enduml

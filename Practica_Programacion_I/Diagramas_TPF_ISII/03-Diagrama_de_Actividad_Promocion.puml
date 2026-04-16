@@ -1,0 +1,43 @@
+@startuml Diagrama_de_Actividad_Ventas
+
+|Usuario|
+start
+
+:"Registrar ítem de venta";
+
+repeat 
+
+    if ("¿Agregar otro ítem?") then ("Si")
+
+        :"Agregar ítem de venta";
+
+    else ("No")
+        if ("¿Eliminar ítem de venta?") then ("Si")
+            :"Eliminar ítem de venta";
+            |Sistema|
+            :"Borrar ítem";
+
+        else ("No")
+            |Usuario|
+        endif 
+
+        repeat
+
+            if ("¿Modificar ítem de venta?") then ("Si")
+                    :"Modificar ítem de venta";
+            else ("No")
+                |Sistema|
+                :"Registrar ítems de compra";
+                :"Guardar registro de ítems";
+                stop 
+
+            endif
+        |Usuario|
+        repeat while ("Modificar otro ítem de venta")
+        stop
+
+    endif 
+
+repeat while ("Agregar otro ítem de venta")
+
+@enduml

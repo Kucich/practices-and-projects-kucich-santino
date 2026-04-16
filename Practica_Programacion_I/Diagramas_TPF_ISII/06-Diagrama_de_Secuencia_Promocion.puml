@@ -1,0 +1,49 @@
+@startuml Diagrama_de_Secuencia_Inventario
+
+actor Usuario
+participant Sistema
+database BD
+
+title Diagrama de Secuencia - Registrar Stock de Productos
+
+Usuario -> Sistema: registrarProducto()
+
+alt ["Datos no válidos"]
+    Sistema --> Usuario: Notificar datos inválidos
+
+end 
+
+alt ["Modificar producto"]
+    Usuario -> Sistema: modificarUnProducto()
+
+    alt ["Datos no válidos"]
+        Sistema --> Usuario: Notificar datos inválidos  
+    end 
+
+        Sistema -> BD: modificarProducto()
+        BD --> Sistema: Modificación guardada
+        Sistema --> Usuario: Notificar modificación exitosa
+
+end
+
+alt ["Eliminar producto"]
+    Usuario -> Sistema: eliminarUnProducto()
+    Sistema -> BD: eliminarProducto()
+    BD --> Sistema: Producto borrado correctamente
+    Sistema --> Usuario: Notificar eliminación exitosa
+
+end 
+
+alt ["Mostrar inventario"]
+    Usuario -> Sistema: solicitarInventario()
+    Sistema -> BD: obtenerInventario()
+    BD --> Sistema: Lista de productos
+    Sistema --> Usuario: Mostrar inventario
+
+end 
+
+Sistema -> BD: agregarProducto()
+BD --> Sistema: Producto agregado con éxito
+Sistema --> Usuario: Notificar registro exitoso
+
+@enduml

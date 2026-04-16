@@ -1,0 +1,46 @@
+@startuml Caso4_Green_Juegos
+
+participant admin
+participant "cp: controlProcesador" as cp
+participant "cpc:<<singleton>>  CatalogoDeUsuarios" as catalogo
+participant "descrip(i): descripcionDeObjeto" as descr
+participant "<<multiobjeto>>  lista_usuarios:ListaDeUsuarios" as multi
+
+admin -> cp: registrar_usuario(nombre:str, apellido:str, email:str, contraseña:str, cuit:str, tipo:str)
+activate cp
+
+cp -> catalogo: buscar_usuario(cuit:str)
+activate catalogo
+
+loop para cada i en descrip
+    catalogo -> descr : get_cuit()
+    activate descr
+    descr --> catalogo : "<<cuit:string>>"
+    deactivate descr
+end
+note right of catalogo
+    Si ya se encontro el cuit:
+    cortar iteración
+    end note
+
+alt cuit ya registrado
+    catalogo --> cp: "<<True>>"
+    
+    cp --> admin: "<<Usuario ya registrado>>"
+    
+end
+
+catalogo --> cp: "<<NULL>>"
+deactivate catalogo
+
+cp -> multi: crear_usuario(nombre:str, apellido:str, email:str, contraseña:str, cuit:str, tipo:str)
+activate multi
+
+multi --> cp: "<<Usuario creado>>"
+
+deactivate multi
+
+cp --> admin: "<<Mensaje de exito>>"
+deactivate cp
+
+@enduml

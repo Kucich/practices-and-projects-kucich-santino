@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datos Personales</title>
+</head>
+<body>
+    
+    <h1>Formulario de datos personales</h1>
+    <hr>
+
+    <fieldset>
+        <legend>Información Personal</legend><br>
+        <!-- <label for="estudiante"></label><br> -->
+        <input type="text" id="estudiante" disabled placeholder="ESTUDIANTE"><br>
+
+        <br>
+        <label for="nombre_completo">Nombre completo</label><br>
+        <input type="text" id="nombre_completo" placeholder="Ingrese su nombre completo" required><br>
+
+        <br>
+        <label for="email">Email</label><br>
+        <input type="email" id="email" placeholder="Ej: papas@gmail.com" required><br>
+
+        <br>
+        <label for="edad">Edad</label><br>
+        <input type="number" id="edad" placeholder="Ingrese su edad" required><br>
+
+        <br>
+        <label for="nacionalidad">Nacionalidad</label><br>
+        <input list="nacionalidades" id="nacionalidad" required placeholder="Seleccione una opción">
+
+        <datalist id="nacionalidades">
+            <option value="Argentina"></option>
+            <option value="Chile"></option>
+            <option value="Uruguay"></option>
+        </datalist>
+
+        <br>
+        <br>
+        <label for="ocupacion">Condición laboral</label><br>
+        <select id="ocupacion">
+            <option value="" selected disabled>¿Cúal es su ocupación acutal?</option>
+            <option value="1">Desempleado</option>
+            <option value="1">En búsqueda laboral</option>
+            <option value="1">Trabajo part time</option>
+            <option value="1">Trabajo full time</option>
+        </select>
+    </fieldset>
+
+    <br>
+
+    <fieldset>
+        <legend>Gustos Personales</legend>
+        <label for="gusto_musical">Genero musical preferido</label><br>
+        <input type="text" placeholder="Ej: Rock nacional"><br>
+
+        <br>
+        <label for="comidas">Comida preferida</label><br>
+        <select id="comidas">
+            <option value="" selected disabled>¿Qué comida le gusta más?</option>
+            <option value="1">Hamburguesa</option>
+            <option value="2">Empanadas</option>
+            <option value="3">Pizza</option>
+        </select><br>  
+    </fieldset><br>
+    
+    <label for="recordar_datos">Recordar mis datos</label>
+    <input type="checkbox" id="recordar_datos"><br>
+
+    <br>
+    <button>Enviar formulario</button>
+</body>
+</html>

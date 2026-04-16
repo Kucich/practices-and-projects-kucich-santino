@@ -1,0 +1,84 @@
+@startuml Diagrama de clases Green juegos
+
+abstract class Usuario{
+    - nombre : String
+    - apellido : String
+    - tipo_usuario: Bool
+    - email : String
+    - contraseña : String
+
+    + crear_usuario(nombre:str, apellido:str, email:str, contraseña:str, cuit:str, tipo:str): Bool
+    + delete_usuario(usuario): Bool
+    + modificar_usuario(nombre:str, apellido:str, email:str, contraseña:str, cuit:str, tipo:str): Bool
+}
+
+class Administrador{
+}
+
+class Empleado{
+}
+
+class Cliente{
+    - nombre : String
+    - apellido : String
+    - email: String
+    - cuit: str
+}
+
+class Producto{
+    - art : Int 
+    - nombre : String
+    - tipo_categoria : List<Categoria>
+    - descripcion : String
+    - lista_piezas : List<Pieza>
+    - lista_subproducto : List<Subproducto>
+
+    + crear_producto(nom:str, arti:str, cat:str, desc:str, stock:int): Bool
+    + modificar_producto(nom:str, cat:str, desc:str, stock:int): Bool
+    + delete_producto(producto): Bool
+}
+
+class Envio {
+    - id : Int
+    - nombre_producto : String
+    - nombre_cliente : List<Cliente>
+    - fecha_envio : Date
+    - estado_envio : List
+    - observacion : String
+    - rotulo : List<Rotulo>  
+
+    + registrar_envio(id:int, nombre_producto:str, nombre_cliente:List<Cliente>, fecha_envio:Date, estado_envio:List, observacion, rotulo:List<Rotulo>): Bool
+} 
+
+class Rotulo {
+    - id_rotulo : Int
+    - nombre_producto : str
+    - nombre_cliente : str
+    - fecha_creacion : Date
+
+    + crear_rotulo(nombre_producto:str, nombre_cliente:str, fecha_creacion:Date)
+    + imprimir_rotulo(nombre_producto:str, nombre_cliente:str, fecha_creacion:Date)
+}
+
+class Voice {
+    - lista_comandos: List
+    - lista_voces : List
+
+    + crear_palabra_clave(palabra): str
+    + modificar_palabra(palabra): str
+    + recibir_instruccion(mensaje): str
+}
+
+Empleado -- Voice
+
+Administrador "1" -- "0..*" Envio
+
+Envio "1" *-- "1..*" Rotulo
+Envio "0..*" -- "1" Cliente
+
+Rotulo "0..*" o-- "0..*" Producto
+
+Administrador --|> Usuario
+Empleado --|> Usuario
+
+@enduml

@@ -1,0 +1,46 @@
+@startuml Diagrama_de_Actividad_Inventario
+
+|Usuario|
+start 
+
+:"Mostrar inventario";
+
+|Sistema|
+:"Cargar registros de inventario";
+
+|Usuario|
+repeat
+:"Registrar producto";
+
+if ("¿Modificar producto?") then ("Si")
+    :"Modificar producto";
+    |Sistema|
+    :"Guarda modificacion";
+
+else ("No")
+
+endif 
+
+|Usuario|
+if ("¿Eliminar un producto?") then ("Si")
+    :"Eliminar producto";
+    |Sistema|
+    :"Borrar registro de producto";
+
+else ("No")
+    |Usuario|
+
+endif
+
+    if ("¿Registrar otro producto?") then ("No")
+        |Sistema|
+        :"Registrar producto ingresado";
+        :"Guardar producto registrado";
+        stop
+
+    else ("Si")
+        |Usuario|
+
+    endif 
+
+repeat while ("Registrar otro producto")

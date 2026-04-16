@@ -1,0 +1,14 @@
+/home/santino/Escritorio/Terciario_3er_Año/Programacion_II/Practica_de_Programacion/bin/Debug/net10.0/Practica_de_Programacion
+/home/santino/Escritorio/Terciario_3er_Año/Programacion_II/Practica_de_Programacion/bin/Debug/net10.0/Practica_de_Programacion.deps.json
+/home/santino/Escritorio/Terciario_3er_Año/Programacion_II/Practica_de_Programacion/bin/Debug/net10.0/Practica_de_Programacion.runtimeconfig.json
+/home/santino/Escritorio/Terciario_3er_Año/Programacion_II/Practica_de_Programacion/bin/Debug/net10.0/Practica_de_Programacion.dll
+/home/santino/Escritorio/Terciario_3er_Año/Programacion_II/Practica_de_Programacion/bin/Debug/net10.0/Practica_de_Programacion.pdb
+/home/santino/Escritorio/Terciario_3er_Año/Programacion_II/Practica_de_Programacion/obj/Debug/net10.0/Practica_de_Programacion.GeneratedMSBuildEditorConfig.editorconfig
+/home/santino/Escritorio/Terciario_3er_Año/Programacion_II/Practica_de_Programacion/obj/Debug/net10.0/Practica_de_Programacion.AssemblyInfoInputs.cache
+/home/santino/Escritorio/Terciario_3er_Año/Programacion_II/Practica_de_Programacion/obj/Debug/net10.0/Practica_de_Programacion.AssemblyInfo.cs
+/home/santino/Escritorio/Terciario_3er_Año/Programacion_II/Practica_de_Programacion/obj/Debug/net10.0/Practica_de_Programacion.csproj.CoreCompileInputs.cache
+/home/santino/Escritorio/Terciario_3er_Año/Programacion_II/Practica_de_Programacion/obj/Debug/net10.0/Practica_de_Programacion.dll
+/home/santino/Escritorio/Terciario_3er_Año/Programacion_II/Practica_de_Programacion/obj/Debug/net10.0/refint/Practica_de_Programacion.dll
+/home/santino/Escritorio/Terciario_3er_Año/Programacion_II/Practica_de_Programacion/obj/Debug/net10.0/Practica_de_Programacion.pdb
+/home/santino/Escritorio/Terciario_3er_Año/Programacion_II/Practica_de_Programacion/obj/Debug/net10.0/Practica_de_Programacion.genruntimeconfig.cache
+/home/santino/Escritorio/Terciario_3er_Año/Programacion_II/Practica_de_Programacion/obj/Debug/net10.0/ref/Practica_de_Programacion.dll

@@ -1,0 +1,77 @@
+@startuml Diagrama_de_Secuencia_Ventas
+
+actor Usuario
+participant Sistema
+database BD
+
+title Diagrama de Secuencia - Registrar Venta
+
+Usuario -> Sistema: registrarItemVenta()
+
+alt ["Datos no validos"]
+    Sistema --> Usuario: Notificar datos invalidos
+
+end 
+
+loop "Mientras los datos sean validos y haya ítems por agregar"
+
+    alt ["Agregar ítem de venta"]
+        Usuario -> Sistema: agregarItemVenta()
+
+        alt ["Datos no validos"]
+            Sistema --> Usuario: Notificar datos invalidos
+
+        end 
+
+        Sistema -> BD: agregarItem()
+        BD --> Sistema: Ítem agregado guardado con exito
+        Sistema --> Usuario: Notificar ítem agregado
+
+        note right of Sistema
+                "ítem agregado con exito"
+                "Sale del bucle"
+            end note
+
+    end
+    
+
+end 
+
+loop "Mientras los datos sean validos y haya ítems por modificar"
+
+
+    alt ["Modificar ítem de venta"]
+        Usuario -> Sistema: modificarItemVenta()
+
+        alt ["Datos no validos"]
+            Sistema --> Usuario: Notificar datos invalidos
+
+        end 
+
+        Sistema -> BD: modificarItem()
+        BD --> Sistema: Guardado de modificación exitoso
+        Sistema --> Usuario: Notificar ítem modificado
+
+        note right of Sistema
+                "ítem modificado con exito"
+                "Sale del bucle"
+            end note
+
+    end
+
+end 
+
+alt ["Eliminar ítem de venta"]
+    Usuario -> Sistema: eliminarItemVenta()
+
+    Sistema -> BD: eliminarItem()
+    BD --> Sistema: Borrado exitoso
+    Sistema --> Usuario: Notificar ítem eliminado
+
+end
+
+Sistema -> BD: registrarItems()
+BD --> Sistema: Guardado exitoso
+Sistema --> Usuario: Notificar ítem guardado
+
+@enduml

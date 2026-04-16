@@ -1,0 +1,51 @@
+@startuml Caso12_Green_Juegos
+
+participant admin
+participant "cp: controlProcesador" as cp
+participant "cpc:<<singleton>>  CatalogoDeComandos" as catalogo
+participant "descrip(i): descripcionDeObjeto" as descr
+participant "<<multiobjeto>>  lista_comandos:ListaDeComandos" as multi
+
+admin -> cp: registrar_comando(comando:str)
+activate cp
+
+alt Datos no validos
+
+    cp --> admin: "<<Datos no validos>>"
+
+end
+
+cp -> catalogo: buscar_comando(comando:str)
+activate catalogo
+
+loop para cada i en descrip
+    catalogo -> descr : get_comando()
+    activate descr
+    descr --> catalogo : "<<comando:string>>"
+    deactivate descr
+end
+note right of catalogo
+    Si se encontro coincidencia:
+    cortar iteración
+    end note
+
+alt Comando encontrado
+    catalogo --> cp: "<<True>>"
+    cp --> admin: "<<Comando ya registrado>>"
+    
+end
+
+catalogo --> cp: "<<NULL>>"
+deactivate catalogo 
+
+cp -> multi: "registrar_comando(comando:str)"
+activate multi 
+
+multi --> cp: "<<Comando registrado>>"
+
+cp --> admin: "<<Comando registrado con exito>>"
+deactivate cp 
+
+@enduml
+
+
