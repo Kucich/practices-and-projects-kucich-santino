@@ -66,7 +66,6 @@
 <hr>
 
 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta voluptas vitae possimus nulla ipsam, neque ipsa veniam, <em> sequi incidunt soluta beatae porro</em>, quos iure ea earum magni. Facilis, nemo ex!</p>
-</body>
 
 
 <h2>Lista ordenada</h2>
@@ -155,7 +154,13 @@
     <option value="Chrome">
     <option value="Opera">
     <option value="Safari">
-    </datalist>
+    </datalist><br>
 
+    <!-- <input type="text" id="text" value=""><br>
 
+    <button onclick="speechSynthesis.speak(new SpeechSynthesisUtterance(text.value))">Hablar</button><br> -->
+
+    <input type="text" id="text">
+    <button onclick="SpeechSynthesis.speak(new SpeechSynthesisUtterance(text.value))">hablar</button> 
+    </body>
 </html>

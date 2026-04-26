@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto</title>
+
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+    
+    <!--Encabezado de la página -->
+    <header>
+        <h1>Contacto</h1>
+        <p>¿Quieres contactarnos? Esta es tu página.</p>
+    </header>
+
+    <div class="container">
+        <!-- Navegación, contenedor de lado izquierdo -->
+        <nav>
+            <ul>
+                <li><a href="./practica_nro3_kucich.html">Inicio</a></li>
+                <li><a href="./multimedia.html">Multimedia</a></li>
+                <li><a href="./contact.html">Contacto</a></li>
+            </ul>
+        </nav>
+
+        <!-- Contenedor principal -->
+        <main>
+            <section>
+               
+                <table border="1">
+                    <form action="enviar" method="post">
+                        <tr>
+                            <td><label for="">Dato</label></td>
+                            <td><label for="">Completar</label></td>
+                        </tr>
+
+                        <tr>
+                            <td><label for="name">Nombre</label></td>
+                            <td><input type="text" id="name" required placeholder="Ingrese su nombre"></td>
+                        </tr>
+
+                        <tr>
+                            <td><label for="email">Email</label></td>
+                            <td><input type="email" id="email" required placeholder="Ingrese su email"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="age">Edad</label></td>
+                            <td><input type="number" id="age" placeholder="Ingrese su edad"></td>
+                        </tr>
+
+                        <tr>
+                            <td><label for="color">Color preferido</label></td>
+                            <td><input type="color" id="color"></td>
+                        </tr>
+
+                        <tr>
+                            <td><label for="comentario">Comentario</label></td>
+                            <td><textarea name="idea" id="comentario" minlength="10"></textarea></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <label for="boton">Enviar</label>
+                            </td>
+
+                            <td>
+                                <button type="submit" id="boton">Enviar formulario.</button>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                </form>
+            </section>
+
+        </main>
+
+        <!-- Contenedor del lado derecho -->
+        <div class="right">
+            <h2>Info</h2>
+            <p>Trabajemos juntos, tu nos compartes tu servicio o noticia y nosotros lo publicamos.</p>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer>
+        <p>Siempre son bienvenidos los nuevos servicios y noticias, en el enlace de "Contacto" puedes compartinos tus novedades</p>
+        <p>Esta página esta super protegida y reservada</p>
+    </footer>
+
+</body>
+</html>
