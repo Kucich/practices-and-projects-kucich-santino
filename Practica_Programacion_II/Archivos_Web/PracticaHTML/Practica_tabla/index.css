@@ -1,0 +1,91 @@
+html {
+    background-color: rgb(240, 240, 240);
+}
+
+:root{
+    --color72: #blue;
+}
+
+*{
+    font-family: 'Poppins';
+}
+
+img {
+    width: 150px;
+    height: 150px;
+}
+
+.background-red{
+    text-align: center;
+}
+
+.container {
+    width: 1024px;
+    margin: 0 auto;
+}
+.table-container {
+    border-radius: 15px;
+    border: 1px solid #c5c5c5 ;
+    overflow: hidden;
+}
+
+.table-custom{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.table-custom thead{
+    background-color: rgb(250, 250, 250);
+}
+
+table.table-custom tbody tr:hover td{
+    background-color: rgb(128, 118, 118);
+    
+}
+
+table.table-custom tbody tr:hover td {
+    background-color: rgb(204, 32, 32);
+
+}
+
+table.table-custom tbody td {
+    background-color: aquamarine;
+    border-bottom: 1px solid var(--color72);
+    padding: 15px 20px;
+    font-size: 15px;
+}
+
+table.table-custom tbody tr td .data-container  {
+    display: inline-block;
+
+}
+
+table.table-custom tbody tr td .img-container {
+    float: left;
+    margin-right: 13px;
+    padding-top: 20px;
+}
+
+table.table-custom tbody tr td img {
+    width: 50px;
+    border-radius: 100%;
+}
+
+.badge-active {
+    padding: 7px 15px;
+    background-color: #9fe19f;
+    border-radius: 20px;
+    color: #4a6a4a;
+}
+
+.box {
+    background: #2a7b9b;
+    background: linear-gradient(90deg, 
+    rgba(42, 123, 155, 1) 0%,
+    rgba(87, 199, 133, 1) 50%,
+    rgba(237, 221, 83, 1) 100%);
+    width: 250px;
+    height: 150px;
+    border-radius: 35px;
+    corner-shape: bevel;
+}

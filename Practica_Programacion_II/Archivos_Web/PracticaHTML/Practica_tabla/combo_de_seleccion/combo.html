@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        select::picker{
+            appearance: base-select;
+        }
+
+        select {
+            background-color: #222;
+            color:white;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #555;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        option {
+            background: #333;
+            color: white;
+        }
+
+        option:hover {
+            background: #555;
+        }
+
+        option:checked {
+            background-color: tomato;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h2>Ejemplo de Select Estilizado</h2>
+
+    <select name="" id="">
+        <option value="1">Pizza</option>
+        <option value="2">Cangreburguer</option>
+        <option value="3">Lentejas</option>
+    </select>
+    
+</body>
+</html>
