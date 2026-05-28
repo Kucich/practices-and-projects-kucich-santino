@@ -1,0 +1,19 @@
+h2 {
+    font-family: "Noto Sans", "Sans-serif";
+    background-image: url(../img/arboles-naranjas.jpg);
+    background-size: cover;
+    background-clip: text;
+    color: transparent;
+    animation: animate 20s linear infinite;
+    font-size: 20rem;
+}
+@keyframes animate {
+    to {
+        background-position-x: -500px;
+        
+    }
+}
+
+body{
+    background-color: black;
+}
