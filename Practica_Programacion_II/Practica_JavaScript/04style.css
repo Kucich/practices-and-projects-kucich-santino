@@ -1,0 +1,19 @@
+
+body {
+    background-color: rgb(225, 266, 266);
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
+
+p {
+    padding-right: 10px;
+}
+
+#form {
+    border: 2px solid;
+    margin-left: 5px;
+}
