@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Horizontal</title>
+
+    <style>
+
+     .caja {
+        width: 150px;
+        height: 150px;
+        background-color: #3498db;
+        border: 3px solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;        
+     }
+
+     .container {
+        background-color: #ecf0f1;
+        width: 100%;
+        height: 100vh;
+        display: grid;
+        grid-template-columns: auto auto;
+        justify-content: space-around;
+        align-content: space-around;
+     }
+        
+    </style>
+
+</head>
+<body>
+    
+    <div class="container">
+
+        <div class="caja">Caja 1</div>
+        <div class="caja">Caja 2</div>
+        <div class="caja">Caja 3</div>
+        <div class="caja">Caja 4</div>
+        <div class="caja">Caja 5</div>
+        <div class="caja">Caja 6</div>
+        <div class="caja">Caja 4</div>
+        <div class="caja">Caja 5</div>
+        <div class="caja">Caja 6</div>
+
+
+    </div>
+       
+
+    <!-- <ul>
+        <li>
+            <ul>
+                <li>Hola</li>
+                <li>Adios</li>
+                <li>Hola de nuevo</li>
+            </ul>
+        </li>
+        <li>Atún</li>
+        <li>Pescado</li>
+    </ul>
+
+    <table>
+
+        <tr>
+            <td>Hola</td>
+            <td>Adios</td>
+            <td>Hola de nuevo</td>
+        </tr>
+
+        <tr>
+            <td>Atún</td>
+            <td>Pescado</td>
+            <td>Marisco</td>
+        </tr>
+
+
+    </table> -->
+
+
+    <table>
+    <caption>Lista de productos</caption>
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Atún</td>
+            <td>$500</td>
+        </tr>
+        <tr>
+            <td>Pescado</td>
+            <td>$700</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>Total</td>
+            <td>$1200</td>
+        </tr>
+    </tfoot>
+</table>
+
+
+
+<video src="../../videos/video_tornado.mp4" height="500px" width="100%" controls autoplay></video>
+
+<form method="post">
+
+    <label for="email">Email</label> 
+    <input type="email" name="email">
+    
+    <label for="area">Ingrese su comentario</label> 
+    <textarea name="area"></textarea> 
+
+    <button type="submit">Enviar</button>
+</form>
+
+
+</body>
+</html>

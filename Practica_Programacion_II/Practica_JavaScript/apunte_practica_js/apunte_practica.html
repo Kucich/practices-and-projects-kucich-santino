@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apunte practica JS</title>
+
+    <link rel="stylesheet" href="./apunte_practica.css">
+</head>
+<body id="cuerpo">
+    <h2>Ejercicio 1:Validación de formulario</h2>
+
+    <form action="#">
+        <input type="text" placeholder="Ingrese su nombre"
+         id="nombre" value="">
+
+        <button id="boton_nombr" onclick="javascript:boton_nombre();">Enviar nombre</button>
+    </form>
+
+    <h2>Ejercicio 2: Mostrar y ocultar contenido</h2>
+
+    <p id="parrafo_mostrado">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem voluptas incidunt voluptatum, omnis excepturi sequi fuga commodi ducimus harum mollitia tenetur deserunt vero quis fugit ipsam? Mollitia, laudantium? Alias, quasi?</p>
+    <button id="boton_ocultar_mostrar" onclick="javascript:ocultar_mostrar();">Ocultar/Mostrar parrafo</button>
+
+    <h2>Ejercicio 3: Cambiar el color de fondo</h2>
+
+    <input type="color" name="" id="color_fondo" oninput="javascript:cambiar_color();">
+
+    <h2>Ejercicio 4: Contador de clics</h2>
+
+    <p>Contador: <span id="contador">0</span></p>
+
+    <button id="incrementador" onclick="javascript:incrementador();">Incrementar</button>
+
+    <h2>Ejercicio 6: Cambiar el contenido de un párrafo</h2>
+
+    <form action="#">
+        <input type="text" id="texto_ingresado" placeholder="Ingresa un nuevo texto">
+
+        <button id="cambio" onclick="javascript:cambiar_parrafo();">Cambiarlo ya</button>
+    </form>
+
+    <p id="cambiado">Este parrafo cambiara</p>
+
+    <script src="./apunte_practica.js"></script>
+</body>
+</html>

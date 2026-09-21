@@ -1,0 +1,59 @@
+/* ejer1
+.contenedor {
+    display: flex;
+    justify-content: center;
+}
+
+.caja {
+    margin: 20px;
+    border: 2px solid black;
+    width: 100px;
+    height: 100px;
+} */
+
+
+/* ejer2
+.contenedor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.caja {
+    margin: 15px;
+    border: 2px solid black;
+    width: 100px;
+    height: 100px;
+} */
+
+
+/* ejer3
+.contenedor {
+    display: flex;
+    justify-content: space-between;
+
+    
+}
+
+.caja {
+    margin: 15px;
+    border: 2px solid black;
+    width: 100px;
+    height: 100px;
+} */
+
+
+.contenedor {
+    display: flex;
+    justify-content: space-between;
+    
+    
+}
+
+/* ejer4: la diferencia es que justify-content mueve los elementos de forma horizontal mientras que aling-items alinea de forma vertical */
+
+
+/* ejer5: respuesta correcta C , horizontal y verticalmente */
+

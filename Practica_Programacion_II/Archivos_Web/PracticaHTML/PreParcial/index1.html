@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PreParcial</title>
+</head>
+<body>
+    
+    <header>
+
+        <h1>Sobre mi</h1>
+
+        <ul>
+            <li><a href="#mi">Sobre mi</a></li>
+            <li><a href="#cualidades">Cualidades</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+
+    </header>
+
+    <main>
+        <section class="presentacion">
+            <p>Mi nombre es Santino y soy Desarrollador de Software</p>
+            <p>Tengo conocimientos en programacion con <strong>Python</strong>, <strong>JavaScript</strong> y tecnologias Web como <strong>HTML</strong> y <em>CSS</em></p>
+        </section>
+
+        <div class="img">
+            <img src="./media/foto_perfil.jpeg" alt="Foto de perfil" width="200" height="200">
+        </div>
+
+        <!--Contenedor de tabla de lenguajes de programación -->
+        <div class="tabla">
+            <table border="1px">
+                <thead>
+                    <tr>
+                        <th>Lenguajes de Programación</th>
+                        <th>Nivel de Conocimiento</th>
+                        <th>Gusto Personal</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <tr>
+                        <td>Python</td>
+                        <td>⭐⭐⭐⭐</td>
+                        <td>Alto</td>
+                    </tr>
+
+                    <tr>
+                        <td>JavaScript</td>
+                        <td>⭐⭐</td>
+                        <td>Alto</td>
+                    </tr>
+
+                    <tr>
+                         <td rowspan="2">HyperTextMarkupLenguaje y CSS</td>
+                         <td colspan="2">Gusto de ⭐⭐⭐</td>
+                    </tr>
+
+                    <tr>
+                        <td>⭐⭐⭐</td>
+                        <td>Interesante</td>
+                    </tr>
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td colspan="3">Me gustan todos los lenguajes que conozco, algunos más que otros.</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </main>
+
+    <footer>
+        <fieldset>
+            <legend>Formulario de Contacto</legend>
+
+            <form action="" method="post">
+
+                <label for="nombre">Nombre</label>
+                <input id="nombre" name="nombre" type="text" required>
+
+                <label for="edad">Edad</label>
+                <input id="edad" name="edad" type="number">
+
+                <label for="motivo">Motivo de Contacto</label>
+                <select id="motivo" name="motivo">
+                    <option value="1">Preguntas</option>
+                    <option value="2">Entrevista</option>
+                    <option value="3">Oferta Laboral</option>
+                </select>
+
+                <input type="submit">
+
+            </form>
+
+        </fieldset>
+    </footer>
+
+</body>
+</html>

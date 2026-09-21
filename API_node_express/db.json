@@ -1,0 +1,50 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "nombre": "Juan Pérez",
+      "email": "juan@example.com"
+    },
+    {
+      "id": 2,
+      "nombre": "María Gómez",
+      "email": "maria@example.com"
+    },
+    {
+      "id": 3,
+      "nombre": "Lucia Sevilla",
+      "email": "lucia@example.com"
+    }
+  ],
+  "productos": [
+    {
+      "id": 101,
+      "nombre": "Auriculares",
+      "precio": 2500,
+      "stock": 15
+    },
+    {
+      "id": 102,
+      "nombre": "Teclado",
+      "precio": 4500,
+      "stock": 8
+    }
+  ],
+  "pedidos": [
+    {
+      "id": 5001,
+      "usuarioId": 1,
+      "productos": [
+        {
+          "productoId": 101,
+          "cantidad": 2
+        },
+        {
+          "productoId": 102,
+          "cantidad": 1
+        }
+      ],
+      "estado": "pendiente"
+    }
+  ]
+}

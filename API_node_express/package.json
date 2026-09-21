@@ -1,0 +1,24 @@
+{
+  "name": "api_node_express",
+  "version": "1.0.0",
+  "description": "mi primera api",
+  "keywords": [
+    "node",
+    "js"
+  ],
+  "license": "ISC",
+  "author": "santino",
+  "type": "module",
+  "main": "01-probando.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.24.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

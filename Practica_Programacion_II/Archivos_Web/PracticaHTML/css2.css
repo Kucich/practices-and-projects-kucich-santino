@@ -7,3 +7,25 @@ p {
 body {
     background-color: white;
 }
+
+h2 {
+    color: blue;
+}
+
+p {
+    font-size: 18px;
+}
+
+.destacado {
+    background-color: yellow;
+}
+
+#principal {
+    border: 2px solid;
+    border-color: black;
+}
+
+a {
+    text-decoration: none;
+    
+}

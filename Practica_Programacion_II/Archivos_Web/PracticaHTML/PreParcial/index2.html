@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscripción a un Torneo Gamer</title>
+</head>
+
+<body>
+    <header>
+        <h1>Torneo Gamer 2026</h1>
+
+        <nav>
+            <ul>
+                <li><a href="#info-torneo">Información del torneo</a></li>
+                <li><a href="#juegos-disponibles">Juegos disponibles</a></li>
+                <li><a href="#formulario">Formulario de inscripción</a></li>
+            </ul>
+        </nav>
+
+        <p>Un evento épico que reúne a los mejores jugadores de la región.
+        Competencias intensas en títulos de estrategia y acción.
+        Premios, diversión y comunidad gamer en un solo lugar.</p>
+        
+        <img src="./media/juegos.jpeg" alt="Imagen de mandos de play 4">
+    </header>
+
+    <main>
+        <section id="info-torneo">
+            <h2>Información del torneo</h2>
+            
+            <p>¿En qué fecha sera el torneo? ¿Dónde se realizara el torneo? ¿Cúal es el premio? ¿Cuantos pueden participar?</p>
+
+            <ul>
+                <li>Fecha: 22/06/2026</li>
+                <li>Lugar: Instituto Juan Pablo II Roldán</li>
+                <li>Premio: Play Station Plus por 3 años o 15 tarjetas de Steam</li>
+                <li>Cantidad máxima de participantes: 150</li>
+            </ul>
+
+            <p>¡Anotate rapido!</p>
+        </section>
+
+        <section id="juegos-disponibles">
+            <h2>Juegos Disponibles</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Plataforma</th>
+                        <th>Máximo de Jugadores</th>
+                    </tr>
+                </thead>
+    
+                <tbody>
+                    <tr>
+                        <td>CSGO 2</td>
+                        <td>PC</td>
+                        <td>30</td>
+                    </tr>
+                    <tr>
+                        <td>Fornite</td>
+                        <td>Play 4</td>
+                        <td>30</td>
+                    </tr>
+                    <tr>
+                        <td>Hunt Showdown</td>
+                        <td>PC</td>
+                        <td>30</td>
+                    </tr>
+                    <tr>
+                        <td>Far Cry 3</td>
+                        <td>Play 4</td>
+                        <td>30</td>
+                    </tr>
+                    <tr>
+                        <td>Hell Let Lose</td>
+                        <td>PC</td>
+                        <td>30</td>
+                    </tr>
+                </tbody>
+    
+                <tfoot>
+                    <tr>
+                        <td colspan="2">Jugadores totales =</td>
+                        <td>150</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+
+        <section id="formulario">
+            <h2>Formulario de Inscripción</h2>
+
+            <fieldset>
+                <legend>Complete el formulario con sus datos personales</legend>
+
+                <form action="#" method="post">
+                    <label for="nombreUsuario">Nombre</label>
+                    <input id="nombreUsuario" name="nombre" type="text" required><br>
+
+                    <label for="edadUsuario">Edad</label>
+                    <input id="edadUsuario" name="edad" type="number" required><br>
+
+                    <label for="emailUsuario">Email</label>
+                    <input id="emailUsuario" name="email" type="email" required><br>
+
+                    <label for="contrasenaUsuario">Contraseña</label>
+                    <input id="contrasenaUsuario" name="contrasena" type="password" required><br>
+
+                    <label for="nacimientoUsuario">Fecha de nacimiento</label>
+                    <input id="nacimientoUsuario" name="nacimiento" type="date" required><br>
+
+                    <label for="juegoUsuario">¿A qué vas a jugar?</label>
+                    <select name="anotarse-juego" id="juegoUsuario" required>
+                        <option value="selec" selected disabled>Seleccionar</option>
+                        <option value="csgo2">CSGO2</option>
+                        <option value="fornite">Fornite</option>
+                        <option value="hunt">Hunt Showdown</option>
+                        <option value="Farcry3">Far Cry 3</option>
+                        <option value="hellletlose">Hell Let Lose</option>
+                    </select><br>
+
+                    <h3>Plataforma</h3>
+                    <p>Play Station 4</p>
+                    <input id="play4" name="plataforma" type="radio"><br>
+                    <p>PC</p>
+                    <input id="pc" name="plataforma" type="radio">
+
+                    <h3>Accesorios</h3>
+                    <p>Auriculares</p>
+                    <input name="accesorios" type="checkbox">
+                    <p>Mando propio</p>
+                    <input name="accesorios" type="checkbox">
+                    <p>Mouse Gamer</p>
+                    <input name="accesorios" type="checkbox">
+                    <p>Teclado Gamer</p>
+                    <input name="accesorios" type="checkbox"><br><br>
+
+                    <label for="comentarioUsuario">¿Algo que quieras contarnos?</label><br>
+                    <textarea name="comentario" id="comentarioUsuario"></textarea><br><br>
+
+                    <input id="enviarDatosUsuario" name="boton" type="submit">
+                </form>
+            </fieldset>
+        </section>
+    </main>
+
+    <footer>
+        <h2>¿Quien organiza todo el torneo?</h2>
+        <p>Santino Kucich</p>
+
+        <h3>Ante cualquier consulta, comunicate al sigueinte email</h3>
+        <p>contacto@gmail.com</p>
+
+        <h3>Eventos similares</h3>
+        <a href="https://www.3djuegos.com/eventos" target="_blank">Pagina de 3Djuegos</a>
+    </footer>
+</body>
+</html>

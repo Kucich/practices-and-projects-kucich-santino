@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./nav.css">
+    <title>Document</title>
+    <style>
+        body{
+
+            display: grid;
+            grid-template-columns: 350px 1fr; /* despues en la primera columna le podemos poner auto y que se adapte al menu
+            /
+            grid-template-areas: "header header"
+                                 "aside main ";
+            gap: 0.5rem; /Esto no es necesario pero lo puse para que los espacios queden con una separación.*/
+            min-height: 100vh;
+        }
+
+        #container-header{
+            grid-area: header;
+
+        }
+
+        main{
+            grid-area: main;
+            background-color: aqua;
+
+        }
+
+        #container-aside{
+            grid-area: aside;
+            background-color: brown;
+            min-height: 100vh;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="container-header"></div>
+    <main>hola</main>
+    <div id="container-aside"></div>
+</body>
+<script src="./nav.js"></script>
+</html>

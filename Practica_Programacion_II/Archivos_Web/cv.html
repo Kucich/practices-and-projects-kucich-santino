@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    /* ── Reset & Variables ─────────────────────────────────── */
+    :root {
+      --color-primario: #0a3894;
+      --color-secundario: #2075fd;
+      --color-acento: #2c90fb;
+      --color-texto: #1B1B1B;
+      --fuente-titulo: 'Georgia', serif;
+      --fuente-cuerpo: 'Trebuchet MS', sans-serif;
+      --radio-borde: 8px;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: var(--fuente-cuerpo);
+      background-color: var(--color-acento);
+      color: var(--color-texto);
+      line-height: 1.7;
+    }
+    /* ── Header ───────────────────────────────────────────── */
+    header {
+      background-color: var(--color-primario);
+      color: #fff;
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      font-family: var(--fuente-titulo);
+      font-size: 2.4rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    /* ── Navegación ───────────────────────────────────────── */
+    nav ul {
+      list-style: none;      display: flex;      gap: 2rem;
+    }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radio-borde);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    nav ul li a:hover {
+      background-color: var(--color-secundario);
+      color: var(--color-primario);
+    }
+    /* ── Layout principal ─────────────────────────────────── */
+    .contenedor {
+      max-width: 1100px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2.5rem;
+    }
+    /* ── Artículos ────────────────────────────────────────── */
+    article {
+      background: #fff;
+      border-radius: var(--radio-borde);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      border-left: 5px solid var(--color-secundario);
+    }
+    article h2 {
+      font-family: var(--fuente-titulo);
+      font-size: 1.6rem;
+      margin-bottom: 0.6rem;
+      color: var(--color-primario);
+    }
+    article .meta {
+      font-size: 0.82rem; color: #888; margin-bottom: 1rem;
+    }
+    article p {
+      font-size: 1rem; margin-bottom: 1rem;
+    }
+    article img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: var(--radio-borde);
+      display: block;
+      margin-bottom: 1.2rem;
+    }
+    /* ── Etiquetas / Tags ─────────────────────────────────── */
+    .etiquetas {
+      display: flex;      flex-wrap: wrap;      gap: 0.5rem;      margin-top: 1rem;
+    }
+    .etiqueta {
+      background-color: var(--color-acento);
+      color: var(--color-primario);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    /* ── Tabla de datos ───────────────────────────────────── */
+    .tabla-wrapper {
+      overflow-x: auto;  margin-top: 1.5rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+    table th,
+    table td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    table th {
+      background: var(--color-primario);
+      color: white;
+      font-weight: 700;
+    }
+    table tr:nth-child(even) {
+      background-color: #f4f9f6;
+    }
+    table tr:hover {
+      background-color: var(--color-acento);
+      cursor: default;
+    }
+    /* ── Sidebar ──────────────────────────────────────────── */
+    aside {
+      position: sticky;
+      top: 2rem;
+      align-self: start;
+    }
+    .widget {
+      background: #fff;
+      border-radius: var(--radio-borde);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+    .widget h3 {
+      font-family: var(--fuente-titulo);
+      font-size: 1.15rem;
+      margin-bottom: 1rem;
+      color: var(--color-primario);
+      border-bottom: 2px solid var(--color-acento);
+      padding-bottom: 0.5rem;
+    }
+    /* ── Formulario de suscripción ────────────────────────── */
+    .form-suscripcion {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .form-suscripcion input[type="email"] {
+      padding: 0.6rem 1rem;
+      border: 2px solid #ccc;
+      border-radius: var(--radio-borde);
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.25s;
+    }
+    .form-suscripcion input[type="email"]:focus {
+      border-color: var(--color-secundario);
+    }
+    .form-suscripcion input[type="text"] {
+      padding: 0.6rem 1rem;
+      border: 2px solid #ccc;
+      border-radius: var(--radio-borde);
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.25s;
+    }
+    .form-suscripcion input[type="text"]:focus {
+      border-color: var(--color-secundario);
+    }
+    .form-suscripcion textarea:focus {
+      border-color: var(--color-secundario);
+    }
+    .form-suscripcion textarea {
+      padding: 0.6rem 1rem;
+      border: 2px solid #ccc;
+      border-radius: var(--radio-borde);
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.25s;
+    }
+    
+    .btn-suscribir {
+      padding: 0.65rem 1.2rem;
+      background-color: var(--color-primario);
+      color: white;
+      border: none;
+      border-radius: var(--radio-borde);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.15s;
+    }
+    .btn-suscribir:hover {
+      background-color: var(--color-secundario);
+      color: var(--color-primario);
+      transform: translateY(-2px);
+    }
+    /* ── Lista reciente ───────────────────────────────────── */
+    .lista-reciente {
+      list-style: none;  padding: 0;
+    }
+    .lista-reciente li {
+      padding: 0.5rem 0;
+      border-bottom: 1px dashed #ddd;
+      font-size: 0.9rem;
+    }
+    .lista-reciente li:last-child {
+      border-bottom: none;
+    }
+    .lista-reciente a {
+      color: var(--color-primario);  text-decoration: none;  font-weight: 600;
+    }
+    .lista-reciente a:hover {
+      text-decoration: underline;
+    }
+    /* ── Footer ───────────────────────────────────────────── */
+    footer {
+      background-color: var(--color-texto);
+      color: #ddd;
+      text-align: center;
+      padding: 2.5rem;
+      margin-top: 4rem;
+      font-size: 0.88rem;
+    }
+    footer a {
+      color: var(--color-secundario);   text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    /* ── Media Query ──────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .contenedor {
+        grid-template-columns: 1fr;
+      }
+      header {
+        flex-direction: column;  gap: 1rem;  text-align: center;
+      }
+    }
+
+    </style>
+</head>
+<body>
+    
+    <!-- ENCABEZADO -->
+  <header>
+    <h1>TechBlog</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="articulos.html">Artículos</a></li>
+        <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+  <!-- CONTENIDO PRINCIPAL -->
+  <main>
+  <div class="contenedor">
+    <!-- SECCIÓN PRINCIPAL -->
+    <main>
+      <!-- Artículo 1 -->
+      <article>
+        <img src="https://carballar.com/redes-neuronales-que-son-y-como-funcionan" alt="Ilustración de redes neuronales" title="Inteligencia Artificial en 2025">
+        <h2>El auge de la Inteligencia Artificial en 2025</h2>
+        <p class="meta">
+          <time datetime="2025-03-15">15 de marzo de 2025</time> ·
+          <span>Por <strong>Ana Gómez<strong></span>
+        </p>
+        <p> La inteligencia artificial ha dejado de ser una promesa futura para convertirse en parte del trabajo cotidiano. Los modelos de lenguaje de gran escala transforman la manera en que programamos, escribimos y tomamos decisiones.</p>
+        <p> Según los últimos informes, más del <em>60 % de las empresas</em> ya integran algún tipo de IA en sus flujos de trabajo diarios.</p>
+        <div class="etiquetas">
+          <span class="etiqueta">IA</span>
+          <span class="etiqueta">Machine Learning</span>
+          <span class="etiqueta">Tendencias</span>
+        </div>
+      </article>
+      <!-- Artículo 2 — con tabla -->
+      <article>
+        <h2>Comparativa de frameworks front-end</h2>
+        <p class="meta">
+          <time datetime="2025-02-28">28 de febrero de 2025</time> ·
+          <span>Por <strong>Luis Torres</strong></span>
+        </p>
+        <p>Elegir el framework correcto puede marcar la diferencia en productividad y mantenibilidad. A continuación, una comparativa de los más usados en la industria:</p>
+        <div class="tabla-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Framework</th><th>Curva de aprendizaje</th><th>Rendimiento</th> <th>Popularidad</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>React</td><td>Media</td><td>Alta</td><td>★★★★★</td>
+              </tr>
+                <td>Vue.js</td><td>Baja</td><td>Alta</td><td>★★★★☆</td>
+              </tr>
+              <tr>
+                <td>Angular</td><td>Alta</td><td>Alta</td><td>★★★★☆</td>
+              </tr>
+              <tr>
+                <td>Svelte</td><td>Baja</td><td>Muy alta</td><td>★★★☆☆</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="etiquetas">
+          <span class="etiqueta">React</span>
+          <span class="etiqueta">Vue</span>
+          <span class="etiqueta">JavaScript</span>
+        </div>
+      </article>
+      <!-- Artículo 3 — formulario de comentario -->
+      <article>
+        <h2>¿Cómo escribir CSS más eficiente?</h2>
+        <p class="meta">
+          <time datetime="2025-01-10">10 de enero de 2025</time> ·
+          <span>Por <strong>María Ruiz</strong></span>
+        </p>
+        <p>Usar variables CSS, selectores específicos y metodologías como BEM reduce drásticamente el código repetido y mejora la colaboración en equipos grandes.</p>
+        <section aria-label="Dejar un comentario">
+          <h3>Dejá tu comentario</h3>
+          <form action="/comentarios" method="GET" class="form-suscripcion">
+            <label for="nombre">Nombre completo</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+            <label for="correo">Correo electrónico</label>
+            <input type="email"  id="correo" name="correo" placeholder="tucorreo@ejemplo.com" required>
+            <label for="comentario">Comentario</label>
+            <textarea id="comentario" name="comentario" rows="4" placeholder="Escribí tu opinión..." required></textarea>
+            <button type="submit" class="btn-suscribir">Enviar comentario</button>
+          </form>
+          
+        </section>
+        <div class="etiquetas">
+          <span class="etiqueta">CSS</span><span class="etiqueta">BEM</span><span class="etiqueta">Buenas Prácticas</span>
+        </div>
+      </article>
+    </main>
+    <!-- SIDEBAR -->
+    <aside>
+      <!-- Widget suscripción -->
+      <div class="widget">
+        <h3>Suscribite al blog</h3>
+        <form class="form-suscripcion" action="/suscripcion" method="post">
+          <label for="email-sub">Tu correo</label>
+          <input type="email" id="email-sub" name="email" placeholder=correo@ejemplo.com required />
+          <button class="btn-suscribir" type="submit">Suscribirme</button>
+        </form>
+      </div>
+      <!-- Widget artículos recientes -->
+      <div class="widget">
+        <h3>Artículos recientes</h3>
+        <ul class="lista-reciente">
+          <li><a href="#">Introducción a TypeScript</a></li>
+          <li><a href="#">Grid vs Flexbox: ¿cuándo usar cada uno?</a></li>
+          <li><a href="#">Accesibilidad web desde cero</a></li>
+          <li><a href="#">APIs REST con Node.js</a></li>
+        </ul>
+      </div>
+      <!-- Widget categorías -->
+      <div class="widget">
+        <h3>Categorías</h3>
+        <div class="etiquetas">
+          <span class="etiqueta">HTML</span>
+          <span class="etiqueta">CSS</span>
+          <span class="etiqueta">JavaScript</span>
+          <span class="etiqueta">Accesibilidad</span>
+          <span class="etiqueta">Performance</span>
+        </div>
+      </div>
+    </aside>
+  </div><!-- /.contenedor -->
+  <!-- PIE DE PÁGINA -->
+  <footer>
+    <p>&copy; 2025 TechBlog — Todos los derechos reservados</p><p>Diseñado con ♥️ por el equipo de <a href="#">Dev Studio</a></p>
+  </footer>
+
+</body>
+</html>
