@@ -20,7 +20,7 @@ while (contador != 100) {
     contador = contador + 1
     total = total + contador
     console.log(total)
-    
+
     if (contador == 100) {
         console.log(`El total de la suma de los numeros es ${total}`)
         break

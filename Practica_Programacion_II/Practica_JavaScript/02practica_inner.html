@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practica Js</title>
+    <link rel="stylesheet" href="./02estilos.css">
+</head>
+<body>
+    
+    <div id="contenedor">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur tempore nobis commodi dolorem quis natus perferendis, qui incidunt fugiat necessitatibus assumenda, cupiditate asperiores est iure reiciendis deserunt voluptates laborum doloribus?</p>
+    </div>
+    
+    <!-- <button class="boton" onclick="javascript:apretar(); cambiar_texto();">Apretar botón</button> -->
+    
+    <div id="contenedor2">
+        <p>Los colores son coloridos</p>
+        
+    </div>
+
+    
+
+    <form action="" id="formulario">
+
+        
+        
+        <label for="nombr">Nombre</label>
+        <input class="inputform" type="text" id="nombre" placeholder="Juan Luis">
+
+        <label for="apellid">Apellido</label>
+        <input class="inputform" type="text" id="apellido" placeholder="San Jorge">
+
+        <label for="selector">Seleccione su género</label>
+        <select class="inputform" name="selector" id="select" onchange="agregar_profesiones()">
+            <option id="opcion" value="s" selected disabled>Seleccionar</option>
+            <option id="opcion" value="Masculino">Masculino</option>
+            <option id="opcion" value="Femenino">Femenino</option>
+        </select>
+
+        <div id="contenido-genero">
+
+        </div>
+
+        <label for="areatext">Escribe tu opinión</label>
+        <textarea class="inputform" name="text" id="textoarea" placeholder="Tu opinión importa"></textarea>
+
+        <button class="botonform" onclick="javascript:validar_campos();">Botón de validación</button>
+
+    </form>
+
+
+</body>
+
+<script src="./02practicainner.js"></script>
+</html>
