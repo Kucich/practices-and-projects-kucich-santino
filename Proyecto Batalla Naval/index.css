@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    /* padding: 0; */
+    box-sizing: border-box;
+}
+
+.contenedor-principal {
+    display: flex;
+    flex-direction: column;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.35)), url(./imagenes/batalla-naval2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    gap: 5rem;
+}
+
+.contenedor-grillas {
+    display: flex;
+    gap: 5rem;
+}
+
+.secciones {
+    /* background-color: rgb(4, 160, 217); */
+    text-align: center;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.casillas {
+    width: 7rem;
+    height: 7rem;
+    background-color: rgb(20, 63, 109);
+}
+
+.titulo {
+    color: #fff;
+    font-weight: bold;
+}
