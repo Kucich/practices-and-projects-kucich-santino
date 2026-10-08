@@ -38,3 +38,8 @@
     color: #fff;
     font-weight: bold;
 }
+
+#grilla-maquina button {
+    background-color: rgb(80, 8, 8);
+    pointer-events: none;
+}
