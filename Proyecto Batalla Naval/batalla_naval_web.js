@@ -10,22 +10,6 @@
     --------------------------------------------------
 */ 
 
-// Renderizado en HTML
-
-// Usar innerHTML para crear la grilla inicial dentro del único <div>.
-
-// Usar appendChild para botones, mensajes, etc.
-
-// Estilos con CSS
-
-// Diferenciar casillas: agua, barco, impacto.
-
-// Darle aspecto de tablero de juego.
-// --------------------------------------------------
-
-// Importar prompt-sync , es como input en python
-// const prompt = require("prompt-sync")();
-
 // Funciones
 
 function ubicarBarcosJugador(filaSeleccionada, columnaSeleccionada, boton) {
@@ -34,7 +18,7 @@ function ubicarBarcosJugador(filaSeleccionada, columnaSeleccionada, boton) {
 
     if (validarFilaColumna(filaSeleccionada, columnaSeleccionada, jugador)) {
         grillaJugador[filaSeleccionada][columnaSeleccionada] = 1
-        boton.style.backgroundColor = "rgb(14, 48, 12)"
+        boton.style.backgroundColor = "rgb(8, 111, 3)"
         console.log(grillaJugador);
     };
 };
@@ -62,7 +46,7 @@ function validarFilaColumna(fila, columna, grilla) {
        Luego verifico que el lugar seleccionado no este ocupado. */
 
     if (grilla === 0 && grillaJugador[fila][columna] === 1) {
-        console.log("Casilla ya ocupada por un barco. Intente con otra.")
+        informacionDinamica.textContent = "Casilla ya ocupada por un barco. Intente con otra.";
         barcosJugador -= 1
         return false
 
@@ -70,7 +54,7 @@ function validarFilaColumna(fila, columna, grilla) {
         return true
 
     } else if (grilla === 1 && grillaMaquina[fila][columna] === 1) {
-        console.log("La maquina intento una combinación ya utilizada.")
+        informacionDinamica.textContent = "La maquina intento una combinación ya utilizada.";
         return false
 
     } else if (grilla === 1) {
@@ -80,35 +64,44 @@ function validarFilaColumna(fila, columna, grilla) {
 
 function disparoJugador(filaAtacada, columnaAtacada, boton) {
     /*Seleccionamos la posición en la que realizamos el disparo.*/
-
+    tituloGanador.textContent = "Turno de la Máquina";
+    tituloGanador.style.color = "rgb(209, 2, 2)";
     switch (grillaMaquina[filaAtacada][columnaAtacada]) {
     /*Verifico la posición a la que se disparo y ejecuto 
       una acción depende el valor de la posición */
     case 0:
-        console.log("¡AGUA! Disparo errado.");
+        informacionDinamica.textContent = "¡AGUA! Disparo errado.";
+        informacionDinamica.style.color = "rgb(0, 189, 195)";
         grillaMaquina[filaAtacada][columnaAtacada] = 3;
+        boton.style.backgroundColor = "rgb(0, 0, 48)";
         break;
 
     case 1:
-        console.log("¡EN EL BLANCO! Barco Destruido.");
+        informacionDinamica.textContent = "¡EN EL BLANCO! Barco Destruido.";
+        informacionDinamica.style.color = "rgb(16, 230, 30)";
         grillaMaquina[filaAtacada][columnaAtacada] = 2;
-        boton.style.backgroundColor = "rgb(16, 28, 98)";
+        boton.style.backgroundColor = "rgb(55, 2, 2)";
+        contadorBarcosMaquina -= 1;
+        actualizarInformacion();
         break;
 
     default:
-        console.log("Esta posición ya fue seleccionada. Perdiste el turno.");
+        informacionDinamica.textContent = "¡Ya disparaste a esta posición! Perdiste el turno.";
+        informacionDinamica.style.color = "rgb(240, 84, 22)";
         break;
     };
-    console.log("GRILLA DE LA MAQUINA:")
+    console.log("GRILLA DE LA MÁQUINA:")
     console.log(grillaMaquina);
     let cont = contarBarcos(grillaMaquina)
-    console.log("Barcos de la Maquina: " + cont);
+    console.log("Barcos de la Máquina: " + cont);
 };
 
 function disparoMaquina() {
-    /*La maquina realiza sus disparos en las posiciones seleccionadas.*/
+    /*La máquina realiza sus disparos en las posiciones seleccionadas.*/
     let filaAtacada = Math.floor(Math.random() * 5); // entero entre 0 y 4
     let columnaAtacada = Math.floor(Math.random() * 5); // entero entre 0 y 4
+    tituloGanador.textContent = "Turno del Jugador";
+    tituloGanador.style.color = "rgb(16, 230, 30)";
     let botonJugador = tablaJugador.querySelector(
         `[data-fila="${filaAtacada}"][data-columna="${columnaAtacada}"]`
         );
@@ -116,19 +109,24 @@ function disparoMaquina() {
         /*Verifico la posición a la que se disparo y ejecuto 
             una acción depende el valor de la posición*/
         case 0:
-            console.log("La Maquina dio en el AGUA.");
+            informacionDinamica.textContent = "La Máquina dio en el AGUA.";
+            informacionDinamica.style.color = "rgb(0, 189, 195)";
             grillaJugador[filaAtacada][columnaAtacada] = 3;
             botonJugador.style.backgroundColor = "rgb(0, 0, 48)";
             break;
 
         case 1:
-            console.log("¡LA MAQUINA DIO EN EL BLANCO! Barco Destruido.");
+            informacionDinamica.textContent = "¡LA MÁQUINA DIO EN EL BLANCO! Barco Destruido.";
+            informacionDinamica.style.color = "rgb(209, 2, 2)";
             grillaJugador[filaAtacada][columnaAtacada] = 2;
             botonJugador.style.backgroundColor = "rgb(55, 2, 2)";
+            contadorBarcosJugador -= 1;
+            actualizarInformacion();
             break;
 
         default:
-            console.log("La Maquina disparo en un lugar que ya habia elegido. Pierde el turno.");
+            informacionDinamica.textContent = "La Máquina disparo en un lugar que ya habia elegido. Dispara de nuevo.";
+            informacionDinamica.style.color = "rgb(232, 200, 17)";
             disparoMaquina();
     };
     console.log("GRILLA DEL JUGADOR:")
@@ -141,17 +139,25 @@ function contarBarcos(grilla) {
     /*flat() aplana la grilla 5x5 en un solo array.
     filter(c => c === 1) se queda solo con barcos.
     .length te da la cantidad.*/
-    return grilla.flat().filter(c => c === 1).length;
+    return grilla.flat().filter(contador => contador === 1).length;
 };
 
 function definirGanador() {
     /* Se evalua los barcos de cada jugador y se define el ganador o empate. */
-    if(contarBarcos(grillaJugador) === 0) {
-        console.log("Todos las barcos del Jugador fueron destruidos. ¡La Maquina gana!");
-    } else if(contarBarcos(grillaMaquina) === 0) {
-        console.log("Todos las barcos de la Maquina fueron destruidos. ¡El Jugador gana!");
-    } else{
-        console.log("¡Los barcos de ambos bandos fueron destruidos! La guerra no tiene ganadores...");
+    if(contarBarcos(grillaJugador) === 0 || contarBarcos(grillaMaquina) === 0) {
+
+        if(contarBarcos(grillaJugador) === 0 && contarBarcos(grillaMaquina) === 0) {
+            tituloGanador.style.color = "rgb(214, 224, 16)"
+            tituloGanador.textContent = "¡Los barcos de ambos bandos fueron destruidos! La guerra no tiene ganadores...";
+
+        } else if(contarBarcos(grillaJugador === 0)){
+            tituloGanador.style.color = "rgb(186, 3, 3)"
+            tituloGanador.textContent = "Todos las barcos del Jugador fueron destruidos. ¡La Maquina gana!";
+
+        } else if(contarBarcos(grillaMaquina) === 0) {
+            tituloGanador.style.color = "rgb(9, 196, 9)"
+            tituloGanador.textContent = "Todos las barcos de la Maquina fueron destruidos. ¡El Jugador gana!";
+        };
     };
 };
 
@@ -200,6 +206,11 @@ function DOMcrearGrillas(idContenedor, titulo, id) {
 `;
 };
 
+function actualizarInformacion() {
+    barcosDisponiblesJugador.textContent = `Barcos del Jugador: ${contadorBarcosJugador}`;
+    barcosDisponiblesMaquina.textContent = `Barcos de la Máquina: ${contadorBarcosMaquina}`;
+};
+
 // Cuerpo del programa
 
 // Creo grilla 5x5 inicializada con ceros
@@ -208,14 +219,17 @@ let grillaMaquina = Array.from({ length: 5 }, () => Array(5).fill(0));
 
 const barcosDisponibles = 3;
 let barcosJugador = 0;
-let comenzo = false // Bandera para desbloquear los botones de la grilla de la maquina
+let contadorBarcosJugador = 3;
+let contadorBarcosMaquina = 3;
+let turnoJugador = true;
 
 // DOM
 
 const contenedor = document.getElementById("contenedor-principal");
 contenedor.innerHTML = `
-  <div class="contenedor-titulo">
+  <div class="contenedor-titulo" id="contenedor-titulo">
     <h1 class="titulo">BATALLA NAVAL</h1>
+
   </div>
 
   <div class="contenedor-grillas">
@@ -227,12 +241,35 @@ contenedor.innerHTML = `
 DOMcrearGrillas("grilla-jugador", "GRILLA DEL JUGADOR");
 DOMcrearGrillas("grilla-maquina", "GRILLA DE LA MÁQUINA");
 
-console.log("Posiciones de la Maquina:");
+console.log("Posiciones de la Máquina:");
 ubicarBarcosMaquina();
 
 const botonesMaquina = document.querySelectorAll("#grilla-maquina button");
 const botonesJugador = document.querySelectorAll("#grilla-jugador button");
 const tablaJugador = document.getElementById("grilla-jugador");
+
+const barcosDisponiblesJugador = document.createElement("p");
+barcosDisponiblesJugador.className = "barcos";
+const barcosDisponiblesMaquina = document.createElement("p");
+barcosDisponiblesMaquina.className = "barcos";
+
+barcosDisponiblesJugador.textContent = "Coloque sus 3 barcos";
+barcosDisponiblesMaquina.textContent = `Barcos de la Máquina: ${contadorBarcosMaquina}`
+
+const seccionJugador = document.getElementById("grilla-jugador");
+seccionJugador.appendChild(barcosDisponiblesJugador);
+const seccionMaquina = document.getElementById("grilla-maquina");
+seccionMaquina.appendChild(barcosDisponiblesMaquina);
+
+const informacionDinamica = document.createElement("p");
+informacionDinamica.id = "infodinamica";
+contenedor.appendChild(informacionDinamica);
+
+const contenedorTitulo = document.getElementById("contenedor-titulo")
+const tituloGanador = document.createElement("h1");
+tituloGanador.id = "tituloGanador";
+tituloGanador.textContent = "Seleccione donde posicionar sus barcos.";
+contenedorTitulo.appendChild(tituloGanador);
 
 contenedor.addEventListener("click", (evento) => {
     if (!(evento.target instanceof Element)) return;
@@ -246,9 +283,12 @@ contenedor.addEventListener("click", (evento) => {
     if(barcosJugador <= 2) {
         console.log("Casilla elegida:", fila, columna);
         ubicarBarcosJugador(fila, columna, boton);
-        barcosJugador += 1
+        barcosJugador += 1;
         if(barcosJugador === 3){
-            console.log("Numero maximo de barcos desplegado.")
+            console.log("Numero maximo de barcos desplegado.");
+            actualizarInformacion();
+            tituloGanador.textContent = "¡Comienza la Batalla! Turno del Jugador";
+            tituloGanador.style.color = "rgb(16, 230, 30)";
             botonesMaquina.forEach(boton => {boton.style.pointerEvents = "auto";});
             botonesJugador.forEach(boton => {boton.style.pointerEvents = "none";});
         };
@@ -256,9 +296,17 @@ contenedor.addEventListener("click", (evento) => {
         if(contarBarcos(grillaJugador) > 0 && contarBarcos(grillaMaquina) > 0) {
              /* Se realizan los disparos por turnos comenzando con el jugador
                 El juego no termina hasta que todos los barcos de algun bando sean destruidos */
+            informacionDinamica.style.backgroundColor = "rgb(0, 0, 0)"
+            if (!turnoJugador) return;
+            turnoJugador = false;
             disparoJugador(fila, columna, boton);
-            disparoMaquina();
-        } else {
+
+            /* Este setTimeout hace que la Máquina tarde 3 segundos en disparar. */
+            setTimeout(() => {
+                disparoMaquina();
+                turnoJugador = true;
+            }, 3000);
+
             definirGanador();
         };
     }; 

@@ -4,10 +4,26 @@
     box-sizing: border-box;
 }
 
+.contenedor-titulo {
+    padding-top: 2rem;
+    gap: 2rem;
+    color: #fff;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.titulo {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
 .contenedor-principal {
     display: flex;
     flex-direction: column;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.35)), url(./imagenes/batalla-naval2.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.70), rgba(0, 0, 0, 0.70)), url(./imagenes/batalla-naval2.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -31,7 +47,7 @@
 .casillas {
     width: 7rem;
     height: 7rem;
-    background-color: rgb(20, 63, 109);
+    background-color: rgb(10, 66, 16);
 }
 
 .titulo {
@@ -40,6 +56,27 @@
 }
 
 #grilla-maquina button {
-    background-color: rgb(80, 8, 8);
+    background-color: rgb(188, 72, 0);
     pointer-events: none;
+}
+
+.barcos {
+    color: #fff;
+    font-size: 2rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#infodinamica {
+    color: #ff1212;
+    padding: 2rem;
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#tituloGanador {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #ff6d12;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
