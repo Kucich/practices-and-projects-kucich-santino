@@ -27,11 +27,16 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    height: 100vh;
-    justify-content: center;
+    background-attachment: fixed;   /*el fondo queda quieto al scrollear*/
+    min-height: 100vh;              /* min-height en vez de height */
+    min-height: 100dvh;             /* corrige la barra del navegador en celulares */
+    justify-content: center;    /* en vez de center */
     align-items: center;
     gap: 5rem;
+    padding-bottom: 2rem;
 }
+
+/* CSS de las grillas de juego */
 
 .contenedor-grillas {
     display: flex;
@@ -48,6 +53,18 @@
     width: 7rem;
     height: 7rem;
     background-color: rgb(10, 66, 16);
+}
+
+.icono-barco{
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.casillas img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .titulo {
@@ -80,3 +97,201 @@
     color: #ff6d12;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+
+#botonReinicio {
+    font-size: 2rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: rgb(252, 251, 193);
+    border: solid 0.3rem;
+}
+
+#botonReinicio:hover {
+    background-color: #afe791;
+}
+
+
+/* CSS de el campo nombre de ingreso, boton y titulo */
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 3rem;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: white;
+}
+
+.nombre {
+    width: 31rem;
+    padding: 1.5rem;
+    border: 2px solid #000000;
+    font-size: 1.8rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#boton-nombre {
+    padding: 10px 18px;
+    border: none;
+    background-color: #1445ad;
+    color: white;
+    font-weight: bold;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+#boton-nombre:hover {
+    background-color: #0b2b85;
+}
+
+.solicitar-nombre{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* CSS para el modal bloqueante*/
+
+.bloqueado {
+    filter: blur(5px);
+    pointer-events: none;
+}
+
+.solicitar-nombre{
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+
+    background-color: rgba(0,0,0,.5);
+
+    z-index: 1000;
+}
+
+/* CSS para la tabla del ranking*/
+
+#rankingDinamico {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%); /* centrado vertical */
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+#tituloRanking {
+    font-size: 2.6rem;
+    text-align: center;
+    padding-bottom: 0.5rem;
+}
+
+#tablaRanking {
+    border-collapse: collapse;
+    font-size: 16px;
+    min-width: 180px;
+}
+
+.columnaTabla {
+    padding: 4px 10px;
+    text-align: left;
+}
+
+#encabezadoRanking {
+    font-size: 2.3rem;
+    font-weight: bolder;
+}
+
+#cuerpoRanking {
+    font-size: 2.3rem;
+}
+
+/* Medias querys */
+
+@media (max-width: 600px) {
+    /* Contenedor principal */
+    .contenedor-principal {
+        gap: 1.5rem;
+    }
+
+    /* Titulos */
+    .contenedor-titulo {
+        text-align: center;
+    }
+
+    #tituloGanador {
+        font-size: 1.6rem;
+    }
+
+    .titulo {
+        font-size: 1.4rem;
+    }
+
+    /* Grillas */
+    .contenedor-grillas {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .casillas {
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .barcos {
+        font-size: 1.2rem;
+    }
+
+    /* Mensajes de juego */
+    #infodinamica {
+        font-size: 1.2rem;
+        padding: 1rem;
+    }
+
+    /* Ranking */
+    #rankingDinamico {
+        position: static;
+        order: -1;
+        transform: none;
+        margin: 1rem auto 2rem;
+        width: fit-content;
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+    }
+    
+    #tituloRanking {
+        font-size: 1.4rem;
+    }   
+
+    #encabezadoRanking, #cuerpoRanking {
+        font-size: 1.2rem;
+    }
+
+    /* Formulario de nombre */
+    label {
+        font-size: 1.6rem;
+    }
+
+    .nombre {
+        width: 80vw;
+        font-size: 1.2rem;
+        padding: 1rem;
+    }
+
+    #boton-nombre {
+        font-size: 1.3rem;
+    }
+
+    #botonReinicio {
+        font-size: 1.6rem;
+        background-color: rgb(182, 223, 131);
+    }
+}
+
