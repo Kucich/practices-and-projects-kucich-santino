@@ -444,12 +444,12 @@ contenedor.addEventListener("click", (evento) => {
             turnoJugador = false;
             disparoJugador(fila, columna, boton);
             console.log(puntosJugador);
-            /* Este setTimeout hace que la Máquina tarde 3 segundos en disparar. */
+            /* Este setTimeout hace que la Máquina tarde 4 segundos en disparar. */
             if(contadorBarcosJugador != 0) {
                 setTimeout(() => {
                     disparoMaquina();
                     turnoJugador = true;
-                }, 1000);
+                }, 4000);
             };
         };
     }; 
