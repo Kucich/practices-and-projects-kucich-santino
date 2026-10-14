@@ -53,6 +53,7 @@
     width: 7rem;
     height: 7rem;
     background-color: rgb(10, 66, 16);
+    cursor: pointer;
 }
 
 .icono-barco{

@@ -67,6 +67,7 @@ function disparoJugador(filaAtacada, columnaAtacada, boton) {
     /*Seleccionamos la posición en la que realizamos el disparo.*/
     tituloGanador.textContent = "Turno de la Máquina";
     tituloGanador.style.color = "rgb(209, 2, 2)";
+    botonesMaquina.forEach(boton => {boton.style.cursor = "wait";});
     switch (grillaMaquina[filaAtacada][columnaAtacada]) {
     /*Verifico la posición a la que se disparo y ejecuto 
       una acción depende el valor de la posición */
@@ -104,6 +105,7 @@ function disparoMaquina() {
     /*La máquina realiza sus disparos en las posiciones seleccionadas.*/
     let filaAtacada = Math.floor(Math.random() * 5); // entero entre 0 y 4
     let columnaAtacada = Math.floor(Math.random() * 5); // entero entre 0 y 4
+    botonesMaquina.forEach(boton => {boton.style.cursor = "pointer";});
     let botonJugador = tablaJugador.querySelector(
         `[data-fila="${filaAtacada}"][data-columna="${columnaAtacada}"]`
         );
